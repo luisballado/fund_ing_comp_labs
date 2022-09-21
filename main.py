@@ -87,13 +87,14 @@ plt.ylabel("Tiempo de ejecución (segundos)")
 
 
 
-# Ejecutar 10 veces el codigo
-"""
+# Ejecutar 31 veces el codigo y obtener una media de los valores obtenidos
 for i in range(1,11):
 
   print(random.getrandbits(i))
-"""
 
+  for i in range(0,31):
+    print("Executed " + str(i))
+    #obtener un promedio de lo calculado
 
 print("----%s segundos ----" % (time.time() - start_time))
 
