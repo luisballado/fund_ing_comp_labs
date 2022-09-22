@@ -21,81 +21,108 @@ import random
 import time
 import matplotlib.pyplot as plt
 import numpy as np
+import statistics
 
-def usuario_uno():
-    print('usuario_uno executed')
-    return 0
+"""
+Clase Usuario Uno
+"""
+class UsuarioUno:
+  def __init__(self, G, P):
+    self.g = G
+    self.p = P
+    self.a = random.randint(1,10)
+    
+  def __generator__(self):
+    self.x = int(pow(self.g,self.a,self.p))
+    
+    return self.x
 
-def usuario_dos(s, q, p):
-    print('usuario_dos executed')
-    return 0
+  def __make_key__(self,y):
+    self.usuario_uno_key = int(pow(y,self.a,self.p))
+    
+    return self.usuario_uno_key
+  
+    
+"""
+Clase Usuario Dos
+"""
+class UsuarioDos:
+  def __init__(self, G, P):
+    self.g = G
+    self.p = P
+    self.b = random.randint(1,10)
 
-start_time = time.time()
+  def __generator__(self):
+    self.y = int(pow(self.g,self.b,self.p))
+    return self.y
 
-bits = 1024
+  def __make_key__(self,y):
+    self.usuario_dos_key = int(pow(x,self.b,self.p))
+    return self.usuario_dos_key
+    
+# Input _bits_
+def diffie_hellman(_bits_):
+  P = Crypto.Util.number.getPrime(_bits_, randfunc=Crypto.Random.get_random_bytes)
+  G = (random.randint(1,P-1)) % P
+  
+  return P,G
 
-# Obtener un num primo de N bits
-# https://www.pycryptodome.org/src/util/util#module-Crypto.Util.number
-P = Crypto.Util.number.getPrime(bits, randfunc=Crypto.Random.get_random_bytes)
+time_cicle = []
+bits = [1024,1280,1536,1792,2048]
 
-print("Random n-bit Prime (p): ",P)
+time_mean = []
+for i_bits in bits:  
 
-# Crypto.Util.number.getPrime(bits, randfunc=Crypto.Random.get_random_bytes)
-G = 1024
+  
+  start_time_cicle = time.time()
 
-print('El valor de P es: %d'%(P))
-print('El valor de G es: %d'%(G))
+  for i in range(3):
 
-# numero cliente 1
-cliente1 = random.randint(3, 9)
+    
+    print("__::ronda::__" + str(i))
+    
+    # Obtener un num primo de N bits
+    # https://www.pycryptodome.org/src/util/util#module-Crypto.Util.number
+    P = Crypto.Util.number.getPrime(i_bits, randfunc=Crypto.Random.get_random_bytes)
+    
+    #print("Random n-bit Prime (p): ",P)
+    
+    # Crypto.Util.number.getPrime(bits, randfunc=Crypto.Random.get_random_bytes)
+    G = (random.randint(1,P-1)) % P
+    
+    #print('El valor de P es:' + str(p))
+    #print('El valor de G es: ' + str(g))
+    
+    # numero cliente 1
+    cliente1 = UsuarioUno(G,P)
+    x = cliente1.__generator__()
+    
+    cliente2 = UsuarioDos(G,P)
+    y = cliente2.__generator__()
+    
+    #print("El valor de X es: " + str(x))
+    #print("El valor de Y es: " + str(y))
+    
+    key_cliente1 = cliente1.__make_key__(y)
+    key_cliente2 = cliente2.__make_key__(x)
+    
+    print("LLAVE_CLIENTE1: " + str(key_cliente1))
+    print("LLAVE_CLIENTE2: " + str(key_cliente2))
+    
+    time_cicle.append(time.time() - start_time_cicle)
+  mean = statistics.mean(time_cicle)
+  time_mean.append(mean)
 
-print('El valor de la llave del cliente1 es: %d',cliente1)
-
-# Generar la llave
-# Power function to return value of (G^(cliente1)) * mod P
-x = int(pow(G,cliente1,P))
-
-# numero cliente2
-cliente2 = random.randint(9, 19)
-
-print('El valor de la llave del cliente2 es: %d',cliente2)
-
-# Power function to return value of (G^(cliente2)) * mod P
-y = int(pow(G,cliente2,P))
-
-# (y^(cliente1)) * mod P
-key_cliente1 = int(pow(y,cliente1,P))
-
-# (x^(cliente1)) * mod P
-key_cliente2 = int(pow(x,cliente2,P))
-
-print('Secret key client1 is: %d'%(key_cliente1))
-print('Secret key client2 is: %d'%(key_cliente2))
-
-security_values = [1024,1124,1224,1324]
-time_executed = [3, 8, 1, 10]
-
+print(bits)
+print(time_mean)
 # create data
-x1 = np.array(security_values)
-y1 = np.array(time_executed)
+x1 = np.array(bits)
+y1 = np.array(time_mean)
 
 plt.plot(x1, y1,marker="o")
 
 plt.title("Lab1: Diffie Hellman")
 plt.xlabel("Nivel de seguridad (bits)")
 plt.ylabel("Tiempo de ejecución (segundos)")
-
-
-
-# Ejecutar 31 veces el codigo y obtener una media de los valores obtenidos
-for i in range(1,11):
-
-  print(random.getrandbits(i))
-
-  for i in range(0,31):
-    print("Executed " + str(i))
-    #obtener un promedio de lo calculado
-
-print("----%s segundos ----" % (time.time() - start_time))
 
 plt.show()
