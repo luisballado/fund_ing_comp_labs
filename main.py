@@ -68,7 +68,7 @@ def diffie_hellman(_bits_):
   return P,G
 
 time_cicle = []
-bits = [1024,1280,1536,1792,2048]
+bits = [1024,1128,1232,1336,1440,1544,1648,1752,1856,1960,2048]
 
 time_mean = []
 for i_bits in bits:  
@@ -76,7 +76,7 @@ for i_bits in bits:
   
   start_time_cicle = time.time()
 
-  for i in range(3):
+  for i in range(5):
 
     
     print("__::ronda::__" + str(i))
@@ -124,5 +124,5 @@ plt.plot(x1, y1,marker="o")
 plt.title("Lab1: Diffie Hellman")
 plt.xlabel("Nivel de seguridad (bits)")
 plt.ylabel("Tiempo de ejecución (segundos)")
-
+plt.grid()
 plt.show()
