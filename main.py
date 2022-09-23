@@ -116,7 +116,7 @@ for i_bits in bits:
     _bits_arr_.append(i_bits)
     start_time_cicle = time.time()
 
-    for i in range(10):
+    for i in range(31):
 
         print("__::ronda::__" + str(i))
         diffie_hellman(i_bits)
