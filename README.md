@@ -76,7 +76,7 @@ Al estar aquí el protocolo, aquí se encuentrá el Grupo Multiplicativo Zp*, la
 def diffie_hellman(_bits_):
     P = Crypto.Util.number.getPrime(_bits_,
                                     randfunc=Crypto.Random.get_random_bytes)
-    G = (random.randint(1, P - 1)) % P
+    G = (Crypto.Util.number.getRandomRange(1, P - 1)) % P
 
     cliente1 = UsuarioUno(G, P)
     x = cliente1.__generator__()

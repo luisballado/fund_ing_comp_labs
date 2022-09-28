@@ -20,16 +20,16 @@ Implementar un programa que realice lo siguiente:
 """
 
 import Crypto.Util.number  #libreria pycriptodome
-import random
 import time
 import matplotlib.pyplot as plt
 import numpy as np
 import statistics
 from tabulate import tabulate
-
 """
 Clase Usuario Uno
 """
+
+
 class UsuarioUno:
 
     def __init__(self, G, P):
@@ -51,6 +51,8 @@ class UsuarioUno:
 """
 Clase Usuario Dos
 """
+
+
 class UsuarioDos:
 
     def __init__(self, G, P):
@@ -67,17 +69,18 @@ class UsuarioDos:
         return self.usuario_dos_key
 
 
-def comparar_llaves(self,that):
-  if ((self > that) - (self < that)) == 0:
-    return ">>>Llaves IGUALES<<<"
-  else:
-    return ">>>Llaves DIFERENTES<<<"
-    
+def comparar_llaves(self, that):
+    if ((self > that) - (self < that)) == 0:
+        return ">>>Llaves IGUALES<<<"
+    else:
+        return ">>>Llaves DIFERENTES<<<"
+
+
 # Input _bits_
 def diffie_hellman(_bits_):
     P = Crypto.Util.number.getPrime(_bits_,
                                     randfunc=Crypto.Random.get_random_bytes)
-    G = (random.randint(1, P - 1)) % P
+    G = (Crypto.Util.number.getRandomRange(1, P - 1)) % P
 
     cliente1 = UsuarioUno(G, P)
     x = cliente1.__generator__()
@@ -90,27 +93,26 @@ def diffie_hellman(_bits_):
 
     key_cliente1 = cliente1.__make_key__(y)
     key_cliente2 = cliente2.__make_key__(x)
-    print(comparar_llaves(key_cliente1,key_cliente2))
+    print(comparar_llaves(key_cliente1, key_cliente2))
 
-    
 
-def graficar(x_datos,y_datos,result_arr):
+def graficar(x_datos, y_datos, result_arr):
 
-  
-  print(tabulate(result_arr))
-  
-  x1 = np.array(x_datos)
-  y1 = np.array(y_datos)
-  
-  plt.plot(x1, y1, marker="o")
-  
-  plt.title("Lab1: Diffie Hellman")
-  plt.xlabel("Nivel de seguridad (bits)")
-  plt.ylabel("Tiempo de ejecución (segundos)")
-  plt.grid()
-  plt.show()
+    print(tabulate(result_arr))
 
-bits = [1024,1128,1232,1336,1440,1544,1648,1752,1856,1960,2048]
+    x1 = np.array(x_datos)
+    y1 = np.array(y_datos)
+
+    plt.plot(x1, y1, marker="o")
+
+    plt.title("Lab1: Diffie Hellman")
+    plt.xlabel("Nivel de seguridad (bits)")
+    plt.ylabel("Tiempo de ejecución (segundos)")
+    plt.grid()
+    plt.show()
+
+
+bits = [1024, 1128, 1232, 1336, 1440, 1544, 1648, 1752, 1856, 1960, 2048]
 time_cicle = []
 time_mean = []
 _result_arr_ = []
@@ -126,13 +128,12 @@ for i_bits in bits:
         print("__::ronda::__" + str(i))
         diffie_hellman(i_bits)
         time_cicle.append(time.time() - start_time_cicle)
-      
+
     mean = statistics.mean(time_cicle)
-  
+
     _bits_arr_.append(mean)
     time_mean.append(mean)
     _result_arr_.append(_bits_arr_)
 
-
 # create data
-graficar(bits,time_mean,_result_arr_)
+graficar(bits, time_mean, _result_arr_)
