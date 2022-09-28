@@ -14,6 +14,9 @@ Implementar un programa que realice lo siguiente:
 6. Reportar una tabla de tiempos de ejecución para cada caso de prueba.
   1. EjeX: Nivel de seguridad (tamaño de bits de p)
   2. EjeY: Tiempo de ejecución del protocolo Diffie Hellman
+
+
+  TODO: Comparar las llaves
 """
 
 import Crypto.Util.number  #libreria pycriptodome
@@ -64,6 +67,9 @@ class UsuarioDos:
         return self.usuario_dos_key
 
 
+def comparar_llaves(self,that):
+  return ((self > that) - (self < that))
+      
 # Input _bits_
 def diffie_hellman(_bits_):
     P = Crypto.Util.number.getPrime(_bits_,
@@ -81,9 +87,9 @@ def diffie_hellman(_bits_):
 
     key_cliente1 = cliente1.__make_key__(y)
     key_cliente2 = cliente2.__make_key__(x)
+    print(comparar_llaves(key_cliente1,key_cliente2))
 
-    print("LLAVE_CLIENTE1: " + str(key_cliente1))
-    print("LLAVE_CLIENTE2: " + str(key_cliente2))
+    
 
 def graficar(x_datos,y_datos,result_arr):
 
@@ -116,7 +122,7 @@ for i_bits in bits:
     _bits_arr_.append(i_bits)
     start_time_cicle = time.time()
 
-    for i in range(31):
+    for i in range(10):
 
         print("__::ronda::__" + str(i))
         diffie_hellman(i_bits)
