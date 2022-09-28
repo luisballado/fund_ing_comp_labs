@@ -171,3 +171,19 @@ def comparar_llaves(self,that):
   else:
     return ">>>Llaves DIFERENTES<<<"
 ```
+## Tabla de tiempos
+
+Tomando en cuenta que la ejecución se realizó en replit con una máquina de baja caracteristicas, se puede observar que a medida que se incrementa la dificultad en la generación del número primo p en base a los bits, el tiempo de ejecución aumenta exponencialmente.
+
+
+Bits | 1024 | 6.89503
+Bits | 1128 | 8.88642
+Bits | 1232 | 9.90423
+Bits | 1336 | 10.9786
+Bits | 1440 | 12.613
+Bits | 1544 | 14.4639
+Bits | 1648 | 16.1857
+Bits | 1752 | 19.1532
+Bits | 1856 | 21.1139
+Bits | 1960 | 25.5909
+Bits | 2048 | 28.5619
