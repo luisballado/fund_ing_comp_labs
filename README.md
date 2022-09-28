@@ -17,7 +17,7 @@
 ## Inicio
 
 El proyecto está escrito en lenguaje python3.8 (el cual no es muy recomendable para aplicaciones donde se espera un mejor "performance") 
-con ayuda de la libreria [Named Link](https://www.pycryptodome.org/ "pycryptodome")
+con ayuda de la libreria [pycryptodome](https://www.pycryptodome.org/ "pycryptodome")
 
 ### Prerequisitos
 
