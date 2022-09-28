@@ -68,8 +68,11 @@ class UsuarioDos:
 
 
 def comparar_llaves(self,that):
-  return ((self > that) - (self < that))
-      
+  if ((self > that) - (self < that)) == 0:
+    return ">>>Llaves IGUALES<<<"
+  else:
+    return ">>>Llaves DIFERENTES<<<"
+    
 # Input _bits_
 def diffie_hellman(_bits_):
     P = Crypto.Util.number.getPrime(_bits_,
@@ -106,10 +109,6 @@ def graficar(x_datos,y_datos,result_arr):
   plt.ylabel("Tiempo de ejecución (segundos)")
   plt.grid()
   plt.show()
-  
-
-
-#bits = [1024, 1128, 1232, 1336, 1440, 1544, 1648, 1752, 1856, 1960, 2048]
 
 bits = [1024,1128,1232,1336,1440,1544,1648,1752,1856,1960,2048]
 time_cicle = []
@@ -122,7 +121,7 @@ for i_bits in bits:
     _bits_arr_.append(i_bits)
     start_time_cicle = time.time()
 
-    for i in range(10):
+    for i in range(31):
 
         print("__::ronda::__" + str(i))
         diffie_hellman(i_bits)
