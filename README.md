@@ -8,7 +8,7 @@
 ## Implementar un programa que realice lo siguiente: ##
 
 1. Debe recibir como entrada un número primo p, de cualquier tamaño (por ejemplo los recomendados para aplicaciones criptográficas (1024,2048,.. bits)
-2. Construir un Grupo multiplicativo $Zp^{\star}$ (usando el conjunto ${1,2,...p-1}$ y la operación $ *\ mod\ p$
+2. Construir un Grupo multiplicativo $Zp^{\star}$ (usando el conjunto ${1,2,...p-1}$ y la operación $ * mod\ p$
 3. Usar como generador algún elemento aleatorio de $Zp^{\star}$
 4. Ejecutar el protocolo Diffie Hellman. Se deberá verificar que tanto el valor calculado en A como en B son iguales
 5. Ejecutar en al menos +10 casos de prueba, usando un valor de p diferente para cada caso de prueba
@@ -58,7 +58,7 @@ Usuario1 escoge $a \in Zp^{\star} - 1$ al azar, y calcula $X = (g^{a}) * mod\ p$
 
 Usuario2 escoge $b \in Zp^{\star} - 1$ al azar, y calcula $Y = (g^{b}) * mod\ p$ y envia $Y$ al Usuario1
 
-Nótese que tanto $X$ como $Y$ pueden calcular el valor $K = g^{a*b} * mod\p$
+Nótese que tanto $X$ como $Y$ pueden calcular el valor $K = g^{a*b} * mod\ p$
 
 Como ambas partes pueden calcular $K$, entonces la podemos usar como clave compartida. 
 
