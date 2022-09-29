@@ -51,11 +51,12 @@ Se crean dos clases para la creación de una llave a partir del protocolo diffie
 
 Para dos partes Usuario1 y Usuario2, que intentan establecer una clave secreta el protocolo se implementa como sigue:
 
-Se establece un numero primo p (P) y un generador g (G) que pertenece a la estructura algebraica Zp* 
+Se establece un numero primo p (P) y un generador g (G) que pertenece a la estructura algebraica $Zp^{\star}$ 
 Estos son públicos, conocidos no solo por las partes Usuario1 y Usuario2 sino también por el adversario el canal
 
-Usuario1 escoge $a \in Zp^{\star} - 1$ al azar, y calcula $X = (g^{a}) * mod p$ y envia 'X' al Usuario2
-Usuario2 escoge $b \in Zp^{\star} - 1}$ al azar, y calcula $Y = (g^{b}) * mod p$ y envia 'Y' al Usuario1
+Usuario1 escoge $a \in Zp^{\star} - 1$ al azar, y calcula $X = (g^{a}) * mod p$ y envia $X$ al Usuario2
+
+Usuario2 escoge $b \in Zp^{\star} - 1}$ al azar, y calcula $Y = (g^{b}) * mod p$ y envia $Y$ al Usuario1
 
 Nótese que tanto $X$ como $Y$ pueden calcular el valor $K = g^{a*b} * mod p$
 
