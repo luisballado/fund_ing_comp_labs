@@ -8,11 +8,12 @@
 ## Implementar un programa que realice lo siguiente: ##
 
 1. Debe recibir como entrada un número primo p, de cualquier tamaño (por ejemplo los recomendados para aplicaciones criptográficas (1024,2048,.. bits)
-2. Construir un Grupo multiplicativo Zp* (usando el conjunto {1,2,...p-1} y la operación * mod p
-3. Usar como generador algún elemento aleatorio de Zp*
+2. Construir un Grupo multiplicativo $Zp^{\star}$ (usando el conjunto ${1,2,...p-1}$ y la operación ${* mod\ p}$
+3. Usar como generador algún elemento aleatorio de $Zp^{\star}$
 4. Ejecutar el protocolo Diffie Hellman. Se deberá verificar que tanto el valor calculado en A como en B son iguales
 5. Ejecutar en al menos +10 casos de prueba, usando un valor de p diferente para cada caso de prueba
-6. Reportar una tabla de tiempos de ejecución para cada caso de prueba. (Eje X: Nivel de seguridar; Eje Y: Tiempo de ejecución del protocolo Diffie-Hellman)
+6. Reportar una tabla de tiempos de ejecución para cada caso de prueba.
+   (Eje X: Nivel de seguridar; Eje Y: Tiempo de ejecución del protocolo Diffie-Hellman)
 
 ## Inicio
 
@@ -35,6 +36,8 @@ Dependencias
 * cryptography = "^38.0.1"
 * pycryptodome = "^3.15.0"
 * pycryptodomex = "^3.15.0"
+* matplotlib = "^3.6.0"
+* tabulate = "^0.8.10"
 ```
 
 ### Versión replit
@@ -51,15 +54,16 @@ Se crean dos clases para la creación de una llave a partir del protocolo diffie
 
 Para dos partes Usuario1 y Usuario2, que intentan establecer una clave secreta el protocolo se implementa como sigue:
 
-Se establece un numero primo p (P) y un generador g (G) que pertenece a la estructura algebraica Zp* 
+Se establece un numero primo p (P) y un generador g (G) que pertenece a la estructura algebraica $Zp^{\star}$ 
 Estos son públicos, conocidos no solo por las partes Usuario1 y Usuario2 sino también por el adversario el canal
 
-Usuario1 escoge a ∈ Zp* - 1 al azar, y calcula X = (g^a) * mod p y envia 'X' al Usuario2
-Usuario2 escoge b ∈ Zp* - 1 al azar, y calcula Y = (g^b) * mod p y envia 'Y' al Usuario1
+Usuario1 escoge $a \in Zp^{\star} - 1$ al azar, y calcula $X = (g^{a}) * mod\ p$ y envia $X$ al Usuario2
 
-Nótese que tanto X como Y pueden calcular el valor K = g^(a*b) * mod p
+Usuario2 escoge $b \in Zp^{\star} - 1$ al azar, y calcula $Y = (g^{b}) * mod\ p$ y envia $Y$ al Usuario1
 
-Como ambas partes pueden calcular K, entonces la podemos usar como clave compartida. 
+Nótese que tanto $X$ como $Y$ pueden calcular el valor $K = g^{a*b} * mod\ p$
+
+Como ambas partes pueden calcular $K$, entonces la podemos usar como clave compartida. 
 
 ## Código
 
@@ -70,7 +74,7 @@ bits = [1024,1128,1232,1336,1440,1544,1648,1752,1856,1960,2048]
 ```
 
 Encapsulamiento del protocolo diffie hellman para ser usado iterativamente para el arreglo de bits y las 31 muestras a tomar
-Al estar aquí el protocolo, aquí se encuentrá el Grupo Multiplicativo Zp*, la obtención del Generador y el intercambio de los valores x & y
+Al estar aquí el protocolo, aquí se encuentrá el Grupo Multiplicativo $Zp^{*}$, la obtención del Generador y el intercambio de los valores $x$ & $y$
 
 ```python
 def diffie_hellman(_bits_):
