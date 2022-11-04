@@ -9,7 +9,9 @@ Implementar un programa que realice lo siguiente:
 
 4. Ejecutar el protocolo Diffie Hellman. Se deberá verificar que tanto el valor calculado en A como en B son iguales.
 
-5. Se deberá ejecutar en al menos 10 casos de prueba, usando un valor de p diferente para cada caso, siendo que p puede ser de entre 1024 y 2048 bits.
+- por el teorema del limite central
+
+5. Se deberá ejecutar en al menos 31 casos de prueba, usando un valor de p diferente para cada caso, siendo que p puede ser de entre 1024 y 2048 bits.
 
 6. Reportar una tabla de tiempos de ejecución para cada caso de prueba.
   1. EjeX: Nivel de seguridad (tamaño de bits de p)
