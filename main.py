@@ -16,87 +16,130 @@ Implementar un programa que realice lo siguiente:
 6. Reportar una tabla de tiempos de ejecución para cada caso de prueba.
   1. EjeX: Nivel de seguridad (tamaño de bits de p)
   2. EjeY: Tiempo de ejecución del protocolo Diffie Hellman
+
+
+  TODO: Comparar las llaves
 """
 
-import Crypto.Util.number #libreria pycriptodome
-import random
+import Crypto.Util.number  #libreria pycriptodome
 import time
 import matplotlib.pyplot as plt
 import numpy as np
+import statistics
+from tabulate import tabulate
+"""
+Clase Usuario Uno
+"""
 
-def usuario_uno():
-    print('usuario_uno executed')
-    return 0
 
-def usuario_dos(s, q, p):
-    print('usuario_dos executed')
-    return 0
+class UsuarioUno:
 
-start_time = time.time()
+    def __init__(self, G, P):
+        self.g = G
+        self.p = P
+        self.a = 17
 
-bits = 1024
+    def __generator__(self):
+        self.x = int(pow(self.g, self.a, self.p))
 
-# Obtener un num primo de N bits
-# https://www.pycryptodome.org/src/util/util#module-Crypto.Util.number
-P = Crypto.Util.number.getPrime(bits, randfunc=Crypto.Random.get_random_bytes)
+        return self.x
 
-print("Random n-bit Prime (p): ",P)
+    def __make_key__(self, y):
+        self.usuario_uno_key = int(pow(y, self.a, self.p))
 
-# Crypto.Util.number.getPrime(bits, randfunc=Crypto.Random.get_random_bytes)
-G = 1024
+        return self.usuario_uno_key
 
-print('El valor de P es: %d'%(P))
-print('El valor de G es: %d'%(G))
 
-# numero cliente 1
-cliente1 = random.randint(3, 9)
+"""
+Clase Usuario Dos
+"""
 
-print('El valor de la llave del cliente1 es: %d',cliente1)
 
-# Generar la llave
-# Power function to return value of (G^(cliente1)) * mod P
-x = int(pow(G,cliente1,P))
+class UsuarioDos:
 
-# numero cliente2
-cliente2 = random.randint(9, 19)
+    def __init__(self, G, P):
+        self.g = G
+        self.p = P
+        self.b = 15
 
-print('El valor de la llave del cliente2 es: %d',cliente2)
+    def __generator__(self):
+        self.y = int(pow(self.g, self.b, self.p))
+        return self.y
 
-# Power function to return value of (G^(cliente2)) * mod P
-y = int(pow(G,cliente2,P))
+    def __make_key__(self, x):
+        self.usuario_dos_key = int(pow(x, self.b, self.p))
+        return self.usuario_dos_key
 
-# (y^(cliente1)) * mod P
-key_cliente1 = int(pow(y,cliente1,P))
 
-# (x^(cliente1)) * mod P
-key_cliente2 = int(pow(x,cliente2,P))
+def comparar_llaves(self, that):
+    if ((self > that) - (self < that)) == 0:
+        return ">>>Llaves IGUALES<<<"
+    else:
+        return ">>>Llaves DIFERENTES<<<"
 
-print('Secret key client1 is: %d'%(key_cliente1))
-print('Secret key client2 is: %d'%(key_cliente2))
 
-security_values = [1024,1124,1224,1324]
-time_executed = [3, 8, 1, 10]
+# Input _bits_
+def diffie_hellman(_bits_):
+    P = Crypto.Util.number.getPrime(_bits_,
+                                    randfunc=Crypto.Random.get_random_bytes)
+    G = (Crypto.Util.number.getRandomRange(1, P - 1)) % P
+
+    cliente1 = UsuarioUno(G, P)
+    x = cliente1.__generator__()
+
+    cliente2 = UsuarioDos(G, P)
+    y = cliente2.__generator__()
+
+    #print("El valor de X es: " + str(x))
+    #print("El valor de Y es: " + str(y))
+
+    key_cliente1 = cliente1.__make_key__(y)
+    key_cliente2 = cliente2.__make_key__(x)
+    print(comparar_llaves(key_cliente1, key_cliente2))
+
+
+def graficar(x_datos, y_datos, result_arr):
+
+    print(tabulate(result_arr))
+
+    x1 = np.array(x_datos)
+    y1 = np.array(y_datos)
+
+    plt.plot(x1, y1, marker="o")
+
+
+    plt.show()
+
+    plt.title("Lab1: Diffie Hellman")
+    plt.xlabel("Nivel de seguridad (bits)")
+    plt.ylabel("Tiempo de ejecución (segundos)")
+    plt.grid()
+    plt.show()
+
+
+bits = [1024, 1128, 1232, 1336, 1440, 1544, 1648, 1752, 1856, 1960, 2048]
+time_cicle = []
+time_mean = []
+_result_arr_ = []
+
+for i_bits in bits:
+    _bits_arr_ = []
+    _bits_arr_.append("Bits")
+    _bits_arr_.append(i_bits)
+    start_time_cicle = time.time()
+
+    for i in range(31):
+
+        print("__::ronda::__" + str(i))
+        diffie_hellman(i_bits)
+        time_cicle.append(time.time() - start_time_cicle)
+
+    mean = statistics.mean(time_cicle)
+
+    _bits_arr_.append(mean)
+    time_mean.append(mean)
+    _result_arr_.append(_bits_arr_)
 
 # create data
-x1 = np.array(security_values)
-y1 = np.array(time_executed)
+graficar(bits, time_mean, _result_arr_)
 
-plt.plot(x1, y1,marker="o")
-
-plt.title("Lab1: Diffie Hellman")
-plt.xlabel("Nivel de seguridad (bits)")
-plt.ylabel("Tiempo de ejecución (segundos)")
-
-
-
-# Ejecutar 10 veces el codigo
-"""
-for i in range(1,11):
-
-  print(random.getrandbits(i))
-"""
-
-
-print("----%s segundos ----" % (time.time() - start_time))
-
-plt.show()
