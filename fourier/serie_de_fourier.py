@@ -13,25 +13,25 @@ Tarea 1
 x_ = np.linspace(-2,2,1000)
 
 #Periodo a graficar
-T=1 #funcion1
-#T = 4 #funcion3
+#T=1 #funcion1
+T = 4 #funcion3
 
 #Armonicos valor de n
-armonicos = 100
+armonicos = 10
 
 #Coeficiente An
 def an(n):
     n=int(n)
-    return (pow(-1,n)-1)/pow(n*np.pi,2) #funcion1
-    #return (2*((math.cos((n*np.pi)/2))))/(np.pi-(pow(n,2)*np.pi)) #funcion2
+    #return (pow(-1,n)-1)/pow(n*np.pi,2) #funcion1
+    return (2*((math.cos((n*np.pi)/2))))/(np.pi-(pow(n,2)*np.pi)) #funcion2
     #return 0 #funcion3
 
 
 #Coeficiente Bn
 def bn(n):
     n = int(n)
-    return ((-n*np.pi)*pow(-1,n))/pow(n*np.pi,2) #funcion1
-    #return 0 #funcion2
+    #return ((-n*np.pi)*pow(-1,n))/pow(n*np.pi,2) #funcion1
+    return 0 #funcion2
     #return (4*((math.sin((np.pi*n)/4))**2))/(np.pi*n)#funcion3
 
     
@@ -44,8 +44,8 @@ def wn(n):
 #Serie de Fourier
 def serie_fourier(armonico,x):
 
-    a0 = 1/2 #funcion1
-    #a0 = 2/np.pi #funcion2
+    #a0 = 1/2 #funcion1
+    a0 = 2/np.pi #funcion2
     #a0 = 0 #funcion3
     sumas = a0
 
