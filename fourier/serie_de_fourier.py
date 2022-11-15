@@ -51,7 +51,8 @@ def serie_fourier(armonico,x):
 
     for n in range(1,armonico):
         try:
-            sumas = sumas + an(n)*np.cos(wn(n)*x) + bn(n)*np.sin(wn(n)*x)
+            #sumas = sumas + an(n)*np.cos(wn(n)*x) + bn(n)*np.sin(wn(n)*x)
+            sumas = sumas + (6/wn(n))*np.sin(2*wn(n))
         except Exception as e:
             print(e)
             pass
@@ -67,4 +68,4 @@ for i in x_:
 plt.plot(x_,f,color="dodgerblue")
 plt.grid()
 plt.title("Serie trigonométrica con " + str(armonicos) + " terminos")
-plt.savefig("serie_fourier.png")
+plt.savefig("trabs_fourier.png")
