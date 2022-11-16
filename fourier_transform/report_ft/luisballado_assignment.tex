@@ -81,97 +81,135 @@
 
 {\color{teal}
   \dotfill
+  Función 1
+\dotfill}
+
+\begin{minipage}{0.3\textwidth}
+\includegraphics[scale=0.5]{images/func_1.png}
+\end{minipage}
+\begin{minipage}{0.6\textwidth}\raggedleft
+\[f(t) =\left\{ \begin{array}{lr}+1, & -2 < t < -1 \\-1, & 1 < t < 2\\0, & otro\hspace{0.1cm} caso \end{array}\right.\]
+\end{minipage}
+\noindent
+
+{\color{teal}
+  \dotfill
   Transformada de Fourier
 \dotfill}
-
-\begin{enumerate}
-  \setcounter{enumi}{0}
-\item Función 1: \\
-  \[f(t) =\left\{ \begin{array}{lr}+1, & -2 < t < -1 \\-1, & 1 < t < 2\\0, & otro\hspace{0.1cm} caso \end{array}\right.\]
-
-  \begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.5]{images/funcion_one.jpg}
-  \end{figure}
-  
-\end{enumerate}
-
-$p=\frac{T}{2}=\frac{2}{2}=1$\\
+\[\int_{-\infty}^{\infty} f(t) \,e^{-jwt} \,dt \]
 \dotfill
-\[a_{0} = \frac{1}{p}\int_{-p}^{p} f(t) \,dt = 1\int_{-1}^{0}0 dt + \int_{0}^{1}t dt =  \frac{t^{2}}{2}\Big|_0^1 = \frac{1}{2} \]
-\dotfill
-\[a_{n}=\frac{1}{p}\int_{-p}^{p} f(t) cos(\frac{nt\pi}{p}) dt =\]
-\[= 1\left[ \int_{-1}^{0} 0*cos(\frac{nt\pi}{1}) dt + \int_{0}^{1} t*cos(\frac{nt\pi}{1}) dt\right]=\]
-\[ 1\left[ \int_{0}^{1} t*cos(nt\pi) dt\right]=\]
-resolviendo la integral por partes: $u=t$ ; $du=dt$ ; $dv=cos(nt\pi)$ ; $v= \frac{1}{n\pi}sen(nt\pi)$
-\[ \frac{t*sen(nt\pi)}{n\pi} \Big|_0^1 - \int \frac{1}{n\pi}*sen(nt\pi) dt =\]
-\[ \frac{1}{(n\pi)^{2}} \left[ nt\pi *sen(n\pi) + cos(n\pi) -1 \right] = \]
-\[ \frac{cos(n\pi)-1}{(n\pi)^{2}}=\]
-\[ a_{n} = \frac{(-1)^{n}-1}{(n\pi)^{2}}\]
-\dotfill
-\[b_{n}=\frac{1}{p}\int_{-p}^{p} f(t) sen(\frac{nt\pi}{p}) dt =\]
-\[= 1\left[ \int_{-1}^{0} 0*sen(\frac{nt\pi}{1}) dt + \int_{0}^{1} t*sen(\frac{nt\pi}{1}) dt\right]=\]
-\[ 1\left[ \int_{0}^{1} t*sen(nt\pi) dt\right]=\]
-resolviendo la integral por partes: $u=t$ ; $du=dt$ ; $dv=sen(nt\pi)$ ; $v= \frac{-1}{n\pi}cos(nt\pi)$
-\[ \frac{-t*cos(nt\pi)}{n\pi} \Big|_0^1 - \int \frac{-1}{n\pi}*cos(nt\pi) dt =\frac{sen(n\pi)-n\pi * cos(n\pi)}{(n\pi)^{2}}= \frac{(-1)^{n}*-n\pi}{(n\pi)^{2}}\]
+
+\[\int_{-2}^{-1} 1*e^{-jwt} dt + \cancel{\int_{-1}^{1} 0*e^{-jwt} dt} + \int_{1}^{2} -1*e^{-jwt} dt =\int_{-2}^{-1} e^{-jwt} dt - \int_{1}^{2} e^{-jwt} dt \]
+Recordando la integral de una exponencial:
+\[\int e^{u} du = e^{u} + C \Rightarrow  \frac{-e^{-jwt}}{jw} \Big|_{-2}^{-1} + \frac{-e^{-jwt}}{jw} \Big|_{1}^{2} \]
+\[ = \left[\frac{e^{jw}(e^{jw}-1)-e^{-2jw}(e^{jw}-1)}{jw}\right] = \left[\frac{e^{2jw}-e^{jw}-e^{-jw}+e^{-2jw}}{jw}\right]\]
+\[ = \left[\frac{e^{2jw}+e^{-2jw}}{jw} - \frac{e^{jw}+e^{-jw}}{jw}\right]*\frac{2}{2} = \frac{2}{w} * \left[\left(\frac{e^{2jw}+e^{-2jw}}{2j}\right) - \left(\frac{e^{jw}+e^{-jw}}{2j}\right)\right]\]
+
+Aplicando identidad:
+\[ \frac{2}{w} * \left[\left(\frac{e^{2jw}+e^{-2jw}}{2j}\right) - \left(\frac{e^{jw}+e^{-jw}}{2j}\right)\right] \Rightarrow cos(\theta)=\frac{e^{i\theta}+e^{-i\theta}}{2j} \] 
+\begin{center}
+\fbox{\begin{minipage}{15em}
+\[ \frac{2}{w}*(cos(2w)-cos(w))\]
+\end{minipage}}
+\end{center}
 
 \newpage
 {\color{teal}
 \dotfill
-Transformada de Fourier
+Función 1
 \dotfill}
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.8]{images/funcion1_10.jpg}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.8]{images/funcion1.jpg}
+  \includegraphics[scale=0.8]{images/trans_fourier_1.png}
 \end{figure}
 
 \newpage
-\begin{enumerate}
-  \setcounter{enumi}{1}
-\item Función 2:
 
-  \[f(t) =\left\{ \begin{array}{lr}t, & 0 < t < 1 \\0, & otro\hspace{0.1cm} caso \end{array}\right.\]
-  
-  \begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.5]{images/funcion_two.jpg}
-  \end{figure}
-  
-\end{enumerate}
+{\color{teal}
+  \dotfill
+  Función 2
+\dotfill}
 
-$p=\frac{T}{2}=\frac{4}{2}=2$\\
+\begin{minipage}{0.3\textwidth}
+\includegraphics[scale=0.5]{images/func_2.png}
+\end{minipage}
+\begin{minipage}{0.6\textwidth}\raggedleft
+\[f(t) =\left\{ \begin{array}{lr}t, & 0 < t < 1 \\0, & otro\hspace{0.1cm} caso \end{array}\right.\]
+\end{minipage}
+\noindent
+
+{\color{teal}
+  \dotfill
+  Transformada de Fourier
+\dotfill}
+\[\int_{-\infty}^{\infty} f(t) \,e^{-jwt} \,dt \]
 \dotfill
-\[a_{0} = \frac{1}{p}\int_{-p}^{p} f(t) \,dt = \frac{1}{2}\int_{-2}^{-1}0 dt + \int_{-1}^{0}-1 dt + \int_{0}^{1}1 dt + \int_{1}^{2}0 dt =  -1+1 = 0 \]
-\dotfill
-\[a_{n}=\frac{1}{p}\int_{-p}^{p} f(t) cos(\frac{nt\pi}{p}) dt =\]
-\[\frac{1}{2}\int_{-2}^{2} f(t) cos(\frac{nt\pi}{2}) dt =\]
-\[\frac{1}{2}\int_{-2}^{1} 0*cos(\frac{nt\pi}{2}) dt + \int_{-1}^{0} -1*cos(\frac{nt\pi}{2}) dt + \int_{0}^{1} 1*cos(\frac{nt\pi}{2}) dt + \int_{1}^{2} 0*cos(\frac{nt\pi}{2}) dt =\]
-\[ \frac{2*sen(\frac{nt\pi}{2})}{n\pi} - \frac{2*sen(\frac{n\pi}{2})}{n\pi} = 0\]
-\dotfill
-\[b_{n}=\frac{1}{p}\int_{-p}^{p} f(t) sen(\frac{nt\pi}{p}) dt =\]
-\[\frac{1}{2}\int_{-2}^{2} f(t) sen(\frac{nt\pi}{2}) dt =\]
-\[\frac{1}{2}\int_{-2}^{1} 0*sen(\frac{nt\pi}{2}) dt + \int_{-1}^{0} -1*sen(\frac{nt\pi}{2}) dt + \int_{0}^{1} 1*sen(\frac{nt\pi}{2}) dt + \int_{1}^{2} 0*sen(\frac{nt\pi}{2}) dt =\]
-\[b_{n}=\frac{4*sen^{2}(\frac{n\pi}{4})}{n\pi}\]
+
+\[\int_{0}^{1} t*e^{-jwt} dt \]
+\center{Resolviendo la integral por partes}\\
+sea $u=t$; $du=dt$;\\
+$dv=e^{-jwt}dt$; \\$v=\frac{-e^{-jwt}}{jw}$
+\[=\left(\frac{-t*e^{-jwt}}{jw}\right)\Big|_{0}^{1}+\frac{1}{jw}\int_{0}^{1}{e^{-jwt}dt}\]
+\[\frac{-1*e^{-jw}}{jw}+\frac{1}{jw}\int_{0}^{1}{e^{-jwt}dt}=\frac{-e^{-jw}}{jw}+\frac{1}{jw}\left(\frac{-e^{-jw}+1}{jw}\right)\]
+\[\frac{-e^{-jw}}{jw}-\left(\frac{e^{-jw}-1}{(jw)^{2}}\right)\]
+\[ = \left[\frac{-e^{-jw}*jw-e^{-jw}+1}{(jw)^2}\right]\]
+\center{Factorizando}
+\begin{center}
+\fbox{\begin{minipage}{15em}
+\[ \frac{e^{-jw}(-jw+e^{jw}-1)}{(jw)^2}\]
+\end{minipage}}
+\end{center}
 
 \newpage
 {\color{teal}
 \dotfill
-Serie trigonométrica de Fourier
+Función 2
 \dotfill}
-
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.8]{images/funcion3_10.jpg}
+  \includegraphics[scale=0.8]{images/trans_fourier_2.png}
 \end{figure}
 
+\newpage
+
+{\color{teal}
+  \dotfill
+  Función 3
+\dotfill}
+
+\begin{minipage}{0.3\textwidth}
+\includegraphics[scale=0.5]{images/func_3.png}
+\end{minipage}
+\begin{minipage}{0.6\textwidth}\raggedleft
+\[f(t) =\left\{ \begin{array}{lr}2, & 0 < t < 1 \\1, & 1 < t < 2 \\0, & otro\hspace{0.1cm} caso \end{array}\right.\]
+\end{minipage}
+\noindent
+
+{\color{teal}
+  \dotfill
+  Transformada de Fourier
+\dotfill}
+\[\int_{-\infty}^{\infty} f(t) \,e^{-jwt} \,dt \]
+\dotfill
+
+\[\int_{0}^{1} 2*e^{-jwt} dt + \int_{1}^{2} 1*e^{-jwt} dt + 0 = 2\int_{0}^{1} e^{-jwt} dt + \int_{1}^{2} e^{-jwt} dt + 0 \]
+
+\[2\left(\frac{-e^{-jwt}}{jw}\right) \Big|_{0}^{1} + \frac{-e^{-jwt}}{jw} \Big|_{1}^{2} \]
+\[=2\left( \frac{1-e^{-jw}}{jw}\right) +\frac{e^{-2jw}*(e^{jw}-1)}{jw} \]
+\[=\frac{2-2*e^{-jw}}{jw} + \frac{e^{-jw}-e^{-2jw}}{jw} = \frac{2-e^{-jw}-e^{-2jw}}{jw} \]
+\begin{center}
+\fbox{\begin{minipage}{15em}
+\[ \frac{2-e^{-jw}(1+e^{-jw})}{jw}\]
+\end{minipage}}
+\end{center}
+
+{\color{teal}
+\dotfill
+Función 3
+\dotfill}
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.8]{images/funcion3.jpg}
+  \includegraphics[scale=0.8]{images/trans_fourier_3.png}
 \end{figure}
 
 \newpage
@@ -185,49 +223,23 @@ Con uso de las librerias
 import numpy as np
 import math
 import matplotlib.pyplot as plt
+
+_x_ = np.linspace(-2,2,10000)
+f = []
+
+#iterar para los valores de t
+for i in _x_:
+    w = 2*np.pi*i
+    #f.append(abs((2/w)*(np.cos(2*w)-np.cos(w)))) #Funcion1
+    #f.append(abs((np.exp(-1j*w)*(-1j*w+np.exp(1j*w)-1))/((1j*w)*(1j*w)))) #Funcion2
+    f.append(abs((2-np.exp(-1j*w)-np.exp(-2j*w))/(1j*w))) #Funcion3
+    
+plt.plot(_x_,f,color="dodgerblue")
+plt.title("Transformada de Fourier Funcion 3")
+plt.savefig("trans_fourier_3.png")
+
 \end{verbatim}
 
-Coeficiente $a_{n}$
-\begin{verbatim}
-def an(n):
-    n=int(n)
-    return (pow(-1,n)-1)/pow(n*np.pi,2) #funcion1
-    #return 0 #funcion3
-\end{verbatim}
-
-Coeficiente $b_{n}$
-\begin{verbatim}
-def bn(n):
-    n = int(n)
-    return ((-n*np.pi)*pow(-1,n))/pow(n*np.pi,2) #funcion1
-    #return (4*((math.sin((np.pi*n)/4))**2))/(np.pi*n)#funcion3
-\end{verbatim}
-
-Coeficiente $w_{n}$
-\begin{verbatim}
-def wn(n):
-    global T
-    wn = (2*np.pi*n)/T
-    return wn
-\end{verbatim}
-
-Serie de Fourier
-\begin{verbatim}
-def serie_fourier(armonico,x):
-
-    a0 = 1/2 #funcion1
-    #a0 = 0 #funcion3
-    sumas = a0
-
-    for n in range(1,armonico):
-        try:
-            sumas = sumas + an(n)*np.cos(wn(n)*x) + bn(n)*np.sin(wn(n)*x)
-        except Exception as e:
-            print(e)
-            pass
-        
-    return sumas
-\end{verbatim}
 
 %----------------------------------------------------------------------------------------
 
