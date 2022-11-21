@@ -1,0 +1,18 @@
+import numpy as np
+import scipy as sp
+import matplotlib.pyplot as plt
+import sympy as smp
+from skimage import color
+from skimage import io
+from scipy.fft import fftfreq
+from scipy.fft import fft, ifft,fft2,ifft2
+
+#t - time
+#f - frequency
+t,f = smp.symbols('t,f',real=True)
+
+k = smp.symbols('k',real=True,possitive=True)
+
+x = smp.exp(-k*t**2)*k*t
+
+print(x)

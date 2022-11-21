@@ -3,15 +3,29 @@ import numpy as np
 import time
 
 #Funcion para acomodar fft_shift
-
-def FFT_radix2():
+"""
+def FFT_radix2(x):
     delta = 1
-    
-    return None
+    N = len(x)
+    n = log2(N)
+    for _pass_ in range(1,n):
+        W = np.exp((-1j*2*np.pi)/2*delta)
+        a = 0
+        while(a < delta):
+            b = 0
+            while(b < N):
 
+                t0 = x[b+a]+W
+                
+                
+            b = b + 2*delta
+        
+    return None
+"""
+"""
 def rect(T):
     return lambda t: (-T/2 <= t) & (t < T/2)
-
+"""
 def naiveFFT(x):
     ''' The naive implementation for comparison '''
     N = x.size
@@ -50,10 +64,18 @@ def f_A(t):
 def f_B(t):
     return 5+8*np.cos((2*np.pi*t)-(np.pi/2))+4*np.cos(4*np.pi*t)+2*np.cos((8*np.pi*t)-(np.pi/2))+np.cos(16*np.pi*t)+2*np.cos((32*np.pi-(np.pi/2)))
 
-"""
+def rect(t):
+    y = x
+    for i in range(len(x)):
+        if abs(x[i]) <= 0.5:
+            y[i] = 1
+        else:
+            y[i] = 0
+    return y
+
 # Create a time-series signal
 N = 2**10
-t = np.linspace(0, 10, N)
+t = np.linspace(-2, 2, N)
 T = t[1]-t[0]
 signal = f_B(t)
 fft = FFT(signal)
@@ -64,15 +86,23 @@ freq_scale = np.linspace(0,1/T, N)
 print("sampling_frequency: " + str(1/T))
 
 # Plot the results
-f, (ax1, ax2) = plt.subplots(1, 2)
+# spectrum = fft(signal)
+# magnitude = np.abs(spectrum)
+# phase = np.angle(spectrum)
+f, (ax1,ax2,ax3) = plt.subplots(3, 1)
 ax1.plot(t, signal)
 ax1.set_title('Signal')
 ax2.plot(freq_scale, np.absolute(fft))
+#ax2.plot(freq_scale, np.absolute(fft))
 ax2.set_title('DFT')
-plt.plot
-plt.show()
-"""
+ax3.plot(freq_scale, np.angle(fft))
+f.tight_layout()
+#plt.plot
 
+plt.savefig("fourier_transform_example.png")
+#plt.show()
+
+"""
 def rect(x):
     y = x
     for i in range(len(x)):
@@ -112,3 +142,4 @@ plt.ylabel('$\exp(x)$')
 plt.legend(loc='upper left')
 plt.plot
 plt.show()
+"""
