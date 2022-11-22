@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import time
+from scipy import signal
 
 #Funcion para acomodar fft_shift
 """
@@ -65,6 +66,9 @@ def f_B(t):
     return 5+8*np.cos((2*np.pi*t)-(np.pi/2))+4*np.cos(4*np.pi*t)+2*np.cos((8*np.pi*t)-(np.pi/2))+np.cos(16*np.pi*t)+2*np.cos((32*np.pi-(np.pi/2)))
 
 def rect(t):
+    return signal.square(2 * np.pi * 5 * t)
+
+def rect2(x):
     y = x
     for i in range(len(x)):
         if abs(x[i]) <= 0.5:
@@ -73,12 +77,45 @@ def rect(t):
             y[i] = 0
     return y
 
+def exp_func(x):
+    y = x
+    for i in range(len(x)):
+        if x[i] > 0:
+            y[i] = np.exp(-4*x[i])
+        else:
+            y[i] = 0
+    return y
+
+def sgn(t):
+    """Sign function"""
+    return 1 * (t >= 0) - 1 * (t < 0)
+
+def u(t):
+    """Unit step function"""
+    return 1 * (t >= 0)
+
+def x(t):
+    return np.exp(-0.2 * t) * (t >= 0)
+
+def esc_uni(x):
+    y = x
+    for i in range(len(x)):
+        if x[i] <= 0:
+            y[i] = 0
+        else:
+            y[i] = 1
+    return y
+
 # Create a time-series signal
 N = 2**10
 t = np.linspace(-2, 2, N)
 T = t[1]-t[0]
-signal = f_B(t)
+#signal = rect(t)
+signal = exp_func(t)
+print(signal)
+print(exp_func(t))
 fft = FFT(signal)
+#multiplicar a -1 a los indices para ver centrado
 
 # Calculate the frequency scale for the plot
 freq_scale = np.linspace(0,1/T, N)
@@ -91,15 +128,16 @@ print("sampling_frequency: " + str(1/T))
 # phase = np.angle(spectrum)
 f, (ax1,ax2,ax3) = plt.subplots(3, 1)
 ax1.plot(t, signal)
-ax1.set_title('Signal')
+ax1.set_title('Señal')
 ax2.plot(freq_scale, np.absolute(fft))
 #ax2.plot(freq_scale, np.absolute(fft))
-ax2.set_title('DFT')
+ax2.set_title('FFT')
 ax3.plot(freq_scale, np.angle(fft))
+ax3.set_title('Angulo de Fase')
 f.tight_layout()
 #plt.plot
 
-plt.savefig("fourier_transform_example.png")
+plt.savefig("fourier_transform_signalRect.png")
 #plt.show()
 
 """
