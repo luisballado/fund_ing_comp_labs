@@ -64,6 +64,9 @@ def f_A(t):
 def f_B(t):
     return 5+8*np.cos((2*np.pi*t)-(np.pi/2))+4*np.cos(4*np.pi*t)+2*np.cos((8*np.pi*t)-(np.pi/2))+np.cos(16*np.pi*t)+2*np.cos((32*np.pi-(np.pi/2)))
 
+def _x_(t):
+    return np.exp(-0.2 * t) * (t > 0)
+
 def rect(t):
     y = x
     for i in range(len(x)):
@@ -75,9 +78,9 @@ def rect(t):
 
 # Create a time-series signal
 N = 2**10
-t = np.linspace(-2, 2, N)
+t = np.linspace(-10, 10, N)
 T = t[1]-t[0]
-signal = f_B(t)
+signal = _x_(t)
 fft = FFT(signal)
 
 # Calculate the frequency scale for the plot
@@ -99,8 +102,8 @@ ax3.plot(freq_scale, np.angle(fft))
 f.tight_layout()
 #plt.plot
 
-plt.savefig("fourier_transform_example.png")
-#plt.show()
+#plt.savefig("fourier_transform_example.png")
+plt.show()
 
 """
 def rect(x):
