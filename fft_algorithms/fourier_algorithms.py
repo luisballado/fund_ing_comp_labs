@@ -1,6 +1,39 @@
+import sys
+import argparse
 import matplotlib.pyplot as plt
 import numpy as np
 import time
+from random import randrange
+
+#############################################################
+######################### FUNCIONES #########################
+#############################################################
+
+def _pul_rect_(t):
+    '''PULSO RECTANGULAR'''
+    return 1 * (t >= 0) - 1 * (t < 0)
+
+def _esc_unit_(t):
+    '''ESCALON UNITARIO'''
+    return 1 * (t >= 0)
+
+def _exp_(t):
+    '''FUNCION EXPONENCIAL'''
+    alpha = randrange(3)
+    return np.exp(-alpha * t) * (t > 0)
+
+def f_A(t):
+    '''FUNCION A'''
+    return 5+2*np.cos((2*np.pi*t)-(np.pi/2)) + 3*np.cos(4*np.pi*t)
+
+def f_B(t):
+    '''FUNCION B'''
+    return 5+8*np.cos((2*np.pi*t)-(np.pi/2))+4*np.cos(4*np.pi*t)+2*np.cos((8*np.pi*t)-(np.pi/2))+np.cos(16*np.pi*t)+2*np.cos((32*np.pi-(np.pi/2)))
+
+#############################################################
+#############################################################
+#############################################################
+
 
 #Funcion para acomodar fft_shift
 """
@@ -22,10 +55,7 @@ def FFT_radix2(x):
         
     return None
 """
-"""
-def rect(T):
-    return lambda t: (-T/2 <= t) & (t < T/2)
-"""
+
 def naiveFFT(x):
     ''' The naive implementation for comparison '''
     N = x.size
@@ -57,53 +87,41 @@ def FFT(x):
         return np.concatenate([evens + (W * odds), evens - (W * odds)])
     return 0
 
-# Test with the data from last notebook
-def f_A(t):
-    return 5+2*np.cos((2*np.pi*t)-(np.pi/2)) + 3*np.cos(4*np.pi*t)
-
-def f_B(t):
-    return 5+8*np.cos((2*np.pi*t)-(np.pi/2))+4*np.cos(4*np.pi*t)+2*np.cos((8*np.pi*t)-(np.pi/2))+np.cos(16*np.pi*t)+2*np.cos((32*np.pi-(np.pi/2)))
-
-def _x_(t):
-    return np.exp(-0.2 * t) * (t > 0)
-
-def rect(t):
-    y = x
-    for i in range(len(x)):
-        if abs(x[i]) <= 0.5:
-            y[i] = 1
-        else:
-            y[i] = 0
-    return y
-
 # Create a time-series signal
 N = 2**10
 t = np.linspace(-10, 10, N)
 T = t[1]-t[0]
-signal = _x_(t)
-fft = FFT(signal)
+
+#signal = rect(t)
+signal = exp_func(t)
+
+#fft = FFT(signal)
+#multiplicar a -1 a los indices para ver centrado
 
 # Calculate the frequency scale for the plot
 freq_scale = np.linspace(0,1/T, N)
 
-print("sampling_frequency: " + str(1/T))
+print("frecuencia: " + str(1/T))
 
 # Plot the results
-# spectrum = fft(signal)
-# magnitude = np.abs(spectrum)
-# phase = np.angle(spectrum)
+spectrum = FFT(signal)
+magnitude = np.abs(spectrum)
+phase = np.angle(spectrum)
 f, (ax1,ax2,ax3) = plt.subplots(3, 1)
 ax1.plot(t, signal)
-ax1.set_title('Signal')
-ax2.plot(freq_scale, np.absolute(fft))
+ax1.set_title('Señal')
+ax2.plot(freq_scale, magnitude)
 #ax2.plot(freq_scale, np.absolute(fft))
-ax2.set_title('DFT')
-ax3.plot(freq_scale, np.angle(fft))
+ax2.set_title('FFT')
+ax3.plot(freq_scale, phase)
+ax3.set_title('Angulo de Fase')
 f.tight_layout()
 #plt.plot
 
 #plt.savefig("fourier_transform_example.png")
 plt.show()
+
+
 
 """
 def rect(x):
@@ -146,3 +164,20 @@ plt.legend(loc='upper left')
 plt.plot
 plt.show()
 """
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument("-f", "--funcion", help="Ingresa la funcion a evaluar")
+args = parser.parse_args()
+
+if args.funcion:
+    print('Switch aca')
+else:
+    parser.print_help(sys.stderr)
+    print("Funciones Disponibles:")
+    print("pulso_rectangular - para Pulso rectangular")
+    print("escalon_unitario  - para Escalon unitario")
+    print("exponencial       - para la Funcion Exponencial")
+    print("funcion_a         - para la Funcion A")
+    print("funcion_b         - para la Funcion B")
+    sys.exit()
