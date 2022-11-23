@@ -11,7 +11,6 @@ from random import randrange
 
 def pulso_rectangular(t):
     '''PULSO RECTANGULAR'''
-    #return 1 * (t > 0) - 1 * (t < 0)
     return 1 * (abs(t) < 0.5)
     
 def escalon_unitatio(t):
@@ -35,42 +34,9 @@ def funcion_b(t):
 #############################################################
 #############################################################
 
-#Funcion para acomodar fft_shift
-"""
-def FFT_radix2(x):
-    delta = 1
-    N = len(x)
-    n = log2(N)
-    for _pass_ in range(1,n):
-        W = np.exp((-1j*2*np.pi)/2*delta)
-        a = 0
-        while(a < delta):
-            b = 0
-            while(b < N):
 
-                t0 = x[b+a]+W
-                
-                
-            b = b + 2*delta
-        
-    return None
-"""
-
-def naiveFFT(x):
-    ''' The naive implementation for comparison '''
-    N = x.size
-    X = np.ones(N)*(0+0j)
-
-    for k in range(N):
-        A = np.ones(N)*(0+0j)
-        for n in range(N):
-            A[n] = x[n]*np.exp(complex(0, 2*np.pi*k*n/N))
-        X[k] = sum(A)
-
-    return X
-
-
-def _FFT2_(x):
+def FFT2(x):
+    ''' radix-2 FFT '''
     x = np.array(x, dtype=float)
     N = int(x.size)
     n = np.log2(N)
@@ -92,68 +58,13 @@ def _FFT2_(x):
         d = 2*d
     return x
 
-def _FFT_(x):
-    g = bit_reversal(x)
-    num_of_problems = 1
-    problem_size = 2*len(x)
-    Jtwiddle = 0
-    a={}
-    while (problem_size > 2):
-        half_size = problem_size / 2
-        for k in range(0,num_of_problems):
-            JFirst = k*problem_size
-            JLast = JFirst + half_size - 1
-            Jtwiddle = 2*(len(x) - (len(x) / num_of_problems))
-
-            j = JFirst
-            while(j<=JLast):
-                Tempr = a[j]
-                Tempi = a[j+1]
-                #realizamos la mariposa
-                #primera operacion
-                #rellenamos la parte real
-                a[j] = Tempr + a[j+half_size]
-                #rellenamos la parte imaginaria
-                a[j+1] = Tempi + a[j+half_size+1]
-                #segunda operacion
-                delta = w[Jtwiddle+1] + w[Jtwiddle]
-                gama =  w[Jtwiddle+1] - w[Jtwiddle]
-                m1 = ((Tempr - a[j+half_size])+(Tempi - a[j+half_size + 1])) * w[Jtwiddle]
-                m2 = delta * (Tempi - a[j+half_size+1])
-                m3 = gama * (Tempr - a[j+half_size])
-                a[j+half_size] = m1-m2
-                a[j+half_size+1] = m1+m3
-                Jtwiddle = Jtwiddle + 2
-                j = j+2
-
-        num_of_problems = 2 * num_of_problems
-        problem_size = half_size
-    return a
-    
-def FFT(x):
-    ''' Recursive radix-2 FFT '''
-    x = np.array(x, dtype=float)
-    N = int(x.size)
-    
-    # Use the naive version when the size is small enough
-    if N <= 8:
-        return naiveFFT(x)
-    else:
-        #Calculate first half of the W veco
-        k = np.arange(N//2)
-        W = np.exp(-2j*np.pi*k/N)
-        evens = FFT(x[::2])
-        odds = FFT(x[1::2])
-        return np.concatenate([evens + (W * odds), evens - (W * odds)])
-    return 0
-
 def bit_reversal(data):
     '''
     gold rader - zero padding
     :param data: array de datos
     :return: array de señal con zeros
     '''
-    n = len(data)
+    n = int(data.size)
     j = 0
     i = 0
     while i < n-1:
@@ -169,6 +80,11 @@ def bit_reversal(data):
         i += 1        
     return data
 
+#####################################################################
+#####################################################################
+#########################PROGRAMA PRINCIPAL##########################
+#####################################################################
+#####################################################################
 parser = argparse.ArgumentParser()
 
 parser.add_argument("-f", "--funcion", help="Ingresa la funcion a evaluar")
@@ -180,15 +96,12 @@ funcion = args.funcion
 
 if funcion in funciones:
 
-        
-    # Create a time-series signal
     #APLICAR AQUI RELLENADO DE CEROS
-    N = 2**10 #longitud de la señal de entrada debe ser una potencia entera de dos
-    
+    N = 2**8 #longitud de la señal de entrada debe ser una potencia entera de dos
     t = np.linspace(-2, 2, N)
     T = t[1]-t[0]
-    print(N)
-    #switch funciones
+    
+    #switch funciones a elegir
     if funcion == 'pulso_rectangular':
         signal = pulso_rectangular(t)
     elif funcion == 'escalon_unitario':
@@ -199,31 +112,28 @@ if funcion in funciones:
         signal = funcion_a(t)
     else:
         signal = funcion_b(t)
-
-    #fft = FFT(signal)
-    #multiplicar a -1 a los indices para ver centrado
     
-    # Calculate the frequency scale for the plot
+        
+    # Calcular la escala de frecuencia para graficar
     freq_scale = np.linspace(0,1/T, N)
-    print("frecuencia: " + str(1/T))
+    #print("frecuencia: " + str(1/T))
     
-    # Plot the results
-    spectrum = FFT(signal)
-    magnitude = np.abs(spectrum)
+    # graficar los resultados
+    spectrum = FFT2(signal)
+    magnitude = np.absolute(spectrum)
     phase = np.angle(spectrum)
+
+    #creacion de grafico con resultados
     f, (ax1,ax2,ax3) = plt.subplots(3, 1)
-    ax1.plot(t, signal)
+    ax1.plot(t, signal) #Señal
     ax1.set_title('Señal')
-    ax2.plot(freq_scale, magnitude)
-    #ax2.plot(freq_scale, np.absolute(fft))
+    ax2.plot(freq_scale, magnitude) #Magnitud (abs(fft))
     ax2.set_title('FFT')
-    #ax3.stem(freq_scale, phase)
-    ax3.plot(freq_scale, phase)
+    #ax3.stem(freq_scale, phase) #con rayas y puntos
+    ax3.plot(freq_scale, phase) #Angulo de Fase
     ax3.set_title('Angulo de Fase')
     f.tight_layout()
-    #plt.plot
-    
-    plt.savefig("fourier_transform_"+funcion+".png")
+    plt.savefig("fourier_transform_"+funcion+".png") #guardar imagen
     #plt.show()
     
 else:
