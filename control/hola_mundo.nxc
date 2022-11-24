@@ -1,0 +1,4 @@
+task main(){
+     TextOut(0,0,"Hola CINVESTAV!");
+     Wait(1000);
+}
