@@ -72,7 +72,9 @@ Basically automation gives you the tools to make something accomplish a task aut
 
 Whatever it is the task you're dealing with, you need three fundamental ingredients: the measurement, the control and the actuation.
 
-The measure tells you how things are going the controller is the brain that given the measurements decides which is the action to do the actuator is the one who executes this action.
+- The measure tells you how things are going
+- the controller is the brain that given the measurements decides which is the action to do
+- the actuator is the one who executes this action.
 
 Let's try to better understand the roles with a little experiment!
 
@@ -86,11 +88,898 @@ Whether you have to brush your teeth, make a coffe, heat a room, drive a car, co
 
 
 4.- Tacoma Bridge https://www.youtube.com/watch?v=3mclp9QmCGs
+Duró solamente 4 meses
+
+Nov. 7, 1940 10:00am
+Vibraciones arriba y abajo se observaron durante su construccion
+Start of resonance vibration of bridge in torsional mode
+November 7 bridge went to a twisting motion
+42 miles per hour, lo que hizo que oscilara en uno de sus movimientos naturales con un periodo de 5 segundos.
+
+Los ingenieros civiles acudieron para estudiar el fenomeno, se puede apreciar que uno camina de regreso y es captado por la camara en su recorrido
+
+Es remarcable la flexibidad del puente.
+Sinembargo el colapso es inebitable ya que mas de una hora en vibracion fue suficiente.
+
+Un carro con un perro dentro fueron abandonados en medio del puente, prof. farquharson risk life for the dog in car
+
+Nov. 7, 1940 11:10am
+Collapse of center span because aeroelastic flutter
+
+The bridge was rebuild using stefany turs insted of gerders and the new bridge is completly stable
+
 
 5.- What Control Systems Engineers Do https://www.youtube.com/watch?v=ApMz1-MK9IQ
 
+being a control systems engineer is more than just designing a controller and tuning it.
+
+over the course of a project actually designing a controller might be a relatively small part of your day-to-day job now depending on the size and phase of the project your responsibilities and which group you work with will probably vary greatly
+
+this series is going to cover some of the practical aspects of being a control systems engineer
+
+and in this video in particular I want to provide a picture of the types of things you may be exposed to and which groups you might interface with while working in this field at least from my experience
+
+let's start at the beginning of the project, before you even have an idea of what you want to build
+the concept formulation phase is where you're trying to figure out the need
+the need  might come from an external customer who's asking you to create something for them or it may come internally from your business development team who's claiming there's a market for a particular service or product
+
+for example, there might be a service that takes high resolution aerial imagery of mountainsides to track erosion and predict mudslides
+the business team knows they can sell images like this but they don't know the best way to create them
+is it best to design a fleet of imaging drones
+gimballed camera system that can bolt onto the bottom of an airplane or a satellite that takes pictures from orbit
+this is where the engineering team helps out
+to work through the technical difficulties of each concept
+now the actual decision takes into account a whole bunch of things
+like how quickly does an image need to be available
+how large is the area that you need to image and where is it and how often does the area need to be revisited and so on
+but as a control systems engineer your part in the decision-making process is to explore all of these concepts from a controls perspective and provide information that will help narrow down the selection
+it's easy to see how performance is something that you would care a lot about, but this needs to be balanced against other metrics like cost, size weight and power and the availability of the components
+
+for example how well does each system need to point the camera to get the
+image and what sensors and actuators are required for that performance
+
+can you purchase those components or will you need the company to make them.
+
+now in order to and or questions like these you don't need a fully fleshed out design.
+instead you create models of the proposed systems making as many assumptions and simplifications as possible, and then simulate the various configurations and their performances.
+you don't know very much about the details of the system at this point so you're not getting exact answers.
+after all every other function is at the same stage so for example it's
+impossible to know the exact mechanical configuration or compute capability or operating environment rather you're trying to generate broad answers to estimate the feasibility and level of effort for the project and importantly understand how uncertain you are with those answers
+
+that way you are confident that when you get into detailed design your system is something that you can actually build and even with the uncertainty it's something that will meet the requirements
+
+this phase can be a very dissatisfying process because of how nebulous and confusing it is
+
+there isn't a path to the perfect answer, instead you were narrowing down to an acceptable answer by crossing off all of
+the things that don't work or aren't as
+good as other options
+
+there are a lot of wrong answers and therefore a lot of work that you do to find those wrong answers is just thrown away in the end and that can be hard to accept
+
+however to me this is a really exciting part of control engineering because at the beginning of a project you have a lot of influence on the system you're ultimately going to build and this gives you a chance to explore and learn about many different things that you might not get exposed to on an established program.
+
+once there is a general idea of what needs to be created there comes the
+process of describing the system in a way that communicates to every team what they own and what they specifically need to accomplish
+
+this is often done in the form of requirements system constraints, technical budgets and interface documents and the systems engineering team is typically responsible for creating and managing these documents.
+
+however if systems engineering is solely responsible for defining the system then there's a good chance that they're going to request something that is under defined not feasible or wildly impractical
+as a control engineer and the one ultimately implementing the control system you're going to be helping the systems engineering team to create and validate the requirement that pertain to your system.
+now maybe you'll have a rock star systems engineering team that can do everything themselves, but typically having the engineering team participate in the definition of the system produces better results.
+
+at the very least the engineering team will know why certain requirements were levied on them and will have already thought about the alternative design approaches.
+for example a systems engineer might not understand the need for a gain or phase margin or might set the requirement too high or too low your job at this stage of the project is to help define the system and catch errors early so that there are fewer discrepancies in the detailed engineering later on.
+
+this is also a job that models can help with you, can catch those errors or contradicting requirements with a model, because you can simulate the system as its defined and see the resulting discrepancy right away.
+
+in some cases the model itself becomes the requirement where you define what the system needs to do in model form.
+
+this can be a more efficient way of describing your system.
+
+as an example imagine trying to explain to a contractor using only words what you want your house to look like and which features it should have rather than just handing them a set of drawings
+
+with the definition of the system complete or complete enough then development can start
+
+this is the design implementation and evaluation portion of the project and it's the phase that I think most people think of when they imagine what
+an engineer does
+they design stuff build stuff and test stuff
+
+these three activities aren't done just once but occur over and over again throughout the phase as the entire project evolves and solidifies into the final product
+you're constantly tweaking your design implementing the changes and testing the result
+
+in some industries you may use model-based design and that requires models that accurately represent the real system
+you may start the process by designing a control system using your simplified model, test the design with the simulation and then update the model and your designed over time
+and this is the part of the job where you get to determine the controller structure and use the control theory knowledge that you've gained
+if you have a simple model and the requirements are achievable then getting an initial controller design probably won't take very long
+maybe a few days if it's particularly challenging or if you have to learn
+about the controller that you want to implement but generally it's pretty
+quick most of your time will probably be spent updating your model to make it more realistic and then verifying that it is accurate as the project spirals in on specific implementations
+
+in addition to the model of your system you're gonna also be building a model of the environment that your system will operate in
+
+for example if you're implementing the spacecraft option you might have to model the orbital dynamics and disturbances from the earth and the Sun in order to have the necessary fidelity in your model
+
+now anytime you update your model either the system itself or the environmental simulation, you have to rerun a set of regression tests to check to see if your controller design still meets the requirements with the more accurate model
+
+if it doesn't then you cycle back around and tweak the gains of the controller or change the controller structure entirely
+
+increasing the fidelity of the model isn't the only thing that drives changes to your control design actual changes to the system whether they're inside or outside of your control also require that you revisit your design and since it's impossible to perfectly describe a system in the formulation phase there are always changes over the course of the project and especially for control engineers any change to the system even ones that seem small might affect your design and require you to cycle through these steps again
+
+as an example the mechanical team might change the material of the main structure to reduce its mass
+in this case the reduction of the moment of inertia might change the stability margins since it's a rotating system that points the camera
+or perhaps the thermal properties of the material changed so that the sensor that's attached to it runs hotter or colder than expected changing its sensitivity or increasing its noise
+
+and since change is inevitable you might find that a lot of your time in this phase is spent working with the other engineering groups to update models rerun simulations and convince yourself that your design still meets the requirements and can be implemented safely
+
+if a design changed drastically impacts your control system you might be responsible for proposing other solutions that are less intrusive
+or at the very least describing the impact to the control system to project management in terms that matter to them cost schedule and risk
+
+now a quick note about what you might be expected to do when implementing a control law in software
+
+in some companies the control engineer is just responsible for creating and describing the algorithms and logic for the control laws in a way that a
+software engineer can understand and then code for production
+
+in other companies the control engineer themselves is also a software engineer and expected to be able to write their own production code
+
+finally something that's gaining more popularity every year is the ability for the control engineer to Auto code production software directly from their algorithms
+
+this allows the engineer to specialize in understanding control theory and
+modeling and still be able to generate their own code without deep software expertise or relying on another team
+
+this ability to use model-based design to build software products means that there is a lot more flexibility in the design implementation and test cycle
+you may find even as a controls engineer that you're on a team that follows a software centric development methodology like agile which is becoming a lot more popular
+
+alright let's talk a bit about test and verification because I don't think I can overestimate how much time you will be or at least should be spending verifying that your design is correct
+there are several different fundamental verification methods inspection analysis demonstration and test and as a control engineer you may use each of these methods to verify your design
+
+especially analysis which is basically what you're doing when you
+verify a requirement via simulation
+this also includes formal analysis like checking 4/0 memory leaks dead code or data overflows and models can also be used to verify this as well since modeling software like matlab and simulink have these analysis tools built into them
+
+but the method i want to go into more detail on is test
+testing with physical hardware can be a large portion of your job especially near the end of the engineering phase
+
+let me explain why there are several reasons why you may need to set up a hardware test and verifying that the system meets a requirement is just one of them
+you may also need to run a test to get information from the system
+for example you may need to develop or correlate your model to real hardware
+another reason to test is to get baseline data that you will compare to in the future
+
+for example you might collect some data before disassembling the system and then rebuilding it and after it comes back together you'd run the exact same test as before to verify that it was rebuilt the same way
+
+another reason is to just do science you might have a hypothesis of how the system will behave and you want to run a test to see if the hypothesis is true this is especially the case if there's an anomaly in the design and you're trying to find the root cause
+
+finally you may run a test to train people on the hardware or to demonstrate capability to a customer
+
+I bring this up because running a physical test isn't as straightforward as running a simulation
+
+once you get Hardware involved things become a lot more complicated and a lot of your time will be spent defining what the test is and defending why you have to run it on hardware in the first place
+
+this involves writing a test plan which describes what you're gonna get from the test what you're going to do with the hardware and how you're gonna keep it safe and you also may be required to write a test procedure documenting the step by step actions you're gonna take during the test also you'll need to create any unique hardware software and other apparatus --is that are needed to execute the test and even if you're not the one building this special test equipment you will at the very least be defining what you need for the test group to create
+
+by the end of the engineering phase you'll have a system design that meets
+the project requirements and that is ready for delivery to the customer or to go into operation
+
+however your job as a control engineer doesn't stop once the system is in use you may be asked to be part of an anomaly investigation or maybe a recall if the system doesn't perform the way it was expected to
+
+you can also be involved in training lis users how to operate the system or you may be working on the next variant of the design and therefore interacting with the users to get information regarding what changes are desired
+
+the point here is that as a control engineer you have a lot of different responsibilities
+you may be part of a very large project and be asked to do a very specialized portion of something I mentioned in this video or if you end up on a smaller project your role may expand to all of them and possibly more.
+
+that's what I think is so much fun about control systems you have the opportunity to be involved with all phases of the project and you get to interact with a number of different engineering and business management teams if you want to
+
+
 6.- Control Systems Lectures LTI Systems https://www.youtube.com/watch?v=3eDDTFcSC_Y
+
+in this lecture I will be discussing
+linear and time-invariant systems or LTI
+LTI is a title given to a class of
+systems that respond in a certain way
+when subjected to an arbitrary input all
+LTI systems have the following defining
+properties these are homogeneity
+superposition which is also referred to
+as additive 'ti and time invariance you
+might not be too familiar with any or
+all of these words but don't let that
+discourage you because the concept of
+LTI is actually very simple I'll provide
+a mathematical description of each and
+show an example on how we use the
+property we'll start with two criteria
+that describe linearity homogeneity and
+superposition let's say you have an LTI
+system represented here in block diagram
+form and you subjected to an arbitrary
+input X of T and it produces output Y of
+T homogeneity states that if you scale
+the input by factor a then the output
+would be scaled by the same factor for
+example if you double the input then the
+output would also double here
+graphically we can see that for this
+system if we subjected it to a step
+input of 1 the output happens to be a
+sinusoid with amplitude 1 and likewise
+if we subjected it to a step input of 2
+the output would also double to
+amplitude 2 now let's say that the input
+x1 produces output y1 and input x2
+produces output Y 2 then superposition
+or additive 'ti states that if you add
+the two inputs together X 1 plus X 2
+then the output would also be the
+superposition of the two separate
+outputs y 1 plus y 2 sometimes
+homogeneity and superposition are
+combined to state that if the input is
+scaled and summed then the output will
+also be scaled and summed by the same
+amount if this system meets these two
+criteria this is called a linear system
+time invariance refers to the system
+behaving the same regardless of wind and
+time and action takes place for example
+if you send a slinky down the stairs the
+toilet will behave the same regardless
+of whether it's five o'clock or six
+o'clock this can
+written mathematically by saying that an
+input of X of t minus a produces an
+output of y of t minus a or in other
+words two similar inputs translated in
+time will produce the same output also
+translated in time sometimes time
+invariance is referred to by a more
+generic term called translation
+invariance which also covers translation
+in space as well so these three
+restrictions are all that needs to be
+met in order to have an LTI system
+however these restrictions on a system
+are very severe so severe in fact that
+practically no real-world system fully
+meets them there's always some aspect of
+non-linearity or time variance in the
+real world so that begs the question why
+are l TI systems important i think
+richard fineman stated it best when he
+said linear systems are important
+because we can solve them that is to say
+we have an entire arsenal of
+mathematical tools that are designed for
+and capable of solving complex linear
+systems whereas we can only solve very
+simple and contrived non LTI systems but
+equally important to being able to solve
+them is that a wide range of physical
+systems can be approximated very
+accurately by an LTI model and this is
+very powerful indeed for example LTI
+systems can be characterized by its
+response to an impulse function I'll go
+over this fully in the lecture on
+transfer functions but now I'll explain
+it briefly just so you can appreciate
+the power of LTI systems if you impart
+an impulse onto a system such as hitting
+a mess that is sitting on a table with a
+hammer which would send the mass moving
+along with an instantaneous velocity and
+then you observe the response we would
+say this is the impulse response of the
+system and if there was friction between
+the mass and the table then the response
+might look something like this because
+of the principle of time invariance we
+know that if we hit the mass with a
+hammer at time zero and then we hit it
+again at time one we can expect the same
+response at both times also because of
+the principle of homogeneity we know
+that if we hit the mass twice as hard
+then we would expect a response that was
+twice as large and now finally because
+of the principle of superposition
+the full response to the system would
+just be the summation of both signals in
+this case it's the thick yellow line so
+you can see that this method works
+easily with one or two impulses but what
+if we have an input into the system that
+wasn't just made up of one or two
+discrete impulses what was a continuous
+ramp and further if we broke that ramp
+into a series of sequential impulses
+then with an LTI system we can say that
+the output is the summation of the
+responses to each of those individual
+impulses now for the sake of this
+lecture I drew these impulses very
+discretely in practice each of these
+impulses would be infinitely close to
+each other and the height would be
+infinitesimally small so when you added
+it up you would have the time response
+of the system and when you do this
+summation in the time domain this is
+called convolution which can be a very
+difficult integration however if we
+first transform the impulse response and
+the input signal to the S domain using
+the Laplace transform then convolution
+becomes multiplication now this is the
+basis behind transfer functions and why
+in the S domain they are only applicable
+to LTI systems so how can we take
+advantage of this knowledge as a
+controls engineer you'll be responsible
+for designing the controller as probably
+obvious but what you might also be
+responsible for is creating the
+requirements to which a different group
+will build the sensors and actuators in
+the plant or you might be responsible
+for choosing commercially made control
+system elements or even if you're lucky
+actually get to design and build your
+own sensors and actuators in each of
+these cases it is almost always
+beneficial to design components close
+enough to being LTI that the non LTI
+behavior can be ignored or to put it
+another way to design hardware that can
+be modeled as an LTI system so that the
+standard mathematical tools such as
+transfer functions can be used to design
+and tune the controller with this little
+error as possible
+let me leave you with a common example
+of a nonlinear spring if you plotted a
+real Springs stretched length versus its
+restoring force it would most likely
+have a shape similar to this when you
+stretched it too far eventually the
+material will give and start to deform
+elastically if you compress it too far
+the coils will start bunching up and
+physically impact each other somewhere
+in between and what can be considered
+the operating region of the spring there
+will be a nice nearly linear
+relationship between force and distance
+if you were selecting a spring for your
+project you might specify the region of
+linearity that is the range of forces
+that the spring will likely see and how
+linear that region needs to be so
+hopefully you have a better
+understanding of what an LTI system is
+and why they're so important to
+designing a control system future
+lectures will show how to linearize a
+nonlinear system and how to recognize
+and deal with time and variance once
+again thanks for following along with
+this lecture if you have any questions
+or comments please leave them below and
+I'll try to get to them and also feel
+free to leave suggestions for future
+lessons
 
 7.- Laplace transform https://www.youtube.com/watch?v=VJ9phDRys_I
 
+Laplace transforms for context we're at
+the end of the chapter on transfer
+functions and the new section is 2.6
+this section describes the Laplace
+transform and what I think is an
+intuitive rather than mathematical way
+and the section is specifically
+structured to explain how Laplace
+transforms will be useful for
+understanding transfer functions an easy
+way to understand Laplace is by
+contrasting it with the Fourier
+transform but to do that properly let's
+review some of the finer Fourier
+transform points one thing you should
+remember is that the Fourier transform
+Maps a signal from the time domain
+typically a one-dimensional function of
+time to the frequency domain which is a
+two dimensional function one dimension
+for the magnitude and one dimension for
+the phase of the frequency content we
+can see this by walking through a simple
+example here I just set up a simple
+exponential decay function whose value
+is 0 for all negative time the equation
+for this function is U of T which is
+just the step function multiplied by e
+to the minus T the exponential function
+now instead of solving the Fourier
+transform integral here we just get the
+result by looking up the answer from one
+of the many online transform tables now
+this may feel like cheating but I tend
+to leave solving integrals to the
+mathematics books so I don't make the
+controls concepts I'm trying to cover
+confusing by adding a bunch of calculus
+you'll notice the result is a complex
+function because of the imaginary
+variable J it's 1 over 1 plus J Omega
+now complex functions are by definition
+two-dimensional functions which is where
+our two dimensions come from it's
+embedded in the real and imaginary
+components which we separate out in step
+four now if you were to plot this
+function across all frequencies Omega
+then you'd get a real plot and an
+imaginary plot separately or you could
+just plot them together on a two axis
+plane and describing the result as real
+and imaginary is
+the rectangular coordinate
+representation but to turn it into
+magnitude and phase we need to convert
+it into the polar coordinate
+representation which is done here so now
+you can see the idea laid out in front
+of you starting from a one dimensional
+exponential decay as a function of time
+and ending with a two dimensional
+magnitude and phase as a function of
+frequency Omega where the value of Omega
+describes the value of the frequency as
+well as the location on the frequency
+line keep that in mind as we move on to
+the S plane and the Laplace transforms
+the Laplace transform goes one step
+further than the Fourier transform in
+addition to cosine waves the Laplace
+transform decomposes a signal into
+cosine waves and exponential functions
+so we need a new variable that can
+account for both of these concepts and
+that is where S comes in S is a complex
+variable so it's two-dimensional and it
+contains frequency information J Omega
+as well as exponential information Sigma
+let's explain how that works if you
+raise e to an imaginary number
+the result is a complex function
+consisting of sine and cosine waves
+which is described through Euler's
+formula so raising e to the J Omega
+portion of the S variable produces
+frequency signals on the other hand if
+you raise e to a real number positive
+real numbers give us exponentially
+growing signals and negative real
+numbers give us exponentially decaying
+signals in this case we can replace the
+coefficient of T in the exponent with
+the variable Sigma to get e to the Sigma
+T now negative Sigma's give us decaying
+functions and positive Sigma's give us
+growing functions the larger the number
+the faster they grow or decay so what
+does that mean for s well e to the S T
+has an exponential component and a
+frequency component so that for a given
+s we can create signals that are
+combinations of the two now instead of a
+single dimensional number line like we
+had with just Omega s exists on a
+two-dimensional number plane which we
+call the S plane the real dimension is
+Sigma and the imaginary dimension is
+Omega
+at this point we can move on to the
+Laplace transform because it uses the
+variable s like I said before let's
+contrast the difference between Laplace
+and Fourier as you can see the only
+difference is that we've replaced J
+Omega with s but since s is Sigma plus J
+Omega really we've just added the real
+component Sigma to the equation we
+haven't actually removed anything all
+right now this is kind of cool if we
+replace s with Sigma plus J Omega in the
+Laplace transform and then we rearrange
+the equation we find something
+interesting
+essentially the Laplace transform is
+taking the original function of time
+multiplying it by an exponential
+function and then taking the Fourier
+transform of the result so why is this
+interesting you might ask well let's go
+back to the S plane and look at a very
+narrow strip of it particularly when
+Sigma equals 0 in this one case the
+exponential term goes to 1 since e to
+the 0 is 1 and the Laplace transform
+becomes exactly the Fourier transform so
+when we're looking at our two graphs
+magnitude and phase we can just plot
+those exact same Fourier transform
+results on the S plane along the Sigma
+equals 0 line I have to take a detour to
+briefly explain the region of
+convergence otherwise I'll get in
+trouble for misleading you the Laplace
+transform when Sigma equals 0 only
+equals the Fourier transform if the
+Sigma equals 0 line is inside the region
+of convergence this region is where the
+Laplace integral converges to a finite
+value rather than summing up to infinity
+or just never converging at all to
+understand this let's look at the
+impulse response of a stable system
+which decays over time versus an
+unstable system which grows over time if
+we multiply the stable response by e to
+the minus J Omega T the signal will
+continue to decay and the area under the
+absolute value of the curve has a finite
+value since this value is finite this
+function is within the region of
+convergence
+and the Fourier transform exists for it
+however if we multiply the unstable
+response by e to the minus J Omega T the
+signal will continue to grow in the area
+under the absolute value of the curve
+now has infinite value this is not
+within the region of convergence and
+it's the reason why you can't perform
+the Fourier transform on an unstable
+system however this is not a problem for
+laplace because there are other regions
+in the S plane that are within the
+region of convergence okay let's get
+back to the regular section so far we
+just have a single sliver of the S plane
+filled out we can fill out another
+sliver by choosing another Sigma value
+like Sigma equals minus 1 and then
+multiply our time function by e to the T
+and take the Fourier transform of the
+result but e to the T cancels out the
+exponential in the original function
+which was e to the minus T and we're
+just left with a step function U of T
+now this is a bit of a trick question
+here because the Fourier transform for a
+step function is not inside the region
+of convergence but it's just barely not
+inside actually it's right on the cusp
+of this region you can see that by
+choosing Sigma values on either side of
+minus 1 and see that on one side it
+converges and on the other side it
+definitely doesn't converge so there's
+something special about the location in
+the S plane that produced a value that
+was just exactly infinity and that point
+is right at s equals minus 1 and it's no
+coincidence that both our original time
+domain function and the interesting
+point in the S plane both contain e to
+the minus T that is exactly what the
+Laplace transform is doing its probing
+our original function with every
+possible s across the entire plane to
+see if there is anything interesting
+there and we define interesting as just
+barely infinity or 0 those are the two
+interesting points of course we don't
+have to fill out the entire s plane 1
+Sigma at a time because the Laplace
+transform integral does all of those
+steps all at once also we don't even
+have to play
+the result at all because we can find
+the interesting points which are zeros
+and infinities algebraically by solving
+the resulting equation and that is
+really cool this is just about the end
+of the new section and pretty much all
+of the background information you need
+to fully understand transfer functions
+
 8.- Transfer fuctions https://www.youtube.com/watch?v=RJleGwXorUk
+
+welcome to control systems lectures
+before we get started I want to thank
+those of you who have subscribed to the
+channel and also whether your control
+student who's hearing this for the first
+time or a veteran engineer brushing up
+on the basics I appreciate you taking
+the time to watch this video and if you
+find these videos helpful or if you find
+that I'm not being clear enough please
+leave a comment below and I'll try to
+address it but now on to the lecture in
+this lecture I'm going to describe
+transfer functions and how control
+engineers use them to model elements
+like filters and actuators in order to
+simplify control system design and
+analysis in the simplest description I
+can find a transfer function is the
+Laplace transform of the impulse
+response of a linear and time-invariant
+system when you set the system initial
+conditions to zero now unless you're
+already familiar with transfer functions
+embedding that statement didn't make a
+whole lot of sense for the time being
+we'll just think of a transfer function
+as a mysterious black box and when we
+apply an input signal into it we get a
+modified signal out and if we've
+designed this black box correctly then
+it's a pretty good model of a real
+physical process let's take a completely
+ridiculous example to explain the
+benefit of transfer functions and
+hopefully you'll get a better
+understanding of them in the process say
+you got in trouble at school and you're
+asked to write your name 100 times on
+the chalkboard but instead of standing
+right next to the board the teacher says
+you have to stand on the opposite side
+of the room and since you can't
+physically reach the board from where
+you're standing you have to use this
+strange contraption this consists of a
+flexible stick that has a claw attached
+to the end of it and this claw moves a
+remote control which drives a pair of
+linear actuators that then moves another
+flexible stick which is then attached to
+a piece of chalk which finally is
+touching the chalkboard and now you can
+finally start to write your name I told
+you this was ridiculous so just stay
+with me if we take a simplified block
+diagram of this system it might look
+something like this the input into the
+system are your hand movements this
+moves the first flexible stick that I'll
+represent right now is a black box but
+start thinking of these as transfer
+functions the output of this box is the
+position of the end of the first stick
+the position is now the input into the
+remote control the remote control
+another black box converts the position
+into an electrical signal in the form of
+changing voltage this voltage is applied
+to the linear actuators which converts
+the electrical signal into position
+again this position is the input into
+the final flexible stick whose output is
+the position of a piece of chalk we
+finally draws on the blackboard and if
+you've accounted for all the relative
+motions in the system correctly you can
+write your name 100 times and you get to
+go home
+but how can you possibly even draw a
+straight line let alone something as
+complex as your name through such a
+flexible system with so many different
+transformations the answer is by
+characterizing the behavior of each
+individual part that is each black box
+and combining them to understand how the
+system behaves as a whole and the
+simplest way to do that is with transfer
+functions I'll finish this story in a
+bit but first I need to preface what I'm
+about to claim with some background
+knowledge and just the smallest amount
+of math we start like most things in
+classical control theory with the
+Laplace transform what the Laplace
+transform does is map a function from
+the time domain to the s domain I will
+describe the intricacies of the
+transform in a future lecture however
+for now I will write it here without any
+mathematical proof as you can imagine
+the Laplace transform is a complex
+operation in all but the simplest cases
+luckily actually performing this
+integration is rarely needed because the
+most common transformation between time
+and the S domain are part of software
+packages like MATLAB or can be easily
+looked up in tables or even just
+memorized here are some of the more
+common ones the Dirac Delta function
+which is a squiggly D of T the Laplace
+transform is just one this is also the
+impulse function then you have X of T
+the Laplace transform of that is
+just X of s X prime of T which is the
+first derivative of X is s times X of s
+minus the initial position X 0 then
+there's X double prime which is the
+second derivative of T is just s squared
+times X of s minus s times the initial
+position minus the initial velocity if
+you watched my video on linear
+time-invariant systems you know that any
+LTI system can be completely described
+by its impulse response just as a
+refresher though I'll sum it up here if
+you subject the LTI system to an impulse
+function that's the Dirac Delta function
+at time 0 you can either measure or
+calculate the output this is called the
+impulse response of the system but let's
+say you subject this to an arbitrary
+input how can you determine what the
+output is then well you can break that
+arbitrary input up into an infinite
+number of impulses and since this is an
+LTI system you can scale and shift
+through time the impulse responses
+appropriately based on all the scaled
+and shifted impulse inputs now finding
+the system time domain response to the
+arbitrary input is as simple as summing
+up all of the infinite impulse responses
+and since summing an infinite number of
+signals is impossible to do at one time
+mathematicians came up with what is
+called the convolution integral
+I'll explain using this block diagram
+notation if you have an arbitrary input
+U of T and you apply it to an impulse
+response G of T then the output Y of T
+is equal to the convolution of U and G
+written here in integral form at or if
+you prefer shorthand using this star but
+these two representations are equivalent
+so in this representation G of T is the
+impulse response and U of T is any
+arbitrary input but here's what's great
+about the Laplace transform if you take
+the Laplace transform of the input which
+becomes U of s and you take the Laplace
+transform of the impulse response G of s
+then the output Y of s is just the
+multiplication of U and G
+and G of s is the Laplace transform of
+the impulse response which is called the
+transfer function so we have reduced
+that difficult convolution integral with
+a much simpler multiplication step or
+more accurately the Laplace transform is
+taking care of the convolution for you
+to make sure that this sinks in let's
+walk through this one more time but this
+time with an example take a simple
+harmonic oscillator with mass M and
+spring constant K which is subjected to
+an input forcing function U of T it can
+be shown that the equation of motion of
+such a system is M times the
+acceleration plus K times the position
+and that's set equal to the input U of T
+now to find the impulse response of the
+system we set U of T to the direct Delta
+function and now let's solve this
+differential equation using the Laplace
+transform to do that we take the Laplace
+transform of the left side which is M
+times the Laplace transform of the
+acceleration which if we go back to our
+table we can find X double Prime now
+remember that there are no initial
+conditions for this problem so we can
+set these to 0 and what we're left with
+is s squared times X of s so if we go
+back down we can replace X double prime
+of T with s squared X of s now we can do
+the same with the second term we can go
+back up to our table and find that X of
+T is just X of s that seems simple so we
+get K X of s now we can take the Laplace
+transform of the right-hand side which
+is just the impulse function which has a
+Laplace transform of 1 from here it's
+just a few algebraic steps to solve for
+X of s which is the impulse response of
+the system in the S domain which turns
+out is 1 over M s squared plus K but
+what if we want this in the time domain
+well all we have to do is take the
+inverse Laplace transform and this isn't
+one that I've memorized so I had to look
+this up in a table and it turns out is 1
+over the square root of K M times the
+sine of the square root of K over m
+times T or a sinusoidal what if the
+input wasn't an impulse but a ramp
+thought
+U of T equals T how would you go about
+solving with the responses to this input
+well if you were in the time domain you
+would do this through convolution or you
+would say you would convolve T with that
+sinusoidal and this is a pretty
+difficult integration to do luckily we
+can do this in the s domain by taking
+the Laplace transform of the ramp which
+is 1 over s squared then define the
+response to this ramp all we have to do
+is multiply 1 over s squared by 1 over M
+s squared plus K and remember also that
+1 over M s squared plus K is the impulse
+response to the system in the S domain
+so this is the transfer function and
+notice that we got this transfer
+function by taking the Laplace transform
+of the equation of motion we never
+needed to go to the time domain so now
+that we know that let's get back to our
+example above if we were able to write
+the equations of motion for each of
+these individual processes then by the
+method described below
+we would have the transfer functions
+which we could insert into all of these
+unknown black boxes for example the
+sticks can be modeled as an inertial
+list spring and damper this has a
+transfer function of 1 over C s plus K
+the remote can be modeled as a second
+order process as it converts mechanical
+position into electrical voltage and the
+linear actuators could be modeled as a
+mass so now what would have been a
+near-impossible set of integrals if we
+had tried to do this in the time domain
+with convolution combining these
+transfer functions in the S domain is as
+simple as multiplying them all together
+and the result is the transfer function
+of the entire plant where the input into
+the plant is your hand motion still and
+the output is the chalk position so
+hopefully you can see how important
+transfer functions are to modeling a
+control system in the lectures on
+frequency response and open loop and
+closed loop performance you'll see that
+there are many other ways we use
+transfer functions the last thing I want
+to leave you with is just something to
+think about this is actually a closed
+loop system that you the troubled
+student is part of the reference signal
+is your name this is what you want
+written on the chalk board you sense the
+car
+state of the system with your eyes and
+you compare what you're seeing to what
+you want written your brain interprets
+these errors and generates commands to
+move your hands but what if you wanted
+to remove yourself from this control
+loop and turn it into an automatic
+control system we'll discuss that in
+future lectures
