@@ -2,7 +2,7 @@
 
 ## Laboratorio 1 ##
 
-![grafica_resultados](https://raw.githubusercontent.com/luisballado/fund_ing_comp_labs/main/Diffie_Hellman_graph.png "Grafica de resultados")
+![grafica_resultados](https://raw.githubusercontent.com/luisballado/fund_ing_comp_labs/main/cryptography/Diffie_Hellman_graph.png "Grafica de resultados")
 - - - -
 
 ## Implementar un programa que realice lo siguiente: ##
