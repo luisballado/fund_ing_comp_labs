@@ -1,0 +1,25 @@
+task main(){
+     int count = 0;
+     while(cont<10)
+     {
+	if(ButtonPressed(BTNLEFT,false))
+		count+=1;
+		OnFwd(OUT_A,75);
+		Wait(1000);
+	if(ButtonPressed(BTNRIGHT,false))
+		count=0;
+		OnRev(OUT_A,75);
+		Wait(1000);
+	if(ButtonPressed(BTNCENTER,false))
+		Off(OUT_A);
+		break;
+		
+	ClearScreen();
+	NumOut(0,16,count);
+	Wait(1000);
+	
+     }
+     ClearScreen();
+     TextOut(0,0,"ADIOS");
+     Wait(1000);
+}
