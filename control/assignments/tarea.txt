@@ -163,6 +163,7 @@ process of describing the system in a way that communicates to every team what t
 
 this is often done in the form of requirements system constraints, technical budgets and interface documents and the systems engineering team is typically responsible for creating and managing these documents.
 
+--------------------
 however if systems engineering is solely responsible for defining the system then there's a good chance that they're going to request something that is under defined not feasible or wildly impractical
 as a control engineer and the one ultimately implementing the control system you're going to be helping the systems engineering team to create and validate the requirement that pertain to your system.
 now maybe you'll have a rock star systems engineering team that can do everything themselves, but typically having the engineering team participate in the definition of the system produces better results.
@@ -288,14 +289,18 @@ a mathematical description of each and
 show an example on how we use the
 property we'll start with two criteria
 that describe linearity homogeneity and
-superposition let's say you have an LTI
+superposition
+
+let's say you have an LTI
 system represented here in block diagram
 form and you subjected to an arbitrary
 input X of T and it produces output Y of
 T homogeneity states that if you scale
 the input by factor a then the output
 would be scaled by the same factor for
-example if you double the input then the
+example
+
+if you double the input then the
 output would also double here
 graphically we can see that for this
 system if we subjected it to a step
@@ -306,11 +311,14 @@ the output would also double to
 amplitude 2 now let's say that the input
 x1 produces output y1 and input x2
 produces output Y 2 then superposition
-or additive 'ti states that if you add
+or additive 'ti states that
+
+if you add
 the two inputs together X 1 plus X 2
 then the output would also be the
 superposition of the two separate
 outputs y 1 plus y 2 sometimes
+
 homogeneity and superposition are
 combined to state that if the input is
 scaled and summed then the output will
@@ -318,8 +326,9 @@ also be scaled and summed by the same
 amount if this system meets these two
 criteria this is called a linear system
 time invariance refers to the system
-behaving the same regardless of wind and
+ behaving the same regardless of wind and
 time and action takes place for example
+
 if you send a slinky down the stairs the
 toilet will behave the same regardless
 of whether it's five o'clock or six
@@ -339,6 +348,7 @@ met in order to have an LTI system
 however these restrictions on a system
 are very severe so severe in fact that
 practically no real-world system fully
+
 meets them there's always some aspect of
 non-linearity or time variance in the
 real world so that begs the question why
@@ -469,29 +479,7 @@ lessons
 
 7.- Laplace transform https://www.youtube.com/watch?v=VJ9phDRys_I
 
-Laplace transforms for context we're at
-the end of the chapter on transfer
-functions and the new section is 2.6
-this section describes the Laplace
-transform and what I think is an
-intuitive rather than mathematical way
-and the section is specifically
-structured to explain how Laplace
-transforms will be useful for
-understanding transfer functions an easy
-way to understand Laplace is by
-contrasting it with the Fourier
-transform but to do that properly let's
-review some of the finer Fourier
-transform points one thing you should
-remember is that the Fourier transform
-Maps a signal from the time domain
-typically a one-dimensional function of
-time to the frequency domain which is a
-two dimensional function one dimension
-for the magnitude and one dimension for
-the phase of the frequency content we
-can see this by walking through a simple
+we can see this by walking through a simple
 example here I just set up a simple
 exponential decay function whose value
 is 0 for all negative time the equation
@@ -511,6 +499,7 @@ you'll notice the result is a complex
 function because of the imaginary
 variable J it's 1 over 1 plus J Omega
 now complex functions are by definition
+
 two-dimensional functions which is where
 our two dimensions come from it's
 embedded in the real and imaginary
@@ -527,6 +516,8 @@ representation but to turn it into
 magnitude and phase we need to convert
 it into the polar coordinate
 representation which is done here so now
+
+
 you can see the idea laid out in front
 of you starting from a one dimensional
 exponential decay as a function of time
@@ -535,6 +526,7 @@ magnitude and phase as a function of
 frequency Omega where the value of Omega
 describes the value of the frequency as
 well as the location on the frequency
+
 line keep that in mind as we move on to
 the S plane and the Laplace transforms
 the Laplace transform goes one step
@@ -547,10 +539,12 @@ account for both of these concepts and
 that is where S comes in S is a complex
 variable so it's two-dimensional and it
 contains frequency information J Omega
+-----
 as well as exponential information Sigma
 let's explain how that works if you
 raise e to an imaginary number
 the result is a complex function
+
 consisting of sine and cosine waves
 which is described through Euler's
 formula so raising e to the J Omega
@@ -560,8 +554,10 @@ you raise e to a real number positive
 real numbers give us exponentially
 growing signals and negative real
 numbers give us exponentially decaying
-signals in this case we can replace the
-coefficient of T in the exponent with
+signals in this case
+
+--
+we can replace the coefficient of T in the exponent with
 the variable Sigma to get e to the Sigma
 T now negative Sigma's give us decaying
 functions and positive Sigma's give us
@@ -588,8 +584,9 @@ Omega with s but since s is Sigma plus J
 Omega really we've just added the real
 component Sigma to the equation we
 haven't actually removed anything all
-right now this is kind of cool if we
-replace s with Sigma plus J Omega in the
+right now this is kind of cool
+--
+if we replace s with Sigma plus J Omega in the
 Laplace transform and then we rearrange
 the equation we find something
 interesting
@@ -696,19 +693,6 @@ to fully understand transfer functions
 
 8.- Transfer fuctions https://www.youtube.com/watch?v=RJleGwXorUk
 
-welcome to control systems lectures
-before we get started I want to thank
-those of you who have subscribed to the
-channel and also whether your control
-student who's hearing this for the first
-time or a veteran engineer brushing up
-on the basics I appreciate you taking
-the time to watch this video and if you
-find these videos helpful or if you find
-that I'm not being clear enough please
-leave a comment below and I'll try to
-address it but now on to the lecture in
-this lecture I'm going to describe
 transfer functions and how control
 engineers use them to model elements
 like filters and actuators in order to
@@ -727,12 +711,9 @@ as a mysterious black box and when we
 apply an input signal into it we get a
 modified signal out and if we've
 designed this black box correctly then
-it's a pretty good model of a real
-physical process let's take a completely
-ridiculous example to explain the
-benefit of transfer functions and
-hopefully you'll get a better
-understanding of them in the process say
+--
+
+
 you got in trouble at school and you're
 asked to write your name 100 times on
 the chalkboard but instead of standing
