@@ -3,13 +3,8 @@
 #define MOVE_TIME 100
 
 task main(){
-     while(true)
-     {
-	
-	OnFwd(OUT_A,75);
-	Wait(MOVE_TIME);
-		
-     }
+     OnFwd(OUT_A,75);
+     Wait(1000);
      ClearScreen();
      TextOut(0,0,"ADIOS");
      Wait(1000);
