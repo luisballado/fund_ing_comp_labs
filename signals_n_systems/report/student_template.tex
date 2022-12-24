@@ -1,0 +1,204 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Cleese Assignment (For Students)
+% LaTeX Template
+% Version 2.0 (27/5/2018)
+%
+% This template originates from:
+% http://www.LaTeXTemplates.com
+%
+% Author:
+% Vel (vel@LaTeXTemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[11pt]{article}
+
+\input{structure.tex} % Include the file specifying the document structure and custom commands
+
+%----------------------------------------------------------------------------------------
+%	ASSIGNMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+% Required
+\newcommand{\assignmentQuestionName}{Pregunta} % The word to be used as a prefix to question numbers; example alternatives: Problem, Exercise
+\newcommand{\assignmentClass}{Señales y Sistemas} % Course/class
+\newcommand{\assignmentTitle}{Examen} % Assignment title or name
+\newcommand{\assignmentAuthorName}{Luis Alberto Ballado Aradias} % Student name
+
+% Optional (comment lines to remove)
+\newcommand{\assignmentClassInstructor}{Dr. José Juan} % Intructor name/time/description
+\newcommand{\assignmentDueDate}{CINVESTAV - UNIDAD TAMAULIPAS} % Due date
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\maketitle % Print the title page
+
+\thispagestyle{empty} % Suppress headers and footers on the title page
+
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	QUESTION 1
+%----------------------------------------------------------------------------------------
+
+\begin{question}
+
+\questiontext{Dibuja las siguientes señales}
+
+\begin{enumerate}
+\item{$x[n] = u[n+3] + 0,5u[n-1]$}
+\item{$x[n] = -1^{n} u[-n-2]$}
+\item{$x[n] = $}
+\end{enumerate}
+  
+%\begin{center}
+%	\includegraphics[width=0.5\columnwidth]{swallow.jpg} % Example image
+%\end{center}
+
+\answer{While this question leaves out the crucial element of the geographic origin of the swallow, according to Jonathan Corum, an unladen European swallow maintains a cruising airspeed velocity of \textbf{11 metres per second}, or \textbf{24 miles an hour}. The velocity of the corresponding African swallows requires further research as kinematic data is severely lacking for these species.}
+
+\end{question}
+
+%----------------------------------------------------------------------------------------
+%	QUESTION 2
+%----------------------------------------------------------------------------------------
+
+\begin{question}
+
+\questiontext{Describa todas las características que sean evidentes de los siguientes sistemas}
+
+%--------------------------------------------
+\begin{enumerate}
+\item{$y[n] = 3x[n-1] + 2x[n-2] + 0,75x[n+4] - 3y[n-1]$}
+\item{$y[n] = x[n] cos\left[ \frac{n}{2\pi}\right]$}
+\item{$y[n] = 2n^{2}x[n] + n \times x[n+1]$}
+\end{enumerate}
+  
+%\begin{center}
+%	\includegraphics[width=0.5\columnwidth]{swallow.jpg} % Example image
+%\end{center}
+
+\answer{While this question leaves out the crucial element of the geographic origin of the swallow, according to Jonathan Corum, an unladen European swallow maintains a cruising airspeed velocity of \textbf{11 metres per second}, or \textbf{24 miles an hour}. The velocity of the corresponding African swallows requires further research as kinematic data is severely lacking for these species.}
+
+%--------------------------------------------
+
+\end{question}
+
+%----------------------------------------------------------------------------------------
+%	QUESTION 3
+%----------------------------------------------------------------------------------------
+
+\begin{question}
+
+\questiontext{Calcular la transformada Z de las 3 señales y los 3 sistemas previamente descritos.}
+
+\begin{equation}\label{eq:bayes}
+	P(A|B) = \frac{P(B|A)P(A)}{P(B)}
+\end{equation}
+
+\answer{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent porttitor arcu luctus, imperdiet urna iaculis, mattis eros. Pellentesque iaculis odio vel nisl ullamcorper, nec faucibus ipsum molestie. Sed dictum nisl non aliquet porttitor. Etiam vulputate arcu dignissim, finibus sem et, viverra nisl. Aenean luctus congue massa, ut laoreet metus ornare in. Nunc fermentum nisi imperdiet lectus tincidunt vestibulum at ac elit. Nulla mattis nisl eu malesuada suscipit.}
+
+\end{question}
+
+%----------------------------------------------------------------------------------------
+
+%\assignmentSection{Bonus Questions}
+
+%----------------------------------------------------------------------------------------
+%	QUESTION 4
+%----------------------------------------------------------------------------------------
+
+\begin{question}
+
+\questiontext{Describa que es una eigenfunción en términos de señales y sistemas.}
+
+\begin{table}[h]
+	\centering % Centre the table
+	\begin{tabular}{l l l}
+		\toprule
+		\textit{Per 50g} & Pork & Soy \\
+		\midrule
+		Energy & 760kJ & 538kJ\\
+		Protein & 7.0g & 9.3g\\
+		Carbohydrate & 0.0g & 4.9g\\
+		Fat & 16.8g & 9.1g\\
+		Sodium & 0.4g & 0.4g\\
+		Fibre & 0.0g & 1.4g\\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\answer{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent porttitor arcu luctus, imperdiet urna iaculis, mattis eros. Pellentesque iaculis odio vel nisl ullamcorper, nec faucibus ipsum molestie. Sed dictum nisl non aliquet porttitor. Etiam vulputate arcu dignissim, finibus sem et, viverra nisl. Aenean luctus congue massa, ut laoreet metus ornare in. Nunc fermentum nisi imperdiet lectus tincidunt vestibulum at ac elit. Nulla mattis nisl eu malesuada suscipit.}
+
+\end{question}
+
+\begin{question}
+
+\questiontext{Describa las características particulares de la transformada de Laplace.}
+
+\end{question}
+
+\begin{question}
+
+  \questiontext{Realice un programa, en cualquier lenguaje que prefiera, que ejecute las siguientes tareas.}
+  
+  \begin{itemize}
+  \item{Recibe como entrada en texto plano la descripción de una señal y de un sistema, discretos ambos.}
+  \item{Dibuja la señal y la respuesta al impulso del sistema.}
+  \item{Ejecuta la convolución entre ambas entradas y dibujar la señal resultante.}
+  \end{itemize}
+  
+\end{question}
+
+%----------------------------------------------------------------------------------------
+%	QUESTION 5
+%----------------------------------------------------------------------------------------
+
+\begin{question}
+
+\lstinputlisting[
+	caption=Luftballons Perl Script, % Caption above the listing
+	label=lst:luftballons, % Label for referencing this listing
+	language=Perl, % Use Perl functions/syntax highlighting
+	frame=single, % Frame around the code listing
+	showstringspaces=false, % Don't put marks in string spaces
+	numbers=left, % Line numbers on left
+	numberstyle=\tiny, % Line numbers styling
+	]{luftballons.pl}
+
+%--------------------------------------------
+
+\begin{subquestion}{How many luftballons will be output by the Listing \ref{lst:luftballons} above?} % Subquestion within question
+
+\answer{99 luftballons.}
+
+\end{subquestion}
+
+%--------------------------------------------
+
+\begin{subquestion}{Identify the regular expression in Listing \ref{lst:luftballons} and explain how it relates to the anti-war sentiments found in the rest of the script.} % Subquestion within question
+
+\answer{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent porttitor arcu luctus, imperdiet urna iaculis, mattis eros. Pellentesque iaculis odio vel nisl ullamcorper, nec faucibus ipsum molestie. Sed dictum nisl non aliquet porttitor. Etiam vulputate arcu dignissim, finibus sem et, viverra nisl. Aenean luctus congue massa, ut laoreet metus ornare in. Nunc fermentum nisi imperdiet lectus tincidunt vestibulum at ac elit. Nulla mattis nisl eu malesuada suscipit.}
+
+\end{subquestion}
+
+%--------------------------------------------
+
+\end{question}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
