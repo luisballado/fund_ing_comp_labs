@@ -71,150 +71,89 @@
 %----------------------------------------------------------------------------------------
 \section*{{\color{Apricot}The Step Response | Control Systems in Practice} \url{https://www.youtube.com/watch?v=USH75nuHV6w}}
 
-La automatización en puertos maritimos ha tomado un auge de la mano con la industria 4.0 y la era del internet, la automatización como el uso de energia verdes nos comienza a acompañar a donde sea que vayamos. La globalización se ha convertido en una tendencia en la economía global y los sistemas de control automáticos son una pieza clave.\\
+\textbf{¿Qué es la respuesta al escalón?} \\
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.4]{images/agv.png}
-\end{figure}
+Es el cómo responde un sistema a la entrada de un escalón así que podemos tener como entrada un escalón unitario que es cuando la entra cambia de cero a uno en un periodo corto de tiempo y podemos analizar el comportamiento del sistema. Podríamos no centrarnos en ese comportamiento, también podemos considerar un salto instantáneo a otro valor. \\
 
-Según los datos de las \href{https://news.un.org/es/story/2021/11/1500122}{Naciones Unidas} el embate provocado por la pandemia de COVID-19 sobre el transporte maritimo de mercancias tuvo menos repercusión ya que la demanda global ocacionada por las compras electrónicas ayudo en generar un aumento del 4,3\% en 2021. \\
+Un ejemplo es el control de la altitud de un DRON, suponiendo que se encuentra en una altitud de 10 metros y modificamos para que su nueva altitud sea el doble; el controlador debe modificar su altitud de 10 a 20 metros y la respuesta al escalón será como el DRON reacciona a esa modificación. ¿Qué tan rápido se eleva?, ¿Tiene un sobregiro?, ¿Cuánto tiempo toma estabilizarse a la altitud deseada?, ¿Existirá algún error en el sistema? Todos estos cuestionamientos los podemos usar como los requerimientos del sistema. Cada uno de esos elementos o comportamientos que tiene el sistema son características estudiadas en teoría de control.
+Tiempo de subida, que es el tiempo requerido para posicionarse a un 90\% del valor deseado.\\
 
-Para cualquier empresa donde las tareas se convierten en repetitivas y aburridas, es de buena opción automatizar dichos procesos cuando estos sean tecnológicamente posibles, ya que tareas comunes como cocinar, hacer una limpieza en áreas con muchos objetos suelen ser dificiles de automatizar.\\
+Tiempo de respuesta, tiempo requerido para que la señal de salida permanezca al interior de un valor de tolerancia.
+Instante del sobre impulso, instante en que la respuesta de salida alcance el primer sobre impulso. \\
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.4]{images/hard.png}
-\end{figure}
+Valor relativo del sobre impulso, porcentaje máximo por arriba del valor deseado. Diferencia relativa entre el valor el primer sobre impulso y el valor final de la señal de salida.\\
 
-El futuro de la logistica, transporte marítimo ó terrestre tiene un futuro inteligente y sostenible. Teniendo ejemplos tangibles en los Puertos de Hamburgo, Shangai, Rotterdam por mencionar algunos.\\
-
-La implementacion de vehículos AGV (Automated Guided Vehicles) en la industria de la logistica ha tomado un gran auge, no es dificil pensar que el grande de las ventas por internet AMAZON tenga una implementación en sus centros de distribución de ultima milla casi todo automatizado.\\
-
-Para su construcción, mantenimiento, y desarrollo de sistemas inteligentes es de suma importancia el estudio de Sistemas de Control.
 
 \newpage
 \section*{{\color{Apricot}Understanding Control Systems, Part 1: Open-Loop Control Systems} \url{https://www.youtube.com/watch?v=FurC2unHeXI}}
 
-Los sistemas de control son la pieza que une todos los campos de la ingenieria.\\
-
-Considerando algunos campos de la ingenieria podemos entender un poco más la importancia en el estudio del Control automático.
-
-\begin{itemize}
-\item Ingenieria Eléctica, en el diseño de reguladores y retroalimentaciones.
-\item Ingenieria en Comunicaciones, en el diseño de controles de ganancia automáticas que incrementen la ganancia en señales débiles o decrementarlas en señales fuertes.
-\item Ingeniera Mecánica, en la consideración de vibraciones, diseño de sistemas que aislen las vibraciones. 
-\item Ingeniera Civil, en el diseño de construcciones resistentes a actividades sismicas.
-\item Ingeniera Industrial, en el diseño de robótica para lineas de ensamblaje o diseño de controles PID para aplicaciones en la robótica.
-\item Ingeniera Aeroespacial, en la creación de sistemas aerodinamicos resistentes a las vibraciones.
-\end{itemize}
-
-Esas se pueden tomar como ejemplos en donde los \textbf{sistemas de control} toman un papel importante. Una perspectiva general de los sistemas de control sería cuando se nos cae un objeto, éste vibrará y generará un sonido que se reducira a medida que la energía se disipe, o cuando intentamos detener una caida de algun objeto y este cae, causamos una disipasión rápida de la energía. \\
-
-Una copa de vino cayendo se puede interpretar como la tecnologia detrás de un giroscopio (se basa en una masa girando sobre un eje, la cual se mantiene estable por el momento de rotación que tiene la masa), tecnologia usada en submarinos y satelites para una navegación por estima (inferir la ubicación haciendo uso de fórmulas trigonométricas)\\
-
-\textbf{Teoria de Sistemas de Control} es más que adecuar un control PID y pendulos invertidos. Es contruir modelos de sistemas y poder simularlos para hacer predicciones y de esa forma entender la dinamica y como interactua con el resto del sistema.
-
-\begin{itemize}
-\item Es filtrar ruido y reducir las perturbaciones
-\item Es diseñar o elegir los sensores o actuadores adecuados
-\item Es probar los sistemas para asegurar que funcionará de manera adecuada en situaciones no pensadas
-\item Es entender los sistemas en un nivel muy básico.
-\end{itemize}
+Los sistemas de control de lazo abierto son controles simples que podemos encontrar hasta en aparatos electrodomésticos dentro de nuestros hogares. Un ejemplo de ello es una tostadora cuyo control es el tiempo que estará activa para calentar el pan. El color del pan cambiará en base al tiempo en que el pan está en la tostadora activa. Aquí la tostadora es un control de lazo cerrado ya que no existe una retroalimentación que tenga un sensado del progreso del tostado del pan. \\
+Suponiendo que tenemos una nueva tostadora, no estamos familiarizados en cuánto tiempo le debemos aplicar y experimentamos en diferentes ocasiones, un tiempo diferente hasta encontrar el tostado ideal. Si graficamos los comportamientos del experimento podremos encontrar un gráfico que responde al modelo de nuestro experimento. \\
+Podemos encontrar sistemas de lazo abierto hasta en la mezcladora de agua para regular el agua caliente; suponiendo, que controlamos la llave caliente tal vez mezclándola con el agua fría para obtener la temperatura perfecta para tomar un baño. Parece que el control de lazo abierto funciona bien y sólo con hacer unas calibraciones pudiera funcionar correcto en todo lo que lo apliquemos; pero no es así, no siempre una calibración resulte para cualquier variación. \\
+Retomando el ejemplo de la tostadora, solo basta en cambiar el tamaño o el tipo de pan entonces el comportamiento resultante no será el mismo al que estamos esperando. \\
+Puede que dentro de nuestro sistema de agua doméstica otro integrante de la familia toma también una ducha en otro baño esto basta para desestabilizar nuestra calibración haciendo que variemos la demanda de agua caliente hasta obtener la temperatura deseada (cambios en el sistema afectarán el comportamiento) \\
+Sistemas de lazo abierto son simples, usan prueba y error para obtener un buen funcionamiento. No son eficientes cuando se tienen variaciones en el sistema o comportamientos no predecibles. \\
 
 \newpage
 \section*{{\color{Cerulean}Understanding Control Systems, Part 2: Feedback Control Systems} \url{https://www.youtube.com/watch?v=5NVjIIi9fkY}}
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.3]{images/automation.jpg}
-\end{figure}
-
-
-\textbf{Automatización} es una palabra que se ha tomado milenios en ser formada intervenida, convinando arte e ingenio, pero la ciencia detras tiene menos de dos milenios, pero la palabra automatización unas pocas decadas. No es dificil recordar los dispositivos autómatas en la historia, cuando se creaban artefactos para realizar tareas comunes. No todos los artefactos tenían el mismo uso, en ocaciones solo servian para entretener y no hacian nada mas que los mismos movimientos una y otra vez.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.6]{images/pato.jpg}
-  \caption{Pato de Vaucanson}
-\end{figure}
-
-La \textbf{Automatización} se ocupa de las complejas actividades que se necesitan ser resumidas en desiciones racionales y consisas, confiando en la información disponible y en las matemáticas. Pero básicamente la automatización es el desarrollar tareas de una manera automática.\\
-
-En un vista general se comienza con la representación del sistema que se se desea controlar, linelizarlo, analizar su respuesta al impulso, aplicarle la transformada de LaPlace para pasarlo del dominio de la frecuencia y hacer un sin fin de calculos que nos ayudan a completar el objetivo de automatizar y controlar nuestro sistema. \\
-
-Sea a lo que nos enfrentemos necesitaremos tres elementos fundamentales:
-
-\begin{itemize}
-\item Retroalimentación, que nos indique como van las cosas.
-\item Control, la inteligencia que apartir de las retroalimentaciones decida que acción hacer. 
-\item Actuador, la manera en que ejecutamos la acción.
-\end{itemize}
-
-Un ejemplo básico para el entendimiento de estos elementos es el cepillado de dientes. Al tener una retroalimentación de la posición del cepillo de dientes es fácil controlar la posición y el desplazamiento para las siguientes posiciones que requerimos para limpiar nuestros dientes. Pero, ¿qué pasaría sin alguno de estos tres elementos?
-
-\begin{itemize}
-\item Sin retroalimentación, no podríamos conocer la posición del cepillo y no podríamos indicar la siguiente posición. 
-\item Sin Control, no podríamos saber que hacer ni como hacerlo  
-\item Sin Actuador, no podríamos realizar el cepillado 
-\end{itemize}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.3]{images/ejemplo_control.png}
-  \caption{Ejemplos sin algun elemento de control}
-\end{figure}
-
-Bajo éste ejemplo hemos visto el rol importante de cada elemento que forma parte de un sistema, ya que son importantes para realizar cualquier tarea.
+Tomando el ejemplo anterior de la tostadora en lugar de elegir el tiempo de encendido de la tostadora, elegiremos el color del tostado preferido esto implicará visualizar el progreso el tostado para saber el momento adecuado para pagar la tostadora. Esta es una idea básica del control de lazo cerrado. \\ 
+Si graficamos el progreso y lo comparamos con el deseado, podremos obtener un error, a medida que el error va disminuyendo nos vamos acercando al tostado perfecto. Este sistema retroalimentado contará con un error que el sistema de control recalculará hasta llegar al set point indicado. \\
+Otro ejemplo, retomando el control de flujo/temperatura de la regadera del baño para eventos no esperados. Similar al ejemplo de la tostadora cuando las condiciones cambian, cambian todo en el sistema. \\ 
+A medida que la demanda de agua caliente aumenta en otra parte de la casa, esto hará que variemos el control de agua para regular la temperatura a medida que el error es grande, grande será la compensación que se debe hacer. \\
+Sistemas retroalimentados nos pueden ayudar para las variaciones que puedan ocurrir dentro del sistema, compensaciones para eventos inesperados.
 
 \newpage
 \section*{{\color{RoyalPurple}Understanding Control Systems, Part 3: Components of a Feedback Control System} \url{https://www.youtube.com/watch?v=u1pgaJHiiew}}
 
-El puente de Tacoma, fué construido en 1940 durando solamente 4 meses antes de su colapso en Noviembre 7 de 1940.\\
+Tomando un ejemplo, en que nos invitaran a una fiesta y no queremos perdernos nada, queremos llegar lo más rápido posible; esto es cumpliendo las reglas de tránsito de velocidad, así que lo más rápido que podemos trasladarnos es el límite de velocidad permitido, pero a lo largo de nuestra trayectoria podemos encontrarnos diferentes situaciones haciendo que nuestra velocidad no puede ser constante, como interrupciones en el camino, como colinas etc.  a medida que pasemos por una colina la velocidad bajará teniendo que aumentar la velocidad del carro para contrarrestar y poder vencer la pendiente de la colina; todo esto lo podemos hacer con el uso de la retroalimentación de velocidad, donde en un carro el conductor es el control del sistema solo basta con tener en la vista el tacómetro para mantener la velocidad y nuestro prefijado es el acelerador, basado en el error podremos aumentar o disminuir la velocidad deseada. Entre menos error será menor la corrección a la velocidad a aplicar. \\
 
-Apesar de las vibraciones que se observaron en su construcción, pero ese día la resonancia del puente y su movimiento de torsión debido a vientos más rápidos (65km/h) hizo que su movimiento natural de oscilación tuviera un periodo de 5 segundos.\\
-
-La caída fué debido al fenómeno de resonancia mecánica que se poduce cuando un cuerpo que puede vibrar es sometido a una acción periódica y cuyo período coincide con el período del propio cuerpo causando que el cuerpo vibre aumentando su amplitud. 
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.4]{images/tacoma.jpg}
-\end{figure}
-
-El desastre sirvió para la mejora de las nuevas construcciones de puentes colgantes en todo el mundo. El puente de tacoma fué reconstruido y reinagurado en 1950 y aún existe en nuestros días.
+Podemos describir nuestro sistema como:
+El velocímetro - cantidad o velocidad deseada.
+El controlador - la persona quien maneja el carro.
+El actuador - nuestro pie regulando la velocidad.
+La planta - el carro (el sistema a controlar).
+El sensor - la retroalimentación para monitorear la velocidad.
+Perturbaciones - resistencia al aire, errores en el actuador u otras perturbaciones en el camino.
 
 \newpage
 \section*{{\color{RoyalPurple}Controlling Self Driving Cars} \url{https://www.youtube.com/watch?v=4Y7zG48uHRo}}
 
-Ser un Ingeniero de Sistemas de Control es más que diseñar controles y adecuarlos. Puede que en el transcurso de un proyecto, el diseño del controlador sea una parte pequeña del trabajo. 
-\begin{itemize}
+La tecnología detrás del control de autos autónomos es increíble. En un futuro no lejano existirán autos autónomos viajando en una forma normal en las calles. Para llegar a esto se debe de contar con sensores capaces de localizar el vehículo en cualquier ambiente, así como reconstruir un mapa del punto A al punto B.
+Parece que la conducción de un auto autónomo es tarea fácil, pero no lo es.
+Si queremos seguir una trayectoria, pero estamos muy distantes de ella giramos a tope, pero ¿cuánto debemos girar para mantener la trayectoria?
+Al tener un control oscilante el comportamiento es de un control bang bang y la sensación no es de lo mejor para los pasajeros. Una forma de girar las llantas es con el uso de un control proporcional en lugar de girar determinados grados.
+Con control proporcional obtendremos una corrección mayor, en cuanto mas nos alejemos de la trayectoria deseada; tomando como medida el error para definir que tan alejado nos encontramos, por lo tanto, el ángulo de dirección que usamos es el error multiplicado por una ganancia proporcional llamada ganancia proporcional, este valor altera en gran medida el rendimiento del vehículo haciéndolo oscilante, el comportamiento mejora a medida que la ganancia aumenta.
 
-\item \textbf{Formulacion/Requisitos}, antes de que tengamos idea de lo que se desea construir, la fase de formulación es donde se intenta descubrir la necesidad; dicha necesidad puede provenir de un cliente o un miembro de la empresa que cree que existe un mercado para un determinado producto. El equipo comercial sabe que se puede vender, pero no sabe cual es la mejor manera de hacerlo ni las dificultades técnicas para realizarlo. Como Ingeniero de Sistemas de Control una de las tareas es explorar desde una perspectiva ingenieril y buscar cual es la mejor opción. \\
-Después de todo esto, es imposible conocer la configuración final que el usuario tendrá operando nuestros productos, de esa maneara hay que estar seguros que cuando el sistema este en uso la incertidumbre sea algo que cumpla con los requisitos y visualizar todos los posibles errores es factor para que los costos del producto se mantengan bajos. A menudo se suele listar las restricciones del sistema, presupuestos técnicos y bocetos del producto esperado y el equipo de ingenieria es el responsable de crear y administrar estos documentos.
+Un control proporcional nos arroja mejores resultados que un control bang-bang. Pero con un control tipo proporcional aun no funcionada de manera óptima, puede que el controlador sobrepase repentinamente la trayectoria deseada, para corregir estos sobregiros debemos considerar otros factores como un termino derivativo y agregarlo al termino proporcional.
 
-\item \textbf{Desarrollo}, con las definiciones y requerimientos completos el desarrollo del producto puede comenzar. Esta fase describe el cliché de un ingeniero: Diseña cosas, construye cosas y prueba cosas. Esta fase de desarrollo suele tener correcciones y sufrir cambios. Supongamos que ya tenemos pensado el control que queremos aplicar, pero en las pruebas su tiempo de respuesta no es el esperado por los clientes en conclusión, se tendrá que modificar y probar nuevamente los test que ya fueron aplicados.\\
+$Giro = P*e_{p}+D* e_{D}$
 
-  Ya que los cambios son inevitables se tomará mucho tiempo en la etapa de desarrollo. En algunas compañias el Ingeniero de Control es el reponsable de crear y describir algoritmos y logica para las leyes de control en una forma que los Ingenieros de Software puedan entender y codificar.
-  
-\item \textbf{Pruebas/Verificaciones}, existen diferentes métodos de verificación y como Ingeniero en Control se deben de emplear algun método existente para la verificación del producto. Supongamos que deseamos probar un equipo físico, esto puede llevar mucho tiempo ya que no es lo mismo que simplemente correr un simulador. Hay que escribir un plan para desarrollar las pruebas, documentación de las pruebas. \\
+Ahora se cuentan con dos términos que pueden sincronizarse simultáneamente. 
+Al contar con una ganancia derivativa baja el sistema estará subamortiguado y seguirá oscilando.
+Al contar con una ganancia derivativa alta, el sistema de encontrara sobreamortiguado y tomara mucho tiempo en corregir las compensaciones.
+Elegir la ganancia adecuada permitirá que el vehículo se acerque a la trayectoria deseada rápidamente con una tasa de error cercana a cero (amortiguación critica). Pero esto no basta para un buen control ya que factores externos pueden inestabilizar el sistema fácilmente y puede hacer que tenga un erro para ello se considera un tercer termino integral.
+Este tercer termino resume el error transversal para dar una indicación si estamos pasando mas tiempo en un lado de la trayectoria. Este termino es la suma multiplicada por la ganancia.
+Ahora será necesario ajustar las tres ganancias a la vez, lo que puede resultar difícil de hacer.
+Si la ganancia es muy grande, el control puede ser inestable por fluctuaciones normales.
+Si las ganancias son pequeñas tomara mucho tiempo responder a los cambios dinámicos.
+Cuando la ganancia es la adecuada, el control podrá corregir de manera correcta los devariantes que se puedan presentar en el sistema.
+La combinación de estos términos se conoce como control PID.
 
-  Para el final de la fase de Ingenieria se tendrá un diseño que cumple con las solicitudes planteadas al principio. Sin embargo el trabajo del Ingeniero de Control no termina ahí, es posible que sea requerido para capacitar los operadores del sistema o cubrir alguna variante del diseño o modificaciones en el vuelo. Los Sistemas de Control tienen muchas oportunidades en todas las fases del producto y no es tarea de una sola persona, se requiere el trabajo en equipo.
-  
-\end{itemize}
+
+
 \newpage
 \section*{{\color{RoyalPurple}PID Control - A brief introduction} \url{https://www.youtube.com/watch?v=UR0hOmjaHp0}}
 
-Los sistemas lineales e invariantes en el tiempo (LTI) son una clase de sistemas que responden de una determinada manera cuando se le aplica una entrada arbitraria, todos los sistemas LTI tienen propiedades en común
-\begin{itemize}
-\item \textbf{Homogeniedad}, supongamos que tenemos un sistema LTI y le inyectamos una entrada $x(t)$, esta producirá una salida $y(t)$. La Homogeniedad nos dice que si escalamos la entrada en un factor, entonces el resultado será escalado con el mismo factor 
-\item \textbf{Superposición (Aditividad)}, digamos añadimos dos entradas juntas $x_{1} + x_{2}$, el resultado será la superposición de las dos salidas. Algunas veces la homogeniedad y susperposición son combinadas para que cuando la entrada sea escalada y sumada por la misma cantidad, si el sistema conoce estos dos criterios, se llamará un sistema lineal.
-\item \textbf{Invarianza de Tiempo}, por ejemplo si dejamos caer un objeto por las escaleras, este tendrá el mismo comportamiento independientemente que hora del día sea. En otras palabras, una entrada $x(t-a)$ producirá una salida $y(t-a)$ es decir, dos entradas similares en el transladadas en el tiempo tendrán la misma salida. Este termino de Invarianza de tiempo se puede referir de un termino más generico llamado \textbf{traslación invariante}, que también se puede decir como \textbf{traslación en el espacio}
-\end{itemize}
+Los sistemas de control pueden considerarse con o sin retroalimentación, dependiendo de la exactitud requerida. Un sistema de lazo abierto puede considerarse como una entrada aplicada a un sistema a ser controlado y alguna señal de salida será generada. Comúnmente en estos escenarios el comportamiento del sistema no es del todo bueno.
 
-Estas tres restricciones son las que se necesitan para tener un sistema LTI, pero ¿por qué son importantes los sistemas LTI?- Richard Feynman dicia que son importantes ya que los podemos resolver. Ya que los sistemas físicos se pueden aproximar con modelos LTI.\\
+Considerando un ejemplo de la posición de un robot de un punto A a B, si existe alguna interferencia ajena al sistema este no se comportará conforme a los que esperamos de el ya sea que los movimientos de los motores no sea los indicados, que un motor gire más que otro bastará para no obtener la posición deseada. Controles de lazo abierto son perfectos para sistemas que no cambian mucho o que se esperen que sean precisos; para sistemas que requieren una mayor exactitud podemos hacer uso de sistemas con una retroalimentación donde podemos sensar la salida obteniendo un error e ir corrigiéndolo a medida que el sistema este en funcionamiento. Uno de los objetivos de la teoría de control es reducir estos errores a cero y errores en cero significan que el sistema se encuentra donde fue destinado.
 
-Los sistemas LTI se caracterisan en la respuesta al impulso, por ejemplo si golpeamos un objeto este se moverá y después de un tiempo dejará de hacerlo. Debido al principio de invariante en el tiempo si golpeamos el objeto en un tiempo 0, y continuamos haciendolo en el tiempo 1 podemos esperar el mismo comportamiento y por la característica de homogeniedad, si lo golpeamos con más fuerte esperaremos una respuesta más larga y por la característica de superposición, la respuesta completa del sistema será la sumatoria total de las señales. Podemos hacer que nuestro sistema se aproxime a la linealidad con la sumatoria de todas las señales individuales.\\
+PID del acrónimo Proporcional Integral Derivativo, este tipo de control describe el como el error es manejado, en un esquema de bloques se pueden situar de forma paralela y sumados para producir la salida del control. Cada elemento del control cuenta con una ganancia y cada uno puede ser ajustado dependiendo de los requisitos del sistema.
+Proporcional - producirá una corrección grande cuando exista un gran error; no producirá error si este es cero, si el error es negativo efectuará una corrección negativa.
+Integral – a lo largo que el error se mueve en el tiempo, se sumara y multiplicara por una constante Ki, la parte integral es usada para remover errores constantes.
+Derivativo – a medida que el error cambia el elemento derivativo crecerá.
+La suma de estos elementos de control tendremos como salida un control tipo PID. No siempre se necesitan todos los elementos y podemos omitir alguno con una ganancia de cero. Un control sencillo siempre será fácil de ajustar y probar.
 
-Cuando hacemos la sumatoria en el dominio del tiempo es llamada \textbf{convolución}, que puede ser una Integral difícil de resolver, sin embargo transformamos las respuestas al impulso y las entradas del sistema al dominio $S$ usando la transformada de Laplace, entonces la \textbf{convolución} se convierte en una multiplicación algebraica. Esto solo aplica a los sistemas LTI.
 
 \end{document}
