@@ -1,0 +1,17 @@
+//funcion dummy de delay
+void delay(int seconds){
+     unsigned long int count = 5000,i,j;
+     for(i=0;i<seconds;i++)
+	for(j=0;j<count;j++);
+}
+
+task main(){
+
+     while(true){
+
+
+
+     }
+     
+     
+}

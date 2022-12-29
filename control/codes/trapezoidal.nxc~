@@ -1,0 +1,11 @@
+task main(){
+
+     bool run = true;
+
+     while(run){
+
+	OnFwd(OUT_A, 75); //Mover a una velocidad de 75%
+     
+     }
+
+}

@@ -1,0 +1,108 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% fphw Assignment
+% LaTeX Template
+% Version 1.0 (27/04/2019)
+%
+% This template originates from:
+% https://www.LaTeXTemplates.com
+%
+% Authors:
+% Class by Felipe Portales-Oliva (f.portales.oliva@gmail.com) with template 
+% content and modifications by Vel (vel@LaTeXTemplates.com)
+%
+% Template (this file) License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+	12pt, % Default font size, values between 10pt-12pt are allowed
+	%letterpaper, % Uncomment for US letter paper size
+	%spanish, % Uncomment for Spanish
+]{fphw}
+
+% Template-specific packages
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+\usepackage{mathpazo} % Use the Palatino font
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx} % Required for including images
+\usepackage{amsmath}
+\usepackage{booktabs} % Required for better horizontal rules in tables
+\usepackage{listings} % Required for insertion of code
+\usepackage{enumerate} % To modify the enumerate environment
+\usepackage{ragged2e}
+\usepackage{cancel}
+\usepackage{MnSymbol,bbding,pifont}
+\usepackage{lscape}
+\usepackage{array}
+\usepackage{float,graphicx}
+\usepackage{hyperref}
+\usepackage[spanish]{babel}
+\newcolumntype{M}{>{$}c<{$}}
+%----------------------------------------------------------------------------------------
+%	ASSIGNMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Tarea \#1} % Assignment title
+
+\author{Luis Alberto Ballado Aradias} % Student name
+
+\date{\today} % Due date
+
+\institute{Centro de Investigación y de Estudios Avanzados del IPN \\ Unidad Tamaulipas} % Institute or school name
+
+\class{CONTROL AUTOMÁTICO (Sep - Dec 2022)} % Course or class name
+
+\professor{Dr. José Gabriel Ramírez Torres} % Professor or teacher in charge of the assignment
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Output the assignment title, created automatically using the information in the custom commands above
+
+%----------------------------------------------------------------------------------------
+%	ASSIGNMENT CONTENT
+%----------------------------------------------------------------------------------------
+\section*{{\color{Apricot}Modelado 1}}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{images/p1.png}
+\end{figure}
+
+
+Recordando $\sum F=m*a$
+
+\newpage
+\section*{{\color{Apricot}Modelado 2}}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{images/p2.png}
+\end{figure}
+
+\newpage
+\section*{{\color{Apricot}Modelado 3}}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{images/p3.png}
+\end{figure}
+
+
+\newpage
+\section*{{\color{Apricot}Modelado 4}}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{images/p4.png}
+\end{figure}
+
+
+\end{document}

@@ -28,7 +28,7 @@ task main()
 
 	while(true){
 		
-		pos=MotorRotationCount(OUT_A);	
+		pos=MotorRotationCount(OUT_A);
 		
 		error = SET-pos;
 		u = k * error;
