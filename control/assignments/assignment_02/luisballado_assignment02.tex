@@ -71,56 +71,33 @@
 %----------------------------------------------------------------------------------------
 \section*{{\color{Apricot}Routh-Hurwitz Criterion, An Introduction} \url{https://www.youtube.com/watch?v=WBCZBOB3LCA}}
 
-La automatización en puertos maritimos ha tomado un auge de la mano con la industria 4.0 y la era del internet, la automatización como el uso de energia verdes nos comienza a acompañar a donde sea que vayamos. La globalización se ha convertido en una tendencia en la economía global y los sistemas de control automáticos son una pieza clave.\\
+Para que un sistema sea considerado estable todas las raíces del polinomio característico necesitan situarse del lado izquierdo del plano complejo. \\
+Considerando que la ecuación característica está en el denominador de la función de transferencia, las raíces son las mismas que los polos de la función de transferencia y esas raíces deben aparecer a la izquierda o ser todas componentes reales negativos para tener un sistema estable. \\
+Un ejemplo podría ser, considerar una función con un solo polo $H(s) = \frac{1}{s+a}$ a puede tomar valores positivos o negativos; en nuestro ejemplo la raíz es negativa, podríamos aplicar la inversa de Laplace para obtener la representación en el dominio del tiempo ${L}^{-1} (H(s)) = e^{-at}$ al tener una raíz negativa, existirá en la parte izquierda del plano y si se grafica en el dominio del tiempo, se puede apreciar que la señal tiende a cero a medida que el tiempo tiende a infinito y es considerado estable ya que ninguna otra función de transferencia modificara su comportamiento. Si, de lo contrario; la función fuera $H(s)=\frac{1}{s-a}$  \textbf{s} seria positiva, la respuesta seria positiva y el sistema seria inestable.
+Considerando una función de transferencia más completa, es decir con más raíces, no importa que por partes sean estables, al detectar una parte que no tenga raíces del lado izquierdo del plano todo el sistema se considera inestable.
+Podemos determinar la estabilidad de un sistema para cualquier grado del polinomio sin resolverlo directamente y una forma de realizarlo es usando el criterio de Routh-Hurwitz. Este método se basa en que todas las raíces del polinomio se encuentran del lado izquierdo del plano si y solo si la combinación de sus coeficientes tiene el mismo signo. Lo notable del criterio del Routh-Hurwitz es que no se tiene que resolver la factorización para encontrar las raíces del polinomio característico, y nos permite conocer la estabilidad solo en ver los signos de los coeficientes del polinomio.
+Lo primero que debemos notar es el signo de los coeficientes, si todos los signos no son iguales podemos decir q con certeza que el sistema es inestable. 
+Si contamos con una ecuación característica con al menos un coeficiente no negativo, podemos instantáneamente decir que el sistema es inestable sin tener que aplicar el criterio de Routh-Hurwitz.
+$G(s)=\frac{1}{s+1}\ * \frac{1}{s+3} * \frac{1}{s-2}$ \\
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.4]{images/agv.png}
-\end{figure}
+\section{Routh Array}
 
-Según los datos de las \href{https://news.un.org/es/story/2021/11/1500122}{Naciones Unidas} el embate provocado por la pandemia de COVID-19 sobre el transporte maritimo de mercancias tuvo menos repercusión ya que la demanda global ocacionada por las compras electrónicas ayudo en generar un aumento del 4,3\% en 2021. \\
+Es una tabla que se pobla con los coeficientes del polinomio siguiendo unas reglas.
 
-Para cualquier empresa donde las tareas se convierten en repetitivas y aburridas, es de buena opción automatizar dichos procesos cuando estos sean tecnológicamente posibles, ya que tareas comunes como cocinar, hacer una limpieza en áreas con muchos objetos suelen ser dificiles de automatizar.\\
+\begin{enumerate}
+\item{Hacer la estructura de la tabla, al completar la tabla de izquierda a derecha, el número de las filas depende del orden del polinomio.  Para comenzar necesitamos escribir el polinomio en potencias de s de forma descendente. Las filas se acomodan de manera que la de mayor orden quedara arriba hasta decrecer el orden. El número de columnas depende del orden del polinomio.}
+\item{Escribir el primer coeficiente, y así sucesivamente siguiendo el orden del polinomio.}
+\end{enumerate}
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[scale=0.4]{images/hard.png}
-\end{figure}
+El orden será de forma zigzag. Al final tendremos al inicio los coeficientes impares y por debajo los impares.\\
+Nota: Si no se cuenta con un orden en el polinomio, es decir $s^4 + 2s^3 + 5s + 3$ deberemos completarlo con un 0 en el orden que haga falta, en este caso $s^2$ es cero, no es que no exista, solo que es cero.\\
 
-El futuro de la logistica, transporte marítimo ó terrestre tiene un futuro inteligente y sostenible. Teniendo ejemplos tangibles en los Puertos de Hamburgo, Shangai, Rotterdam por mencionar algunos.\\
+\textbf{Hacer un ejemplo aqui}
 
-La implementacion de vehículos AGV (Automated Guided Vehicles) en la industria de la logistica ha tomado un gran auge, no es dificil pensar que el grande de las ventas por internet AMAZON tenga una implementación en sus centros de distribución de ultima milla casi todo automatizado.\\
-
-Para su construcción, mantenimiento, y desarrollo de sistemas inteligentes es de suma importancia el estudio de Sistemas de Control.
+Una vez que tengamos completa la tabla, se puede visualizar las raíces y los cambios de signo con los que cuenta el sistema, recordemos que basta con uno para que el sistema sea considerado inestable. \\
 
 \newpage
 \section*{{\color{Apricot}Routh-Hurwitz Criterion, Special Cases} \url{https://www.youtube.com/watch?v=oMmUPvn6lP8}}
-
-Los sistemas de control son la pieza que une todos los campos de la ingenieria.\\
-
-Considerando algunos campos de la ingenieria podemos entender un poco más la importancia en el estudio del Control automático.
-
-\begin{itemize}
-\item Ingenieria Eléctica, en el diseño de reguladores y retroalimentaciones.
-\item Ingenieria en Comunicaciones, en el diseño de controles de ganancia automáticas que incrementen la ganancia en señales débiles o decrementarlas en señales fuertes.
-\item Ingeniera Mecánica, en la consideración de vibraciones, diseño de sistemas que aislen las vibraciones. 
-\item Ingeniera Civil, en el diseño de construcciones resistentes a actividades sismicas.
-\item Ingeniera Industrial, en el diseño de robótica para lineas de ensamblaje o diseño de controles PID para aplicaciones en la robótica.
-\item Ingeniera Aeroespacial, en la creación de sistemas aerodinamicos resistentes a las vibraciones.
-\end{itemize}
-
-Esas se pueden tomar como ejemplos en donde los \textbf{sistemas de control} toman un papel importante. Una perspectiva general de los sistemas de control sería cuando se nos cae un objeto, éste vibrará y generará un sonido que se reducira a medida que la energía se disipe, o cuando intentamos detener una caida de algun objeto y este cae, causamos una disipasión rápida de la energía. \\
-
-Una copa de vino cayendo se puede interpretar como la tecnologia detrás de un giroscopio (se basa en una masa girando sobre un eje, la cual se mantiene estable por el momento de rotación que tiene la masa), tecnologia usada en submarinos y satelites para una navegación por estima (inferir la ubicación haciendo uso de fórmulas trigonométricas)\\
-
-\textbf{Teoria de Sistemas de Control} es más que adecuar un control PID y pendulos invertidos. Es contruir modelos de sistemas y poder simularlos para hacer predicciones y de esa forma entender la dinamica y como interactua con el resto del sistema.
-
-\begin{itemize}
-\item Es filtrar ruido y reducir las perturbaciones
-\item Es diseñar o elegir los sensores o actuadores adecuados
-\item Es probar los sistemas para asegurar que funcionará de manera adecuada en situaciones no pensadas
-\item Es entender los sistemas en un nivel muy básico.
-\end{itemize}
 
 
 \end{document}

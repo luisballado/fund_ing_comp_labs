@@ -1,0 +1,16 @@
+import sys
+
+with open(sys.argv[1],'r') as file:
+    contenido = file.read()
+    """
+    for line in file:
+        print(line)
+    """
+
+print(contenido)
+
+
+"""
+Identificar una señal
+Identificar un sistema
+"""

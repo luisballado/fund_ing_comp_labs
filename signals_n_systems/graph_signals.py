@@ -27,8 +27,8 @@ UL = 10
 LL = -10
 n = np.arange(LL, UL, 1)
 #plt.stem(n, u(n+3)+0.5*u(n-1))
-#plt.stem(n, np.cos(n*np.pi)*u(-n-2))
-plt.stem(n,unit_impulse(a,n))
+plt.stem(n, np.cos(n*np.pi)*u(-n-2))
+#plt.stem(n,unit_impulse(a,n))
 
 """
 l = np.size(n)
@@ -42,6 +42,7 @@ plt.xlabel('n')
 plt.xticks(np.arange(LL, UL, 1))
 plt.yticks([0, 1])
 plt.ylabel('u[n]')
+plt.grid()
 plt.title('Unit step u[n-a]')
 plt.savefig('UnitStep.png')
 
