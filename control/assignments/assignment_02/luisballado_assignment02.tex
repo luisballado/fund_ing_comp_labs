@@ -75,29 +75,130 @@ Para que un sistema sea considerado estable todas las raíces del polinomio cara
 Considerando que la ecuación característica está en el denominador de la función de transferencia, las raíces son las mismas que los polos de la función de transferencia y esas raíces deben aparecer a la izquierda o ser todas componentes reales negativos para tener un sistema estable. \\
 Un ejemplo podría ser, considerar una función con un solo polo $H(s) = \frac{1}{s+a}$ a puede tomar valores positivos o negativos; en nuestro ejemplo la raíz es negativa, podríamos aplicar la inversa de Laplace para obtener la representación en el dominio del tiempo ${L}^{-1} (H(s)) = e^{-at}$ al tener una raíz negativa, existirá en la parte izquierda del plano y si se grafica en el dominio del tiempo, se puede apreciar que la señal tiende a cero a medida que el tiempo tiende a infinito y es considerado estable ya que ninguna otra función de transferencia modificara su comportamiento. Si, de lo contrario; la función fuera $H(s)=\frac{1}{s-a}$  \textbf{s} seria positiva, la respuesta seria positiva y el sistema seria inestable.
 Considerando una función de transferencia más completa, es decir con más raíces, no importa que por partes sean estables, al detectar una parte que no tenga raíces del lado izquierdo del plano todo el sistema se considera inestable.
-Podemos determinar la estabilidad de un sistema para cualquier grado del polinomio sin resolverlo directamente y una forma de realizarlo es usando el criterio de Routh-Hurwitz. Este método se basa en que todas las raíces del polinomio se encuentran del lado izquierdo del plano si y solo si la combinación de sus coeficientes tiene el mismo signo. Lo notable del criterio del Routh-Hurwitz es que no se tiene que resolver la factorización para encontrar las raíces del polinomio característico, y nos permite conocer la estabilidad solo en ver los signos de los coeficientes del polinomio.
+Podemos determinar la estabilidad de un sistema para cualquier grado del polinomio sin resolverlo directamente y una forma de realizarlo es usando el criterio de Routh-Hurwitz. \\\\
+Este método se basa en que todas las raíces del polinomio se encuentran del lado izquierdo del plano \textbf{si y sólo} si la combinación de sus coeficientes tiene el mismo signo. \\
+
+Lo notable del criterio del Routh-Hurwitz es que \textbf{no se tiene que resolver la factorización} para encontrar las raíces del polinomio característico, y nos permite conocer la estabilidad solo en ver los signos de los coeficientes del polinomio.\\
 Lo primero que debemos notar es el signo de los coeficientes, si todos los signos no son iguales podemos decir q con certeza que el sistema es inestable. 
 Si contamos con una ecuación característica con al menos un coeficiente no negativo, podemos instantáneamente decir que el sistema es inestable sin tener que aplicar el criterio de Routh-Hurwitz.
-$G(s)=\frac{1}{s+1}\ * \frac{1}{s+3} * \frac{1}{s-2}$ \\
+%$G(s)=\frac{1}{s+1}\ * \frac{1}{s+3} * \frac{1}{s-2}$ \\
 
+\newpage
 \section{Routh Array}
 
 Es una tabla que se pobla con los coeficientes del polinomio siguiendo unas reglas.
 
 \begin{enumerate}
-\item{Hacer la estructura de la tabla, al completar la tabla de izquierda a derecha, el número de las filas depende del orden del polinomio.  Para comenzar necesitamos escribir el polinomio en potencias de s de forma descendente. Las filas se acomodan de manera que la de mayor orden quedara arriba hasta decrecer el orden. El número de columnas depende del orden del polinomio.}
+\item{Hacer la estructura de la tabla, al completar la tabla de izquierda a derecha, el número de las filas depende del orden del polinomio.}
+\item{Para comenzar necesitamos escribir el polinomio en potencias de s de forma descendente.}
+\item{Las filas se acomodan de manera que la de mayor orden quedará arriba hasta decrecer el orden. El número de columnas depende del orden del polinomio.}
 \item{Escribir el primer coeficiente, y así sucesivamente siguiendo el orden del polinomio.}
 \end{enumerate}
 
 El orden será de forma zigzag. Al final tendremos al inicio los coeficientes impares y por debajo los impares.\\
-Nota: Si no se cuenta con un orden en el polinomio, es decir $s^4 + 2s^3 + 5s + 3$ deberemos completarlo con un 0 en el orden que haga falta, en este caso $s^2$ es cero, no es que no exista, solo que es cero.\\
+Nota: Si no se cuenta con un orden en el polinomio, es decir $s^4 + 2s^3 + 5s + 3$ deberemos completarlo con un 0 en el orden que haga falta, en este caso $s^2$ es cero, \textbf{no es que no exista, solo que es cero.}\\
 
-\textbf{Hacer un ejemplo aqui}
+\textbf{Ejemplo}\\\\
 
-Una vez que tengamos completa la tabla, se puede visualizar las raíces y los cambios de signo con los que cuenta el sistema, recordemos que basta con uno para que el sistema sea considerado inestable. \\
+Tomando la ecuación caracteristica del sistema: $4s^{4}+8s^{3}+2s^{2}+10s+3=0$\\
+Apliicando el Criterio Routh Hurwitz, formando el Routh array:
+\begin{center}
+\begin{tabular}{c c c c}
+$s^{4}$ & 4 & 2 & 3 \\
+$s^{3}$ & 8 & 10 & 0 \\
+$s^{2}$ & $\frac{8x2-4x10}{8}=-3$ & $\frac{8x3-0x4}{8}=3$ & - \\
+$s^{1}$ & $\frac{-3x10-3x8}{-3}=18$ & - & - \\
+$s^{0}$ & 3 & - & - 
+\end{tabular}  
+\end{center}
+En la primera columna del array existe un elemento negativo, también existen dos cambios de signo. El primero de 8 a -3 y el segundo de -3 a 18. Dado eso, el sistema es inestable, de los 4 polos, 2 estan situados en la parte derecha del plano s\\\\
+
+Una vez que tengamos completa la tabla, se puede visualizar las raíces y los cambios de signo con los que cuenta el sistema, \textbf{recordemos que basta con uno para que el sistema sea considerado inestable.} \\
 
 \newpage
 \section*{{\color{Apricot}Routh-Hurwitz Criterion, Special Cases} \url{https://www.youtube.com/watch?v=oMmUPvn6lP8}}
+
+\begin{enumerate}
+\item Caso especial - Un cero en la fila con al menos un no cero apareciendo después en la misma fila. \\
+
+  Suponiendo que, a partir del llenado de la tabla se tiene
+
+  \begin{center}
+\begin{tabular}{c c c}
+1 & 0 & 4 \\
+2 & 3 & - \\
+\end{tabular}  
+  \end{center}
+
+  \begin{center}
+\begin{tabular}{c c c}
+1 & 2 & 5 \\
+2 & 4 & - \\
+0 & 5 & - \\
+\end{tabular}  
+\end{center}
+
+  Cuando esto ocurre, el sistema se considera inestable y bastara con terminar el análisis, si lo que necesitamos es solo saber si el sistema es estable o no. Pero si estamos interesados en la cantidad de raíces localizadas en la parte derecha del plano podremos completar la tabla reemplazando el coeficiente que es cero con el carácter Épsilon y efectuamos los mismos cálculos.\\
+
+  Ejemplo: $s^{5}+s^4+3s^3+3s^2+2s+5=0$ Determinando si el sistema es estable o no aplicando el criterio de Routh Hurwitz.\\
+
+  \begin{center}
+\begin{tabular}{c c c c}
+$s^{5}$ & 1 & 3 & 2 \\
+$s^{4}$ & 1 & 3 & 5 \\
+$s^{3}$ & $0\rightarrow \epsilon$ & -3 & 0 \\
+$s^{2}$ & $\frac{3\epsilon+3}{\epsilon}$ & 5 & 0 \\
+  $s^{1}$ & $\frac{\frac{-3(3\epsilon+3)}{\epsilon}-5\epsilon}{\frac{3\epsilon+3}{\epsilon}}$ & - & - \\
+  $s^{0}$ & 5 & - & - 
+\end{tabular}  
+\end{center}
+
+  Ahora si determinamos los elementos de la primera columna:\\
+  $s^3\rightarrow \epsilon > 0$\\
+  $s^2\rightarrow \frac{3\epsilon+3}{\epsilon}=3+\frac{3}{\epsilon}>0$
+  $s^1\rightarrow \frac{-9\epsilon-9-5\epsilon^2}{3\epsilon+3}<0 (ya que \epsilon >0)$\\
+
+  Dado que existe un cambio de signo en $s^1$, el sistema es inestable teniendo dos polos en el lado derecho del plano s debido a los dos cambios de signo
+\item Caso especial - Cuando todos los elementos en una fila son ceros\\\\
+  En este caso existe una simetria en la posición de las raices en el plano s. Pueden existir pares de raices reales con signos contrarios o raices conjugadas en el plano imaginario o formar raices cuadraticas dentro del plano s. El polinomio con esas caracteristicas son los elementos de la fila por arriba de la fila de ceros en el RouthArray es llamado polinomio auxiliar.\\
+  Este polinomio da información del número y ubicación de los pares de raices de la ecuación caracteristica, la cual es simetrica al plano s. El orden del polinomio auxiliar siempre es par.\\
+
+  \textbf{Ejemplo:}\\
+
+  $s^6+2s^5+8s^4+12s^3+20s^2+16s+16=0$\\
+
+  \begin{center}
+\begin{tabular}{c c c c c}
+$s^{6}$ & 1 & 8 & 20 & 16 \\
+$s^{5}$ & 2 & 12 & 16 & 0 \\
+$s^{4}$ & 2 & 12 & 16 & 0\\
+$s^{3}$ & 0 & 0 & 0 & 0 \\
+  $s^{2}$ & - & - & - & -\\
+  $s^{1}$ & - & - & - & -\\
+  $s^{0}$ & - & - & - & - 
+\end{tabular}  
+\end{center}
+
+  Ya que $s^3$ es completamete cero. El polinomio auxiliar es formado por $s^4$ por ejemplo: $2s^4+12s^2+16=0$ ó $s^4+6s^2+8=0$ derivando el polinomio tenemos: \\
+  $4s^3+12s=0$\\
+
+  Los ceros en $s^3$ ahora son reemplazados por los coeficientes del polinomio auxiliar
+
+    \begin{center}
+\begin{tabular}{c c c c c}
+$s^{6}$ & 1 & 8 & 20 & 16 \\
+$s^{5}$ & 2 & 12 & 16 & - \\
+$s^{4}$ & 1 & 6 & 8 & -\\
+$s^{3}$ & 4 & 12 & 0 & - \\
+  $s^{2}$ & 3 & 8 & - & -\\
+  $s^{1}$ & $\frac{1}{3}$ & - & - & -\\
+  $s^{0}$ & 8 & - & - & - 
+\end{tabular}  
+\end{center}
+
+    Debido a que no existe un cambio de signo, el sistema es considerado marginalmente estable. Si resolvemos para encontrar las raices del polinomio auxiliar: $s^4+6s^2+8=0$, las raices son $s = \pm j \sqrt{2}$ y $s=\pm j2$ Estas raices son tambien raices del polinomio caracteristico
+    
+\end{enumerate}
 
 
 \end{document}

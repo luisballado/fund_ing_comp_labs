@@ -73,13 +73,13 @@
 
 \textbf{¿Qué es la respuesta al escalón?} \\
 
-Es el cómo responde un sistema a la entrada de un escalón así que podemos tener como entrada un escalón unitario que es cuando la entra cambia de cero a uno en un periodo corto de tiempo y podemos analizar el comportamiento del sistema. Podríamos no centrarnos en ese comportamiento, también podemos considerar un salto instantáneo a otro valor. \\
+Es el cómo responde un sistema a la entrada de un escalón así que podemos tener como entrada un escalón unitario que es cuando la entra cambia de cero a uno en un periodo corto de tiempo y podemos analizar el comportamiento del sistema. Podríamos no centrarnos en ese comportamiento, también podemos considerar un salto instantáneo a otro valor. \\\\
 
 Un ejemplo es el control de la altitud de un DRON, suponiendo que se encuentra en una altitud de 10 metros y modificamos para que su nueva altitud sea el doble; el controlador debe modificar su altitud de 10 a 20 metros y la respuesta al escalón será como el DRON reacciona a esa modificación. ¿Qué tan rápido se eleva?, ¿Tiene un sobregiro?, ¿Cuánto tiempo toma estabilizarse a la altitud deseada?, ¿Existirá algún error en el sistema? Todos estos cuestionamientos los podemos usar como los requerimientos del sistema. Cada uno de esos elementos o comportamientos que tiene el sistema son características estudiadas en teoría de control.
-Tiempo de subida, que es el tiempo requerido para posicionarse a un 90\% del valor deseado.\\
+Tiempo de subida, que es el tiempo requerido para posicionarse a un 90\% del valor deseado.\\\\
 
 Tiempo de respuesta, tiempo requerido para que la señal de salida permanezca al interior de un valor de tolerancia.
-Instante del sobre impulso, instante en que la respuesta de salida alcance el primer sobre impulso. \\
+Instante del sobre impulso, instante en que la respuesta de salida alcance el primer sobre impulso. \\\\
 
 Valor relativo del sobre impulso, porcentaje máximo por arriba del valor deseado. Diferencia relativa entre el valor el primer sobre impulso y el valor final de la señal de salida.\\
 
@@ -87,56 +87,59 @@ Valor relativo del sobre impulso, porcentaje máximo por arriba del valor desead
 \newpage
 \section*{{\color{Apricot}Understanding Control Systems, Part 1: Open-Loop Control Systems} \url{https://www.youtube.com/watch?v=FurC2unHeXI}}
 
-Los sistemas de control de lazo abierto son controles simples que podemos encontrar hasta en aparatos electrodomésticos dentro de nuestros hogares. Un ejemplo de ello es una tostadora cuyo control es el tiempo que estará activa para calentar el pan. El color del pan cambiará en base al tiempo en que el pan está en la tostadora activa. Aquí la tostadora es un control de lazo cerrado ya que no existe una retroalimentación que tenga un sensado del progreso del tostado del pan. \\
-Suponiendo que tenemos una nueva tostadora, no estamos familiarizados en cuánto tiempo le debemos aplicar y experimentamos en diferentes ocasiones, un tiempo diferente hasta encontrar el tostado ideal. Si graficamos los comportamientos del experimento podremos encontrar un gráfico que responde al modelo de nuestro experimento. \\
-Podemos encontrar sistemas de lazo abierto hasta en la mezcladora de agua para regular el agua caliente; suponiendo, que controlamos la llave caliente tal vez mezclándola con el agua fría para obtener la temperatura perfecta para tomar un baño. Parece que el control de lazo abierto funciona bien y sólo con hacer unas calibraciones pudiera funcionar correcto en todo lo que lo apliquemos; pero no es así, no siempre una calibración resulte para cualquier variación. \\
-Retomando el ejemplo de la tostadora, solo basta en cambiar el tamaño o el tipo de pan entonces el comportamiento resultante no será el mismo al que estamos esperando. \\
-Puede que dentro de nuestro sistema de agua doméstica otro integrante de la familia toma también una ducha en otro baño esto basta para desestabilizar nuestra calibración haciendo que variemos la demanda de agua caliente hasta obtener la temperatura deseada (cambios en el sistema afectarán el comportamiento) \\
+Los sistemas de control de lazo abierto son controles simples que podemos encontrar hasta en aparatos electrodomésticos dentro de nuestros hogares. Un ejemplo de ello es una tostadora cuyo control es el tiempo que estará activa para calentar el pan. El color del pan cambiará en base al tiempo en que el pan está en la tostadora activa. Aquí la tostadora es un control de lazo cerrado ya que no existe una retroalimentación que tenga un sensado del progreso del tostado del pan. \\\\
+Suponiendo que tenemos una nueva tostadora, no estamos familiarizados en cuánto tiempo le debemos aplicar y experimentamos en diferentes ocasiones, un tiempo diferente hasta encontrar el tostado ideal. Si graficamos los comportamientos del experimento podremos encontrar un gráfico que responde al modelo de nuestro experimento. \\\\
+Podemos encontrar sistemas de lazo abierto hasta en la mezcladora de agua para regular el agua caliente; suponiendo, que controlamos la llave caliente tal vez mezclándola con el agua fría para obtener la temperatura perfecta para tomar un baño. Parece que el control de lazo abierto funciona bien y sólo con hacer unas calibraciones pudiera funcionar correcto en todo lo que lo apliquemos; pero no es así, no siempre una calibración resulte para cualquier variación. \\\\
+Retomando el ejemplo de la tostadora, solo basta en cambiar el tamaño o el tipo de pan entonces el comportamiento resultante no será el mismo al que estamos esperando. \\\\
+Puede que dentro de nuestro sistema de agua doméstica otro integrante de la familia toma también una ducha en otro baño esto basta para desestabilizar nuestra calibración haciendo que variemos la demanda de agua caliente hasta obtener la temperatura deseada (cambios en el sistema afectarán el comportamiento) \\\\
 Sistemas de lazo abierto son simples, usan prueba y error para obtener un buen funcionamiento. No son eficientes cuando se tienen variaciones en el sistema o comportamientos no predecibles. \\
 
 \newpage
 \section*{{\color{Cerulean}Understanding Control Systems, Part 2: Feedback Control Systems} \url{https://www.youtube.com/watch?v=5NVjIIi9fkY}}
 
-Tomando el ejemplo anterior de la tostadora en lugar de elegir el tiempo de encendido de la tostadora, elegiremos el color del tostado preferido esto implicará visualizar el progreso el tostado para saber el momento adecuado para pagar la tostadora. Esta es una idea básica del control de lazo cerrado. \\ 
-Si graficamos el progreso y lo comparamos con el deseado, podremos obtener un error, a medida que el error va disminuyendo nos vamos acercando al tostado perfecto. Este sistema retroalimentado contará con un error que el sistema de control recalculará hasta llegar al set point indicado. \\
-Otro ejemplo, retomando el control de flujo/temperatura de la regadera del baño para eventos no esperados. Similar al ejemplo de la tostadora cuando las condiciones cambian, cambian todo en el sistema. \\ 
-A medida que la demanda de agua caliente aumenta en otra parte de la casa, esto hará que variemos el control de agua para regular la temperatura a medida que el error es grande, grande será la compensación que se debe hacer. \\
+Tomando el ejemplo anterior de la tostadora en lugar de elegir el tiempo de encendido de la tostadora, elegiremos el color del tostado preferido esto implicará visualizar el progreso el tostado para saber el momento adecuado para pagar la tostadora. Esta es una idea básica del control de lazo cerrado. \\\\
+Si graficamos el progreso y lo comparamos con el deseado, podremos obtener un error, a medida que el error va disminuyendo nos vamos acercando al tostado perfecto. Este sistema retroalimentado contará con un error que el sistema de control recalculará hasta llegar al set point indicado. \\\\
+Otro ejemplo, retomando el control de flujo/temperatura de la regadera del baño para eventos no esperados. Similar al ejemplo de la tostadora cuando las condiciones cambian, cambian todo en el sistema. \\ \\
+A medida que la demanda de agua caliente aumenta en otra parte de la casa, esto hará que variemos el control de agua para regular la temperatura a medida que el error es grande, grande será la compensación que se debe hacer. \\\\
 Sistemas retroalimentados nos pueden ayudar para las variaciones que puedan ocurrir dentro del sistema, compensaciones para eventos inesperados.
 
 \newpage
 \section*{{\color{RoyalPurple}Understanding Control Systems, Part 3: Components of a Feedback Control System} \url{https://www.youtube.com/watch?v=u1pgaJHiiew}}
 
-Tomando un ejemplo, en que nos invitaran a una fiesta y no queremos perdernos nada, queremos llegar lo más rápido posible; esto es cumpliendo las reglas de tránsito de velocidad, así que lo más rápido que podemos trasladarnos es el límite de velocidad permitido, pero a lo largo de nuestra trayectoria podemos encontrarnos diferentes situaciones haciendo que nuestra velocidad no puede ser constante, como interrupciones en el camino, como colinas etc.  a medida que pasemos por una colina la velocidad bajará teniendo que aumentar la velocidad del carro para contrarrestar y poder vencer la pendiente de la colina; todo esto lo podemos hacer con el uso de la retroalimentación de velocidad, donde en un carro el conductor es el control del sistema solo basta con tener en la vista el tacómetro para mantener la velocidad y nuestro prefijado es el acelerador, basado en el error podremos aumentar o disminuir la velocidad deseada. Entre menos error será menor la corrección a la velocidad a aplicar. \\
+Tomando un ejemplo, en que nos invitaran a una fiesta y no queremos perdernos nada, queremos llegar lo más rápido posible; esto es cumpliendo las reglas de tránsito de velocidad, así que lo más rápido que podemos trasladarnos es el límite de velocidad permitido, pero a lo largo de nuestra trayectoria podemos encontrarnos diferentes situaciones haciendo que nuestra velocidad no puede ser constante, como interrupciones en el camino, como colinas etc.  a medida que pasemos por una colina la velocidad bajará teniendo que aumentar la velocidad del carro para contrarrestar y poder vencer la pendiente de la colina; todo esto lo podemos hacer con el uso de la retroalimentación de velocidad, donde en un carro el conductor es el control del sistema solo basta con tener en la vista el tacómetro para mantener la velocidad y nuestro prefijado es el acelerador, basado en el error podremos aumentar o disminuir la velocidad deseada. Entre menos error será menor la corrección a la velocidad a aplicar. \\\\
 
 Podemos describir nuestro sistema como:
-El velocímetro - cantidad o velocidad deseada.
-El controlador - la persona quien maneja el carro.
-El actuador - nuestro pie regulando la velocidad.
-La planta - el carro (el sistema a controlar).
-El sensor - la retroalimentación para monitorear la velocidad.
-Perturbaciones - resistencia al aire, errores en el actuador u otras perturbaciones en el camino.
+\begin{itemize}
+\item El velocímetro - cantidad o velocidad deseada.
+\item El controlador - la persona quien maneja el carro.
+\item El actuador - nuestro pie regulando la velocidad.
+\item La planta - el carro (el sistema a controlar).
+\item El sensor - la retroalimentación para monitorear la velocidad.
+\item Perturbaciones - resistencia al aire, errores en el actuador u otras perturbaciones en el camino.
+\end{itemize}
 
 \newpage
 \section*{{\color{RoyalPurple}Controlling Self Driving Cars} \url{https://www.youtube.com/watch?v=4Y7zG48uHRo}}
 
-La tecnología detrás del control de autos autónomos es increíble. En un futuro no lejano existirán autos autónomos viajando en una forma normal en las calles. Para llegar a esto se debe de contar con sensores capaces de localizar el vehículo en cualquier ambiente, así como reconstruir un mapa del punto A al punto B.
-Parece que la conducción de un auto autónomo es tarea fácil, pero no lo es.
-Si queremos seguir una trayectoria, pero estamos muy distantes de ella giramos a tope, pero ¿cuánto debemos girar para mantener la trayectoria?
-Al tener un control oscilante el comportamiento es de un control bang bang y la sensación no es de lo mejor para los pasajeros. Una forma de girar las llantas es con el uso de un control proporcional en lugar de girar determinados grados.
-Con control proporcional obtendremos una corrección mayor, en cuanto mas nos alejemos de la trayectoria deseada; tomando como medida el error para definir que tan alejado nos encontramos, por lo tanto, el ángulo de dirección que usamos es el error multiplicado por una ganancia proporcional llamada ganancia proporcional, este valor altera en gran medida el rendimiento del vehículo haciéndolo oscilante, el comportamiento mejora a medida que la ganancia aumenta.
+La tecnología detrás del control de autos autónomos es increíble. En un futuro no lejano existirán autos autónomos viajando en una forma normal en las calles. Para llegar a esto se debe de contar con sensores capaces de localizar el vehículo en cualquier ambiente, así como reconstruir un mapa del punto A al punto B.\\\\
 
-Un control proporcional nos arroja mejores resultados que un control bang-bang. Pero con un control tipo proporcional aun no funcionada de manera óptima, puede que el controlador sobrepase repentinamente la trayectoria deseada, para corregir estos sobregiros debemos considerar otros factores como un termino derivativo y agregarlo al termino proporcional.
+Parece que la conducción de un auto autónomo es tarea fácil, pero no lo es.\\
+Si queremos seguir una trayectoria, pero estamos muy distantes de ella giramos a tope, pero ¿cuánto debemos girar para mantener la trayectoria?\\
+Al tener un control oscilante el comportamiento es de un control bang bang y la sensación no es de lo mejor para los pasajeros. Una forma de girar las llantas es con el uso de un control proporcional en lugar de girar determinados grados.\\
+Con control proporcional obtendremos una corrección mayor, en cuanto mas nos alejemos de la trayectoria deseada; tomando como medida el error para definir que tan alejado nos encontramos, por lo tanto, el ángulo de dirección que usamos es el error multiplicado por una ganancia proporcional llamada ganancia proporcional, este valor altera en gran medida el rendimiento del vehículo haciéndolo oscilante, el comportamiento mejora a medida que la ganancia aumenta.\\\\
+
+Un control proporcional nos arroja mejores resultados que un control bang-bang. Pero con un control tipo proporcional aun no funcionada de manera óptima, puede que el controlador sobrepase repentinamente la trayectoria deseada, para corregir estos sobregiros debemos considerar otros factores como un termino derivativo y agregarlo al termino proporcional.\\\\
 
 $Giro = P*e_{p}+D* e_{D}$
 
 Ahora se cuentan con dos términos que pueden sincronizarse simultáneamente. 
-Al contar con una ganancia derivativa baja el sistema estará subamortiguado y seguirá oscilando.
-Al contar con una ganancia derivativa alta, el sistema de encontrara sobreamortiguado y tomara mucho tiempo en corregir las compensaciones.
-Elegir la ganancia adecuada permitirá que el vehículo se acerque a la trayectoria deseada rápidamente con una tasa de error cercana a cero (amortiguación critica). Pero esto no basta para un buen control ya que factores externos pueden inestabilizar el sistema fácilmente y puede hacer que tenga un erro para ello se considera un tercer termino integral.
-Este tercer termino resume el error transversal para dar una indicación si estamos pasando mas tiempo en un lado de la trayectoria. Este termino es la suma multiplicada por la ganancia.
-Ahora será necesario ajustar las tres ganancias a la vez, lo que puede resultar difícil de hacer.
-Si la ganancia es muy grande, el control puede ser inestable por fluctuaciones normales.
-Si las ganancias son pequeñas tomara mucho tiempo responder a los cambios dinámicos.
+Al contar con una ganancia derivativa baja el sistema estará subamortiguado y seguirá oscilando.\\
+Al contar con una ganancia derivativa alta, el sistema de encontrara sobreamortiguado y tomara mucho tiempo en corregir las compensaciones.\\
+Elegir la ganancia adecuada permitirá que el vehículo se acerque a la trayectoria deseada rápidamente con una tasa de error cercana a cero (amortiguación critica). Pero esto no basta para un buen control ya que factores externos pueden inestabilizar el sistema fácilmente y puede hacer que tenga un erro para ello se considera un tercer termino integral.\\\\
+Este tercer termino resume el error transversal para dar una indicación si estamos pasando mas tiempo en un lado de la trayectoria. Este termino es la suma multiplicada por la ganancia.\\
+Ahora será necesario ajustar las tres ganancias a la vez, lo que puede resultar difícil de hacer.\\
+Si la ganancia es muy grande, el control puede ser inestable por fluctuaciones normales.\\
+Si las ganancias son pequeñas tomara mucho tiempo responder a los cambios dinámicos.\\
 Cuando la ganancia es la adecuada, el control podrá corregir de manera correcta los devariantes que se puedan presentar en el sistema.
 La combinación de estos términos se conoce como control PID.
 
