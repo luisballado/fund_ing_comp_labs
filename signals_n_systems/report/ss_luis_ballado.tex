@@ -95,6 +95,9 @@
   \item Debido a que la salida depende de valores futuros de la entrada el sistema \textbf{no es causal}
   \item \textbf{Sistema Inestable} por la retroalimentación
   \item Variante en el tiempo
+  \item Ecuación en diferencia
+  \item Respuesta al impulso \textbf{Infinita} por la dependencia a los valores futuros
+  \item Cuarto orden (4 bloques de memoria)
   \end{itemize}
   }
 \item{$y[n] = x[n] cos\left[ \frac{n}{2\pi}\right]$}
@@ -104,7 +107,8 @@
   \item Invariante en el tiempo
   \item Los valores de salida n dependen solo de valores de entrada en el momento n, \textbf{sistema sin memoria}
   \item La salida no depende de valores futuros, el sistema \textbf{es causal}
-  
+  \item Respuesta al impulso \textbf{Infinita}
+  \item Primer orden
   \end{itemize}
   }
   
@@ -117,6 +121,7 @@
   \item Debido a que la salida depende de valores futuros de la entrada el sistema \textbf{no es causal}
   \item \textbf{Sistema Inestable}
   \item Variante en el tiempo
+  \item Respuesta al impulso \textbf{Infinita}
   \end{itemize}
   }
   
@@ -217,14 +222,29 @@
 
 \questiontext{Describa que es una eigenfunción en términos de señales y sistemas.}
 
-\answer{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent porttitor arcu luctus, imperdiet urna iaculis, mattis eros. Pellentesque iaculis odio vel nisl ullamcorper, nec faucibus ipsum molestie. Sed dictum nisl non aliquet porttitor. Etiam vulputate arcu dignissim, finibus sem et, viverra nisl. Aenean luctus congue massa, ut laoreet metus ornare in. Nunc fermentum nisi imperdiet lectus tincidunt vestibulum at ac elit. Nulla mattis nisl eu malesuada suscipit.}
+\answer{Cuando la salida de un sistema es una versión de la entrada pero escalada, la entrada es llamada \textbf{eigenfunción}, que proviene de la palabra del alemán \textbf{propia} ó \textbf{misma}.\\
+  La salida es la misma que la entrada, pero escalado por una constante de ganancia. Los exponentes complejos $e^{jwt}$ son eigenfunciones de un sistema LTI. Esta es la razón por la que en ingenieria electrónica es muy importante.\\
+Como propiedad de una eigenfunción, la frecuencia de la magnitud de la salida coincide con la frecuencia de entrada, aunque la magnitud y la fase de la señal de entrada es cambiada por la respuesta del sistema a la frecuencia de entrada.}
 
 \end{question}
 
 \begin{question}
 
 \questiontext{Describa las características particulares de la transformada de Laplace.}
-\answer{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent porttitor arcu luctus, imperdiet urna iaculis, mattis eros. Pellentesque iaculis odio vel nisl ullamcorper, nec faucibus ipsum molestie. Sed dictum nisl non aliquet porttitor. Etiam vulputate arcu dignissim, finibus sem et, viverra nisl. Aenean luctus congue massa, ut laoreet metus ornare in. Nunc fermentum nisi imperdiet lectus tincidunt vestibulum at ac elit. Nulla mattis nisl eu malesuada suscipit.}
+
+\answer{Varias técnicas usadas para resolver problemas de ingeniería se basan en reemplazar funciones de una variable real, por ciertas representeaciones que dependen de la frecuencia, o por funciones de una variable compleja que dependen de la frecuencia.\\
+  La \textbf{transformada de laplace} es una técnica de transformación que relaciona funciones de tiempo a funciones dependientes de frecuencia de una variable compleja.\\
+  La \textbf{transformada de laplace} es una variable compleja definida por $s=\alpha + jw$, donde $\alpha$ y $w$ son variables reales y $j=\sqrt{-1}$\\
+  Alguna de las propiedades de la transformada de Laplace:
+  \begin{itemize}
+  \item Es una transformación lineal entre funciones definidas en el dominio t y funciones definidas en el dominio s.
+  \item La \textbf{transformada de laplace} de una señal el rango de valores que puede tomar s en el cual puede converger es conocido como \textbf{región de convergencia (ROC)}, el cual consiste en valores de $s=\alpha + jw$ en donde la transformada de fourier de $x(t)e^{-\alpha t}$ converge
+  \item La \textbf{transformada de laplace} es racional con polinomios complejos de variable s donde tanto en el numerado como denominador son polinomios.
+  \item Los polinomios en el numerador y denominador en una transformación racional de Laplace pueden especificar las raices y la localización de las raices del numerador y denominador en el plano complejo s e indicar su \textbf{región de convergencia}
+  \item Para \textbf{transformadas de laplace} racionales, la región de convergencia no contiene ningun polo.
+  \end{itemize}
+}
+
 \end{question}
 \newpage
 \begin{question}
@@ -237,35 +257,49 @@
   \item{Ejecuta la convolución entre ambas entradas y dibujar la señal resultante.}
   \end{itemize}
 
+\end{question}
+
+  Correr el script:
+  \begin{itemize}
+  \item Tener python >= 3.10 instalado
+  \item instalar numpy, matplotlib, dependiendo del manejador de paquetes puede que sea con la instrucción pip3.10 install nombredelpaquete
+    \begin{lstlisting}[language=Bash, caption=instalar dependencias]
+      $pip install numpy
+      $pip install matplotlib
+  \end{lstlisting}
+  \begin{lstlisting}[language=Bash, caption=Correr el programa]
+    $python3.10 ss_script.py datos.txt
+  \end{lstlisting}
+
+  \item donde el archivo datos esta conformado por las descripciones de entrada:
+  \begin{lstlisting}[language=Bash, caption=Archivo con datos]
+    x[n]=u[n+3]+0.5*u[n-1]
+    x[n]=-1^n*u[-n-2]
+    x[n]=sigma(0,10,4*delta[n-3*k-1])
+    y[n]=3x[n-1]+2x[n-2]+0.75*x[n+4]-3y[n-1]
+    y[n]=x[n]*cos[n/2*pi]
+    y[n]=2*n**2*x[n]+n*x[n+1]
+  \end{lstlisting}
+  \end{itemize}
+
+  \begin{tcolorbox}[width=\textwidth,colback={red},title={**NOTA**},outer arc=0mm,colupper=white]    
+    El programa nadamas grafica las señales descritas en el archivo datos.txt y \textbf{no efectua la respuesta al impulso ni realiza la convolución}  
+    %\includegraphics[scale=0.5]{frogimage.png}
+  \end{tcolorbox}   
+
+  
+  \newpage
   \lstinputlisting[
-	caption=Luftballons Perl Script, % Caption above the listing
+	caption=Script, % Caption above the listing
 	label=lst:luftballons, % Label for referencing this listing
-	language=Perl, % Use Perl functions/syntax highlighting
+	language=Python, % Use Perl functions/syntax highlighting
 	frame=single, % Frame around the code listing
 	showstringspaces=false, % Don't put marks in string spaces
 	numbers=left, % Line numbers on left
 	numberstyle=\tiny, % Line numbers styling
 	]{luftballons.pl}
 
-  \begin{subquestion}{How many luftballons will be output by the Listing \ref{lst:luftballons} above?} % Subquestion within question
+    
 
-\answer{99 luftballons.}
-
-\end{subquestion}
-
-  
-%--------------------------------------------
-
-
-
-%--------------------------------------------
-
-\begin{subquestion}{Identify the regular expression in Listing \ref{lst:luftballons} and explain how it relates to the anti-war sentiments found in the rest of the script.} % Subquestion within question
-
-\answer{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent porttitor arcu luctus, imperdiet urna iaculis, mattis eros. Pellentesque iaculis odio vel nisl ullamcorper, nec faucibus ipsum molestie. Sed dictum nisl non aliquet porttitor. Etiam vulputate arcu dignissim, finibus sem et, viverra nisl. Aenean luctus congue massa, ut laoreet metus ornare in. Nunc fermentum nisi imperdiet lectus tincidunt vestibulum at ac elit. Nulla mattis nisl eu malesuada suscipit.}
-
-\end{subquestion}
-  
-\end{question}
 
 \end{document}

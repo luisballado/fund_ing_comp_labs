@@ -19,7 +19,7 @@
 %----------------------------------------------------------------------------------------
 
 \usepackage{lastpage} % Required to determine the last page number for the footer
-
+\usepackage[most]{tcolorbox}
 \usepackage{graphicx} % Required to insert images
 
 \setlength\parindent{0pt} % Removes all indentation from paragraphs
@@ -29,6 +29,32 @@
 \usepackage{booktabs} % Required for better horizontal rules in tables
 
 \usepackage{listings} % Required for insertion of code
+
+\usepackage[dvipsnames]{xcolor}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{1,1,1}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\renewcommand{\lstlistingname}{Código}% Listing -> Algorithm
+\lstset{style=mystyle}
 
 \usepackage{etoolbox} % Required for if statements
 
