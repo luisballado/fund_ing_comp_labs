@@ -3,6 +3,9 @@
 // DIBUJAR LA TRAYECTORIA CON LINEAS O PUNTOS EN PANTALLA
 // 
 
+#define SCREEN_WIDTH 100
+#define SCREEN_HEIGHT 60
+
 #define SpeedSlow 20
 #define SpeedFast 50
 
@@ -53,6 +56,7 @@ sub sigue_lineas(){
     
     _sd_ = NumToStr(SD);
     _si_ = NumToStr(SI);
+
     msg = "SD: " + _sd_ + " SI: " + _si_;
     TextOut(0, LCD_LINE1, msg);
     TextOut(0, LCD_LINE2, msg);
@@ -66,8 +70,5 @@ task main(){
     
   //sigue lineas
   sigue_lineas();
-
-  //parar motores
-  
     
 }
