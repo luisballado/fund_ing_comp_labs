@@ -1,0 +1,92 @@
+#define SCREEN_WIDTH  100
+#define SCREEN_HEIGHT 60
+
+#define SpeedSlow 20
+#define SpeedFast 50
+
+//Delay dummy
+void delay(int seconds){
+     unsigned long int count = 5000,i,j;
+     for(i=0;i<seconds;i++)
+	for(j=0;j<count;j++);
+}
+
+int pos1; //Posicion MotorA
+int pos2; //Posicion MotorC
+
+task motor_rotation1(){
+  while(true){
+    pos1 = MotorRotationCount(OUT_A);
+    //pos1 = MotorTachoCount(OUT_A);
+  }
+}
+
+task motor_rotation2(){
+  while(true){
+    pos2 = MotorRotationCount(OUT_C);
+    //pos2 = MotorTachoCount(OUT_C);
+  }
+}
+
+//Dibujar un cuadrado
+task cuadrado(){
+
+  for(int i=0;i<4;i++){
+
+    OnFwd(OUT_AC,SpeedSlow);
+    delay(5);
+    Off(OUT_AC);
+    OnRev(OUT_A,SpeedFast);
+    //RotateMotor(OUT_A,SpeedSlow,180);
+    delay(1);
+    
+  }
+}
+
+task show_text(){
+  while(true){
+    string _si_;
+    string _sd_;
+    string msg1;
+    string msg2;
+    _si_ = NumToStr(pos1);
+    _sd_ = NumToStr(pos2);
+    msg1 = "M Izq: " + _si_;
+    msg2 = "M Der: " + _sd_;
+    TextOut(0,LCD_LINE1,msg1);
+    TextOut(0,LCD_LINE2,msg2);
+  }
+}
+
+task make_draw(){
+
+  int x = SCREEN_WIDTH/2;
+  int y = SCREEN_HEIGHT/2;
+
+  ClearScreen();
+
+  while(true){
+	
+     x = pos2/100;
+     y = pos1/100;
+     //ClearScreen();
+     
+     CircleOut(x,y,2);
+     //delay(1);
+     
+  }
+}
+
+task main(){
+
+  int x = SCREEN_WIDTH/2;
+  int y = SCREEN_HEIGHT/2;
+
+  for(int i=0;i<25;i++){
+     CircleOut(x,y,i);
+     delay(1);
+  }
+
+  Precedes(motor_rotation1,motor_rotation2,make_draw);
+  //Precedes(cuadrado,motor_rotation1,motor_rotation2,make_draw);
+}
