@@ -1,3 +1,6 @@
+//Hacer documentacion de la instalacion no lleva el -EF
+// probar nueva instalacion para quitar el sudo
+
 #define SCREEN_WIDTH  100
 #define SCREEN_HEIGHT 60
 
