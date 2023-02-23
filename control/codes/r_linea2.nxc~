@@ -1,4 +1,4 @@
-// Hacer documentacion de la instalacion no lleva el -EF
+//Hacer documentacion de la instalacion no lleva el -EF
 // probar nueva instalacion para quitar el sudo
 
 #define SCREEN_WIDTH  100
@@ -10,28 +10,33 @@
 //Dibujar Dx, Dy, Dtheta
 //Calcular incrementos
 
-//Posicion MotorA
-int pos1;
+//Delay dummy
+/**
+void delay(int seconds){
+     unsigned long int count = 5000,i,j;
+     for(i=0;i<seconds;i++)
+	for(j=0;j<count;j++);
+}
+*/
 
-//Posicion MotorC
-int pos2; 
+int pos1; //Posicion MotorA
+int pos2; //Posicion MotorC
+float xy = 2.5;
 
-float theta = 0.0;
-//float xy = 2.5;
+task motor_rotation1(){
+  while(true){
+    //pos1 = MotorRotationCount(OUT_A);
+    pos1 = MotorTachoCount(OUT_A);
+  }
+}
 
 //360 es una vuelta completa
 //revisar si acepta flotantes
 //convertir grados a radianes
 //humbral 5-10
-
-task motor_rotation1(){
-  while(true){
-    pos1 = MotorTachoCount(OUT_A);
-  }
-}
-
 task motor_rotation2(){
   while(true){
+    //pos2 = MotorRotationCount(OUT_C);
     pos2 = MotorTachoCount(OUT_C);
   }
 }
@@ -54,26 +59,17 @@ task cuadrado(){
 
 task show_text(){
   while(true){
-    string _si_,_sd_,_theta_;
-    string msg1,msg2,msg3;
-    _si_ = NumToStr(pos1);
+    string _si_;
+    string _sd_;
+    string msg1;
+    string msg2;
+    _si_ = NumToStr(xy);
     _sd_ = NumToStr(pos2);
-    _theta_ = NumToStr(theta);
-    msg1 = "MI: " + _si_;
-    msg2 = "MD: " + _sd_;
-    msg3 = "Theta: " + _theta_;
+    msg1 = "M Izq: " + _si_;
+    msg2 = "M Der: " + _sd_;
     TextOut(0,LCD_LINE1,msg1);
-    TextOut(60,LCD_LINE1,msg2);
-    TextOut(0,LCD_LINE8,msg3);
+    TextOut(0,LCD_LINE2,msg2);
   }
-}
-
-task odometria(){
-     while(true){
-
-	
-
-     }
 }
 
 task make_draw(){
@@ -84,13 +80,14 @@ task make_draw(){
   ClearScreen();
 
   while(true){
-
+	
      x = pos2/100 + 50;
      y = pos1/100 + 30;
      //ClearScreen();
      
-     CircleOut(x,y,1);
-          
+     CircleOut(x,y,2);
+     //delay(1);
+     
   }
 }
 
@@ -99,16 +96,13 @@ task main(){
   int x = SCREEN_WIDTH/2;
   int y = SCREEN_HEIGHT/2;
 
-  //Animacion de prueba
-  //Crear circulos cambiando el radio
+  /*
   for(int i=0;i<25;i++){
      CircleOut(x,y,i);
-     Wait(100);
+     delay(1);
   }
-
-  ClearScreen();
-
-  //Precedes(motor_rotation1,motor_rotation2,make_draw,show_text);
+  */
+  //Precedes(motor_rotation1,motor_rotation2,make_draw);
   Precedes(show_text,motor_rotation1,motor_rotation2);
   //Precedes(cuadrado,motor_rotation1,motor_rotation2,make_draw);
 }
