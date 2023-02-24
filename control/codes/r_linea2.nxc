@@ -4,105 +4,140 @@
 #define SCREEN_WIDTH  100
 #define SCREEN_HEIGHT 60
 
-#define SpeedSlow 20
+#define RMotor OUT_C
+#define LMotor OUT_A
+#define SpeedSlow 10
 #define SpeedFast 50
 
-//Dibujar Dx, Dy, Dtheta
-//Calcular incrementos
+int LPOS = 0; //Posicion MotorA
+int RPOS = 0; //Posicion MotorC
 
-//Delay dummy
-/**
-void delay(int seconds){
-     unsigned long int count = 5000,i,j;
-     for(i=0;i<seconds;i++)
-	for(j=0;j<count;j++);
+int umbral = 5;
+float pi = 3.141592;
+float theta = 0.0;
+
+float x = 0;          //distancia recorrido eje x
+float y = 0;          //distancia recorrido eje y
+
+int Rprev,Lprev;
+float DD,DL,DW,DR;
+
+float radio = 3;      //radio ruedas
+float longitud = 16;  //distancia
+
+int SD;
+int SI;
+
+float grados_radianes(int grados){
+   return (grados * (pi/180));
 }
-*/
 
-int pos1; //Posicion MotorA
-int pos2; //Posicion MotorC
-float xy = 2.5;
+//probar con DR DL con valores fijos
+task odometria(){
+     float ttemp;
+     while(true){
+	DR = RPOS - Rprev;
+     	DL = LPOS - Lprev;
+	
+     	if (abs(DR) < umbral && abs(DL) < umbral) continue;
+	
+     	DR = pi * radio * grados_radianes(DR);
+     	DL = pi * radio * grados_radianes(DL);
+     
+	DD = ((DR+DL)/2);
+     	DW = (DR-DL)/longitud;
+	ttemp = theta * (180/pi);
+     	x = x + (DD * Cos(ttemp))/100;
+     	y = y + (DD * Sin(ttemp))/100;
+	
+     	theta = theta + DW;
+     	Lprev = LPOS;
+     	Rprev = RPOS;
+     } 
+}
 
-task motor_rotation1(){
-  while(true){
-    //pos1 = MotorRotationCount(OUT_A);
-    pos1 = MotorTachoCount(OUT_A);
+task sigue_lineas(){
+    
+  int Threshold = 600;
+    
+  // sensor1
+  SetSensorType(IN_1, IN_TYPE_LIGHT_ACTIVE);
+  SetSensorMode(IN_1, IN_MODE_RAW);
+
+  // sensor2
+  SetSensorType(IN_4, IN_TYPE_LIGHT_ACTIVE);
+  SetSensorMode(IN_4, IN_MODE_RAW);
+  
+  while (true){
+
+    SD = SensorRaw(IN_4);
+    SI = SensorRaw(IN_1);    
+
+    
+    if (SI > Threshold)
+      OnFwdReg(LMotor, SpeedSlow,OUT_REGMODE_IDLE);
+    else
+      OnFwdReg(LMotor, SpeedFast,OUT_REGMODE_IDLE);
+    
+    // linea
+    
+    if (SD > Threshold)
+      OnFwdReg(RMotor, SpeedSlow,OUT_REGMODE_IDLE);
+    else
+      OnFwdReg(RMotor, SpeedFast,OUT_REGMODE_IDLE);
+    
   }
+}
+
+task motor_rotation(){
+     while(true){ 
+	LPOS = MotorRotationCount(LMotor);
+	RPOS = MotorRotationCount(RMotor);
+     }
 }
 
 //360 es una vuelta completa
-//revisar si acepta flotantes
 //convertir grados a radianes
 //humbral 5-10
-task motor_rotation2(){
-  while(true){
-    //pos2 = MotorRotationCount(OUT_C);
-    pos2 = MotorTachoCount(OUT_C);
-  }
-}
-
-//Dibujar un cuadrado
-task cuadrado(){
-
-  for(int i=0;i<4;i++){
-
-    OnFwd(OUT_AC,SpeedSlow);
-    //delay(5);
-    Wait(1000);
-    Off(OUT_AC);
-    OnRev(OUT_A,SpeedFast);
-    RotateMotor(OUT_A,SpeedSlow,180);
-    //delay(1);
-    Wait(1000);
-  }
-}
-
+//Sen Cos - aceptan valores en grados
 task show_text(){
+
+  string _si_,_sd_,_theta_;
+  string msg1,msg2,msg3;
+
   while(true){
-    string _si_;
-    string _sd_;
-    string msg1;
-    string msg2;
-    _si_ = NumToStr(pos1);
-    _sd_ = NumToStr(pos2);
-    msg1 = "M Izq: " + _si_;
-    msg2 = "M Der: " + _sd_;
+    
+    _si_ = NumToStr(x); //LPOS el valor se actualiza
+    _sd_ = NumToStr(y); //RPOS el valor se actualiza
+    _theta_ = NumToStr(theta);
+    msg1 = "X: " + _si_;
+    msg2 = "Y: " + _sd_;
+    msg3 = "Th: " + _theta_;
     TextOut(0,LCD_LINE1,msg1);
     TextOut(0,LCD_LINE2,msg2);
+    TextOut(0,LCD_LINE8,msg3);
   }
 }
 
+//Dibujar
 task make_draw(){
 
-  int x = SCREEN_WIDTH/2;
-  int y = SCREEN_HEIGHT/2;
+  int xx;
+  int yy;
 
   ClearScreen();
-
+  
   while(true){
 	
-     x = pos2/100 + 50;
-     y = pos1/100 + 30;
-     //ClearScreen();
-     
-     CircleOut(x,y,2);
-     //delay(1);
+     xx = x + 50;
+     yy = y + 30;
+          
+     CircleOut(xx,yy,2);
      
   }
 }
 
 task main(){
-
-  int x = SCREEN_WIDTH/2;
-  int y = SCREEN_HEIGHT/2;
-
-  /*
-  for(int i=0;i<25;i++){
-     CircleOut(x,y,i);
-     delay(1);
-  }
-  */
-  //Precedes(motor_rotation1,motor_rotation2,make_draw);
-  Precedes(show_text,motor_rotation1,motor_rotation2);
-  //Precedes(cuadrado,motor_rotation1,motor_rotation2,make_draw);
+  Precedes(odometria,sigue_lineas,motor_rotation,show_text,make_draw);
+  //Precedes(motor_rotation,show_text,make_draw);
 }
