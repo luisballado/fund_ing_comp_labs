@@ -1,64 +1,93 @@
-//Hacer documentacion de la instalacion no lleva el -EF
-// probar nueva instalacion para quitar el sudo
+// TODO: Hacer documentacion de la instalacion
+// TODO: hacer nueva instalacion para quitar el sudo
+// OJO: no lleva el -EF para no forzar a nuevo firmware
 
-#define SCREEN_WIDTH  100
-#define SCREEN_HEIGHT 60
+#define SCREEN_WIDTH  100 //DIMENSION WIDTH PANTALLA
+#define SCREEN_HEIGHT 60  //DIMENSION HEIGHT PANTALLA
 
-#define RMotor OUT_C
-#define LMotor OUT_A
-#define SpeedSlow 10
-#define SpeedFast 50
+#define RMotor OUT_C  // MOTOR DERECHO
+#define LMotor OUT_A  // MOTOR IZQUIERDO
+#define SpeedSlow 10  // VELOCIDAD MINIMA
+#define SpeedFast 50  // VELOCIDAD MAXIMA
 
 int LPOS = 0; //Posicion MotorA
 int RPOS = 0; //Posicion MotorC
 
 int umbral = 5;
+
 float pi = 3.141592;
-float theta = 0.0;
 
-float x = 0;          //distancia recorrido eje x
-float y = 0;          //distancia recorrido eje y
+float theta = 0.0;   //Angulo inclinacion theta
 
-int Rprev,Lprev;
-float DD,DL,DW,DR;
+float x = 0.0;       //distancia recorrido eje x
+float y = 0.0;       //distancia recorrido eje y
+
+int Rprev;    //Posicion MotorC Previa
+int Lprev;    //Posicion MotorA Previa
+
+float DD; //Distancia recorrida del punto medio robot
+float DL; //Distancia recorrida llanta izquierda
+float DW; //
+float DR; //Distancia recorrida llanta derecha
 
 float radio = 3;      //radio ruedas
-float longitud = 16;  //distancia
+float longitud = 16;  //distancia entre ruedas
 
-int SD;
-int SI;
+int SD; // Valor obtenido tachometer MotorDerecho
+int SI; // Valor obtenido tachometer MotorIzquierdo
 
+/**********************************************
+ * Funcion para pasar de grados a radiales
+ *********************************************/
 float grados_radianes(int grados){
    return (grados * (pi/180));
 }
 
-//probar con DR DL con valores fijos
+float ttemp; //theta temporal
+/**********************************************
+ * TASK ODOMETRIA
+ *********************************************/
 task odometria(){
-     float ttemp;
-     while(true){
-	DR = RPOS - Rprev;
-     	DL = LPOS - Lprev;
+    while(true){
 	
+	DR = RPOS - Rprev; //calcular delta derecha
+     	DL = LPOS - Lprev; //calcular delta izquierda
+
+	// Si sobrepasa un valor considerable continuar con el programa
      	if (abs(DR) < umbral && abs(DL) < umbral) continue;
-	
+
+	// Calcular distancias Derecha-Izquierda
      	DR = pi * radio * grados_radianes(DR);
      	DL = pi * radio * grados_radianes(DL);
-     
+
+	// DISTANCIA DEL VEHICULO POSICION MEDIA
 	DD = ((DR+DL)/2);
+
+	//
      	DW = (DR-DL)/longitud;
+
+	//theta temporal
 	ttemp = theta * (180/pi);
-     	x = x + (DD * Cos(ttemp))/100;
-     	y = y + (DD * Sin(ttemp))/100;
+	
+	//x
+	//x = x + ((DD * Cos(ttemp))/100);
+	x = x + ((DD * Cos(theta))/100);
+
+	//y
+	//y = y + ((DD * Sin(ttemp))/100);
+	y = y + ((DD * Sin(theta))/100);
 	
      	theta = theta + DW;
+	
      	Lprev = LPOS;
      	Rprev = RPOS;
      } 
 }
 
+//TASK DE SIGUELINEAS
 task sigue_lineas(){
     
-  int Threshold = 600;
+  int Threshold = 600; //UMBRAL DE OSCURIDAD
     
   // sensor1
   SetSensorType(IN_1, IN_TYPE_LIGHT_ACTIVE);
@@ -73,22 +102,21 @@ task sigue_lineas(){
     SD = SensorRaw(IN_4);
     SI = SensorRaw(IN_1);    
 
-    
+    //MOTOR IZQUIERDO
     if (SI > Threshold)
       OnFwdReg(LMotor, SpeedSlow,OUT_REGMODE_IDLE);
     else
       OnFwdReg(LMotor, SpeedFast,OUT_REGMODE_IDLE);
-    
-    // linea
-    
+
+    //MOTOR DERECHO
     if (SD > Threshold)
       OnFwdReg(RMotor, SpeedSlow,OUT_REGMODE_IDLE);
     else
       OnFwdReg(RMotor, SpeedFast,OUT_REGMODE_IDLE);
-    
   }
 }
 
+// TASK DE TACHOMETER
 task motor_rotation(){
      while(true){ 
 	LPOS = MotorRotationCount(LMotor);
@@ -102,42 +130,41 @@ task motor_rotation(){
 //Sen Cos - aceptan valores en grados
 task show_text(){
 
-  string _si_,_sd_,_theta_;
-  string msg1,msg2,msg3;
+  string msg1,msg2,msg3,msg4,msg5,msg6;
 
   while(true){
+          
+    TextOut(0,LCD_LINE1,"X:  "  + NumToStr(x)); //x LPOS el valor se actualiza
+    TextOut(0,LCD_LINE2,"Y:  "  + NumToStr(y)); //y RPOS el valor se actualiza
+    TextOut(0,LCD_LINE8,"Th: " + NumToStr(theta));
+    TextOut(0,LCD_LINE3,"DW: " + NumToStr(DD));
+    TextOut(0,LCD_LINE4,"DD: " + NumToStr(DW));
+    TextOut(0,LCD_LINE5,"DL: " + NumToStr(DL));
+    TextOut(0,LCD_LINE7,"ttemp: " + NumToStr(ttemp));
+    TextOut(0,LCD_LINE6,"DR: " + NumToStr(DR));
     
-    _si_ = NumToStr(x); //LPOS el valor se actualiza
-    _sd_ = NumToStr(y); //RPOS el valor se actualiza
-    _theta_ = NumToStr(theta);
-    msg1 = "X: " + _si_;
-    msg2 = "Y: " + _sd_;
-    msg3 = "Th: " + _theta_;
-    TextOut(0,LCD_LINE1,msg1);
-    TextOut(0,LCD_LINE2,msg2);
-    TextOut(0,LCD_LINE8,msg3);
   }
 }
 
-//Dibujar
+// TASK PARA DIBUJAR EN PANTALLA
 task make_draw(){
 
   int xx;
   int yy;
-
-  ClearScreen();
   
   while(true){
 	
-     xx = x + 50;
-     yy = y + 30;
+     xx = x + 50; //50 para iniciar en medio de la pantalla
+     yy = y + 30; //30 para iniciar en medio de la pantalla
           
      CircleOut(xx,yy,2);
      
   }
 }
 
+//TASK PRINCIPAL SOLO CREA LOS HILOS
 task main(){
-  Precedes(odometria,sigue_lineas,motor_rotation,show_text,make_draw);
-  //Precedes(motor_rotation,show_text,make_draw);
+     ClearScreen(); //LIMPIAR PANTALLA
+     Precedes(odometria,motor_rotation,show_text);
+     //Precedes(odometria,sigue_lineas,motor_rotation,show_text,make_draw);     
 }
