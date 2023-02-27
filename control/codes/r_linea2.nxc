@@ -2,6 +2,12 @@
 // TODO: hacer nueva instalacion para quitar el sudo
 // OJO: no lleva el -EF para no forzar a nuevo firmware
 
+// TODO: Calibrar
+// TODO: Revisar conversiones de centimetros - px
+// TODO: VER EL RECORRIDO COMPLETO EN SCREEN
+// TODO: ajustar el tiempo de 50ms
+
+
 #define SCREEN_WIDTH  100 //DIMENSION WIDTH PANTALLA
 #define SCREEN_HEIGHT 60  //DIMENSION HEIGHT PANTALLA
 
@@ -15,7 +21,7 @@ int RPOS = 0; //Posicion MotorC
 
 int umbral = 5;
 
-float pi = 3.141592;
+float pi = 3.1416;
 
 float theta = 0.0;   //Angulo inclinacion theta
 
@@ -30,8 +36,8 @@ float DL; //Distancia recorrida llanta izquierda
 float DW; //
 float DR; //Distancia recorrida llanta derecha
 
-float radio = 3;      //radio ruedas
-float longitud = 16;  //distancia entre ruedas
+float radio = 3.3;      //radio ruedas
+float longitud = 16.0;  //distancia entre ruedas
 
 int SD; // Valor obtenido tachometer MotorDerecho
 int SI; // Valor obtenido tachometer MotorIzquierdo
@@ -40,15 +46,23 @@ int SI; // Valor obtenido tachometer MotorIzquierdo
  * Funcion para pasar de grados a radiales
  *********************************************/
 float grados_radianes(int grados){
-   return (grados * (pi/180));
+   return (grados * (pi/180.0));
 }
 
 float ttemp; //theta temporal
+
+//TODO: PONER TODAS LAS VARIABLES DENTRO DEL TASK DEL ODOMETRO
+//TODO: INCLUIR SHOW_TEXT (SI APLICA)
 /**********************************************
  * TASK ODOMETRIA
  *********************************************/
 task odometria(){
     while(true){
+
+	LPOS = MotorRotationCount(LMotor);
+	RPOS = MotorRotationCount(RMotor);
+	
+	float xx, yy;
 	
 	DR = RPOS - Rprev; //calcular delta derecha
      	DL = LPOS - Lprev; //calcular delta izquierda
@@ -57,30 +71,39 @@ task odometria(){
      	if (abs(DR) < umbral && abs(DL) < umbral) continue;
 
 	// Calcular distancias Derecha-Izquierda
-     	DR = pi * radio * grados_radianes(DR);
-     	DL = pi * radio * grados_radianes(DL);
+     	DR = radio * grados_radianes(DR);
+     	DL = radio * grados_radianes(DL);
 
 	// DISTANCIA DEL VEHICULO POSICION MEDIA
-	DD = ((DR+DL)/2);
+	DD = ((DR+DL)/2.0);
 
 	//
      	DW = (DR-DL)/longitud;
 
 	//theta temporal
-	ttemp = theta * (180/pi);
+	ttemp = theta * (180.0/pi);
+	//DD=10.0;
 	
 	//x
 	//x = x + ((DD * Cos(ttemp))/100);
-	x = x + ((DD * Cos(theta))/100);
-
-	//y
-	//y = y + ((DD * Sin(ttemp))/100);
-	y = y + ((DD * Sin(theta))/100);
+	// x = x + ((DD * Cos(ttemp))/100.0);
+	xx=Cos(ttemp) / 100.0;
+	xx=DD*xx;
+	xx=x+xx;
+	x = xx;
 	
-     	theta = theta + DW;
+	yy =  Sin(ttemp)/100.0;
+	yy=DD*yy;
+	yy=y+yy;
+	y = yy;
+	//y = y + ((DD * Sin(theta))/100);
+	//y = y + ((DD * Sin(ttemp))/100);
+
+	theta = theta + DW;
 	
      	Lprev = LPOS;
      	Rprev = RPOS;
+	Wait(50); 
      } 
 }
 
@@ -116,14 +139,6 @@ task sigue_lineas(){
   }
 }
 
-// TASK DE TACHOMETER
-task motor_rotation(){
-     while(true){ 
-	LPOS = MotorRotationCount(LMotor);
-	RPOS = MotorRotationCount(RMotor);
-     }
-}
-
 //360 es una vuelta completa
 //convertir grados a radianes
 //humbral 5-10
@@ -134,14 +149,14 @@ task show_text(){
 
   while(true){
           
-    TextOut(0,LCD_LINE1,"X:  "  + NumToStr(x)); //x LPOS el valor se actualiza
-    TextOut(0,LCD_LINE2,"Y:  "  + NumToStr(y)); //y RPOS el valor se actualiza
-    TextOut(0,LCD_LINE8,"Th: " + NumToStr(theta));
-    TextOut(0,LCD_LINE3,"DW: " + NumToStr(DD));
-    TextOut(0,LCD_LINE4,"DD: " + NumToStr(DW));
-    TextOut(0,LCD_LINE5,"DL: " + NumToStr(DL));
-    TextOut(0,LCD_LINE7,"ttemp: " + NumToStr(ttemp));
-    TextOut(0,LCD_LINE6,"DR: " + NumToStr(DR));
+    TextOut(0,LCD_LINE7,"X:  "  + NumToStr(x) + "   "); //x LPOS el valor se actualiza
+    TextOut(0,LCD_LINE8,"Y:  "  + NumToStr(y) + "   "); //y RPOS el valor se actualiza
+    TextOut(0,LCD_LINE2,"Th: " + NumToStr(theta) + "   ");
+    TextOut(0,LCD_LINE3,"DW: " + NumToStr(DD) + "   ");
+    TextOut(0,LCD_LINE4,"DD: " + NumToStr(DW) + "   ");
+    TextOut(0,LCD_LINE5,"DL: " + NumToStr(DL) + "   ");
+    TextOut(0,LCD_LINE1,"ttemp: " + NumToStr(ttemp) + "   ");
+    TextOut(0,LCD_LINE6,"DR: " + NumToStr(DR) + "   ");
     
   }
 }
@@ -158,13 +173,12 @@ task make_draw(){
      yy = y + 30; //30 para iniciar en medio de la pantalla
           
      CircleOut(xx,yy,2);
-     
   }
 }
 
 //TASK PRINCIPAL SOLO CREA LOS HILOS
 task main(){
      ClearScreen(); //LIMPIAR PANTALLA
-     Precedes(odometria,motor_rotation,show_text);
-     //Precedes(odometria,sigue_lineas,motor_rotation,show_text,make_draw);     
+     //Precedes(odometria,motor_rotation,show_text);
+     Precedes(odometria,sigue_lineas,make_draw);     
 }
