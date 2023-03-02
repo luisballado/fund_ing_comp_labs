@@ -7,46 +7,44 @@
 // TODO: VER EL RECORRIDO COMPLETO EN SCREEN
 // TODO: ajustar el tiempo de 50ms
 
-
 #define SCREEN_WIDTH  100 //DIMENSION WIDTH PANTALLA
 #define SCREEN_HEIGHT 60  //DIMENSION HEIGHT PANTALLA
 
 #define RMotor OUT_C  // MOTOR DERECHO
 #define LMotor OUT_A  // MOTOR IZQUIERDO
-#define SpeedSlow 10  // VELOCIDAD MINIMA
-#define SpeedFast 50  // VELOCIDAD MAXIMA
+#define SpeedSlow 0  // VELOCIDAD MINIMA
+#define SpeedFast 40  // VELOCIDAD MAXIMA
 
-int LPOS = 0; //Posicion MotorA
-int RPOS = 0; //Posicion MotorC
-
-int umbral = 5;
+int SD; // Valor obtenido tachometer MotorDerecho
+int SI; // Valor obtenido tachometer MotorIzquierdo
 
 float pi = 3.1416;
-
-float theta = 0.0;   //Angulo inclinacion theta
 
 float x = 0.0;       //distancia recorrido eje x
 float y = 0.0;       //distancia recorrido eje y
 
-int Rprev;    //Posicion MotorC Previa
-int Lprev;    //Posicion MotorA Previa
+//360 es una vuelta completa
+//convertir grados a radianes
+//humbral 5-10
+//Sen Cos - aceptan valores en grados
+void show_text(float x,float y,float ttemp){
 
-float DD; //Distancia recorrida del punto medio robot
-float DL; //Distancia recorrida llanta izquierda
-float DW; //
-float DR; //Distancia recorrida llanta derecha
+     TextOut(30,LCD_LINE3,"X:"  + NumToStr(x)); //x LPOS el valor se actualiza
+     TextOut(30,LCD_LINE4,"Y:"  + NumToStr(y)); //y RPOS el valor se actualiza
+     //TextOut(0,LCD_LINE2,"Th: " + NumToStr(theta) + "   ");
+     //TextOut(0,LCD_LINE3,"DW: " + NumToStr(DD) + "   ");
+     //TextOut(0,LCD_LINE4,"DD: " + NumToStr(DW) + "   ");
+     //TextOut(0,LCD_LINE5,"DL: " + NumToStr(DL) + "   ");
+     TextOut(30,LCD_LINE5,"O:" + NumToStr(ttemp));
+     //TextOut(0,LCD_LINE6,"DR: " + NumToStr(DR) + "   ");
+}
 
-float radio = 3.3;      //radio ruedas
-float longitud = 16.0;  //distancia entre ruedas
-
-int SD; // Valor obtenido tachometer MotorDerecho
-int SI; // Valor obtenido tachometer MotorIzquierdo
 
 /**********************************************
  * Funcion para pasar de grados a radiales
  *********************************************/
 float grados_radianes(int grados){
-   return (grados * (pi/180.0));
+      return (grados * (pi/180.0));
 }
 
 float ttemp; //theta temporal
@@ -57,7 +55,26 @@ float ttemp; //theta temporal
  * TASK ODOMETRIA
  *********************************************/
 task odometria(){
-    while(true){
+
+     int LPOS = 0; //Posicion MotorA
+     int RPOS = 0; //Posicion MotorC
+
+     int umbral = 5;
+
+     float theta = 0.0;   //Angulo inclinacion theta
+     
+     int Rprev;    //Posicion MotorC Previa
+     int Lprev;    //Posicion MotorA Previa
+
+     float DD; //Distancia recorrida del punto medio robot
+     float DL; //Distancia recorrida llanta izquierda
+     float DW; //
+     float DR; //Distancia recorrida llanta derecha
+
+     float radio = 2.85;      //radio ruedas
+     float longitud = 16.2;  //distancia entre ruedas
+
+     while(true){
 
 	LPOS = MotorRotationCount(LMotor);
 	RPOS = MotorRotationCount(RMotor);
@@ -103,7 +120,10 @@ task odometria(){
 	
      	Lprev = LPOS;
      	Rprev = RPOS;
-	Wait(50); 
+	Wait(50);
+
+	show_text(x,y,ttemp);
+	
      } 
 }
 
@@ -119,8 +139,16 @@ task sigue_lineas(){
   // sensor2
   SetSensorType(IN_4, IN_TYPE_LIGHT_ACTIVE);
   SetSensorMode(IN_4, IN_MODE_RAW);
-  
-  while (true){
+
+  int run = 0;
+  while (run == 0){
+
+    if(ButtonPressed(BTNCENTER, false)){
+     	run = run + 1;
+	Off(OUT_AC);
+	break;
+	
+    }
 
     SD = SensorRaw(IN_4);
     SI = SensorRaw(IN_1);    
@@ -139,46 +167,26 @@ task sigue_lineas(){
   }
 }
 
-//360 es una vuelta completa
-//convertir grados a radianes
-//humbral 5-10
-//Sen Cos - aceptan valores en grados
-task show_text(){
-
-  string msg1,msg2,msg3,msg4,msg5,msg6;
-
-  while(true){
-          
-    TextOut(0,LCD_LINE7,"X:  "  + NumToStr(x) + "   "); //x LPOS el valor se actualiza
-    TextOut(0,LCD_LINE8,"Y:  "  + NumToStr(y) + "   "); //y RPOS el valor se actualiza
-    TextOut(0,LCD_LINE2,"Th: " + NumToStr(theta) + "   ");
-    TextOut(0,LCD_LINE3,"DW: " + NumToStr(DD) + "   ");
-    TextOut(0,LCD_LINE4,"DD: " + NumToStr(DW) + "   ");
-    TextOut(0,LCD_LINE5,"DL: " + NumToStr(DL) + "   ");
-    TextOut(0,LCD_LINE1,"ttemp: " + NumToStr(ttemp) + "   ");
-    TextOut(0,LCD_LINE6,"DR: " + NumToStr(DR) + "   ");
-    
-  }
-}
-
 // TASK PARA DIBUJAR EN PANTALLA
 task make_draw(){
 
   int xx;
   int yy;
-  
+
+  //10cm es un pixel
+
   while(true){
-	
-     xx = x + 50; //50 para iniciar en medio de la pantalla
-     yy = y + 30; //30 para iniciar en medio de la pantalla
+  	
+     xx = (x/2) + 50; //50 para iniciar en medio de la pantalla
+     yy = (y/2) + 5; //30 para iniciar en medio de la pantalla
           
      CircleOut(xx,yy,2);
+     
   }
 }
 
 //TASK PRINCIPAL SOLO CREA LOS HILOS
 task main(){
      ClearScreen(); //LIMPIAR PANTALLA
-     //Precedes(odometria,motor_rotation,show_text);
      Precedes(odometria,sigue_lineas,make_draw);     
 }
